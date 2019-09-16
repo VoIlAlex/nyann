@@ -50,5 +50,17 @@
     <ClInclude Include="nyann\utils\Size.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="nyann\utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="nyann\Net.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="nyann\utils\io.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="nyann\utils\exceptions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
