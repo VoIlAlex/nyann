@@ -6,23 +6,26 @@
 template<typename _DT>
 std::ostream& operator<<(std::ostream& stream, const nyann::DataSet<_DT>& dataset)
 {
-	std::cout << "[[";
+	stream << "[[";
 	for (int i = 0; i < dataset.size(); i++)
 	{
 		if (i != 0)
-			std::cout << "[";
+			stream << "[";
 
 		for (int j = 0; j < dataset[i].size(); j++)
 		{
 			if (j != 0)
-				std::cout << ", ";
-			std::cout << dataset[i][j];
+				stream << ", ";
+			stream << dataset[i][j];
 		}
-		std::cout << "]";
+		stream << "]";
 		if (i != dataset.size() - 1)
-			std::cout << ", " << std::endl;
+			stream << ", " << std::endl;
 	}
-	std::cout << "]";
+	stream << "]";
+
+	return stream;
+}
 
 	return stream;
 }
