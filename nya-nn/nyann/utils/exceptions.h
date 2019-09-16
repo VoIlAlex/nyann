@@ -4,6 +4,6 @@
 
 namespace nyann {
 
-	class DifferentSizeError : public std::exception {}
+	class DifferentSizeError : public std::exception {};
 
 } // namespace nyann
