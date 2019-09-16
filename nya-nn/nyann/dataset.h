@@ -3,7 +3,7 @@
 #include <initializer_list>
 #include <vector>
 
-
+#include "utils/exceptions.h"
 
 namespace nyann {
 	template<typename _DT>
@@ -31,7 +31,7 @@ namespace nyann {
 			throw DifferentSizeError();
 
 		DataRow<_DT> result(left.size());
-		for (int i = left.size(); i < right.size(); i++)
+		for (int i = 0; i < right.size(); i++)
 			result[i] = left[i] + right[i];
 		return result;
 	}
@@ -43,7 +43,7 @@ namespace nyann {
 			throw DifferentSizeError();
 
 		DataRow<_DT> result(left.size());
-		for (int i = left.size(); i < right.size(); i++)
+		for (int i = 0; i < result.size(); i++)
 			result[i] = left[i] - right[i];
 		return result;
 	}
@@ -58,8 +58,6 @@ namespace nyann {
 
 		return result;
 	}
-
-
 
 } // namespace nyann
 
