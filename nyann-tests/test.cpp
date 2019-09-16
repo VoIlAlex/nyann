@@ -40,3 +40,8 @@ TEST(Size, Construction)
 {
 	nyann::Size size{ 2, 5, 10 };
 }
+
+TEST(FCLayer, Construction)
+{
+	nyann::FCLayer<double> layer({ 10, 10 });
+}
