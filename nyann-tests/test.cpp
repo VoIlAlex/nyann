@@ -64,4 +64,10 @@ TEST(FCLayer, BackPropagation)
 	);
 }
 
+
+TEST(Net, Construction)
+{
+	nyann::Net net;
+}
+
 }
