@@ -3,8 +3,7 @@
 #include <initializer_list>
 #include <vector>
 
-// include subclasses of DataSet
-#include "DataSet/TrainDataSet.h"
+
 
 namespace nyann {
 	template<typename _DT>
@@ -22,3 +21,7 @@ namespace nyann {
 		using std::vector<DataRow<_DT>>::vector;
 	};
 } // namespace nyann
+
+
+// include subclasses of DataSet
+#include "DataSet/TrainDataSet.h"
