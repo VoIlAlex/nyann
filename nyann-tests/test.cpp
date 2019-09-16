@@ -52,4 +52,16 @@ TEST(FCLayer, Processing)
 	nyann::DataRow<double> input = { 1.0, 2.0, 3.0, 4.0, 5.0 };
 	nyann::DataRow<double> output = layer(input);
 }
+
+TEST(FCLayer, BackPropagation)
+{
+	nyann::FCLayer<double> layer({ 5, 1 });
+	nyann::DataRow<double> input = { 1.0, 2.0, 3.0, 4.0, 5.0 };
+	nyann::DataRow<double> output = layer(input);
+	std::vector<double> errors = layer.back_propagation(
+		output - nyann::DataRow<double>{1.0},
+		{ 1.0 }
+	);
+}
+
 }
