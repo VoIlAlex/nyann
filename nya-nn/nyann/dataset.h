@@ -77,6 +77,20 @@ namespace nyann {
 		return result;
 	}
 
+	// used in evaluation of results
+	template<typename _DT>
+	double operator-(const DataSet<_DT>& left, const DataSet<_DT>& right)
+	{
+		if (left.size() != right.size())
+			throw DifferentSizeError();
+
+		double error = 0;
+		for (int i = 0; i < left.size(); i++)
+			for (int j = 0; j < left.front().size(); j++)
+				error += left[i][j] - right[i][j];
+		return error;
+	}
+
 } // namespace nyann
 
 
