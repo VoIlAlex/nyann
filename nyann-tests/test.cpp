@@ -3,7 +3,7 @@
 
 
 
-TEST(DataSet, DataSet_construction)
+TEST(DataSet, Construction)
 {
 	nyann::DataRow<float> row = { 1.0, 2.0, 3.0 };
 	nyann::DataSet<float> dataset = {
@@ -12,7 +12,31 @@ TEST(DataSet, DataSet_construction)
 	};
 }
 
-TEST(Size, Size_construction)
+TEST(DataRow, Construction)
+{
+	nyann::DataRow<float> row = { 1.0, 2.0, 3.0 };
+}
+
+TEST(DataSet, IO)
+{
+	nyann::DataSet<float> dataset = {
+		{1.0, 2.0},
+		{3.0, 4.0}
+	};
+	std::cout << dataset << std::endl;
+}
+
+TEST(TrainDataSet, Construction)
+{
+	nyann::TrainDataSet<float> dataset = {
+		{{1.5, 1.5}, {0.}},
+		{{1.5, 0.5}, {1.}},
+		{{0.5, 1.5}, {1.}},
+		{{0.5, 0.5}, {0.}}
+	};
+}
+
+TEST(Size, Construction)
 {
 	nyann::Size size{ 2, 5, 10 };
 }
