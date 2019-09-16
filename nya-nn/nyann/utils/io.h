@@ -27,5 +27,15 @@ std::ostream& operator<<(std::ostream& stream, const nyann::DataSet<_DT>& datase
 	return stream;
 }
 
+template<typename _DT>
+std::ostream& operator<<(std::ostream& stream, const nyann::DataRow< _DT>& datarow)
+{
+	stream << "[";
+	for (int i = 0; i < datarow.size(); i++)
+	{
+		if (i != 0) stream << ", ";
+		stream << datarow[i];
+	}
+	stream << "]";
 	return stream;
 }
