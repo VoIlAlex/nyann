@@ -13,7 +13,7 @@ int main()
 {
 	// A dataset for the problem
 	// dataset_x -> dataset_y
-	nyann::TrainDataSet<float> dataset = {
+	nyann::TrainDataSet<double> dataset = {
 		{{1.5, 1.5}, {0.}},
 		{{1.5, 0.5}, {1.}},
 		{{0.5, 1.5}, {1.}},
@@ -21,8 +21,8 @@ int main()
 	};
 
 	// nn layers
-	nyann::Layer* layer_1 = new nyann::FCLayer(nyann::Size(2), nyann::Size(2));
-	nyann::Layer* layer_2 = new nyann::FCLayer(nyann::Size(2), nyann::Size(1));
+	nyann::Layer<double>* layer_1 = new nyann::FCLayer<double>(nyann::Size(2, 2));
+	nyann::Layer<double>* layer_2 = new nyann::FCLayer<double>(nyann::Size(2, 1));
 
 
 	// creatinga  neural network
@@ -43,7 +43,7 @@ int main()
 	net.fit(
 		dataset, // dataset
 		10, // epoch number
-		4 // batch size
+		1 // batch size
 	);
 
 	// Predict a value
