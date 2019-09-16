@@ -142,6 +142,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="nyann.h" />
+    <ClInclude Include="nyann\DataSet.h" />
+    <ClInclude Include="nyann\DataSet\TrainDataSet.h" />
+    <ClInclude Include="nyann\Layer\FCLayer.h" />
+    <ClInclude Include="nyann\Layer.h" />
+    <ClInclude Include="nyann\Loss.h" />
+    <ClInclude Include="nyann\Loss\MSELoss.h" />
+    <ClInclude Include="nyann\Optimizer.h" />
+    <ClInclude Include="nyann\Optimizer\SGDOptimizer.h" />
+    <ClInclude Include="nyann\utils\Size.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
