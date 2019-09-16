@@ -21,6 +21,24 @@ namespace nyann {
 		using std::vector<DataRow<_DT>>::vector;
 	};
 
+	template<typename _DT>
+	DataRow<_DT> abs(const DataRow<_DT>& datarow)
+	{
+		DataRow<_DT> result = datarow;
+		for (int i = 0; i < result.size(); i++)
+			result[i] = ::abs(result[i]);
+		return result;
+	}
+
+
+	template<typename _DT>
+	DataSet<_DT> abs(const DataSet<_DT>& dataset)
+	{
+		DataSet<_DT> result = dataset;
+		for (auto& row : dataset)
+			row = abs(row);
+		return result;
+	}
 	////////////////////////////
 	// Operators overloadings //
 	////////////////////////////
