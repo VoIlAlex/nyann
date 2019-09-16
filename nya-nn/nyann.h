@@ -9,3 +9,4 @@
 #include "nyann/Loss.h"
 #include "nyann/Optimizer.h"
 #include "nyann/Net.h"
+#include "nyann/utils.h"

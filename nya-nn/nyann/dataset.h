@@ -21,4 +21,4 @@ namespace nyann {
 	public:
 		using std::vector<DataRow<_DT>>::vector;
 	};
-}
+} // namespace nyann

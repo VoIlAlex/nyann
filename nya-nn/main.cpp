@@ -46,7 +46,8 @@ int main()
 		4 // batch size
 	);
 
-	nyann::DataSet predicted_values = net.predict({ 0.1, 1.1 });
+	// Predict a value
+	nyann::DataSet<float> predicted_values = net.predict({ {0.1, 1.1} });
 
 	// visualize the results
 	std::cout << predicted_values;
