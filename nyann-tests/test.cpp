@@ -50,5 +50,6 @@ TEST(FCLayer, Processing)
 {
 	nyann::FCLayer<double> layer({ 5, 1 });
 	nyann::DataRow<double> input = { 1.0, 2.0, 3.0, 4.0, 5.0 };
-	nyann::DataRow<double> ouput = layer(input);
+	nyann::DataRow<double> output = layer(input);
+}
 }
