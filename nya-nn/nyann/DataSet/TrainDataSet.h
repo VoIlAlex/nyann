@@ -12,6 +12,20 @@ namespace nyann {
 	{
 	public:
 		using std::vector<DataSet<_DT>>::vector;
+		DataSet<_DT> get_input() const
+		{
+			DataSet<_DT> input;
+			for (auto it = begin(); it != end(); it++)
+				input.push_back((*it)[0]);
+			return input;
+		}
+		DataSet<_DT> get_output() const
+		{
+			DataSet<_DT> output;
+			for (auto it = begin(); it != end(); it++)
+				output.push_back((*it)[1]);
+			return output;
+		}
 	};
 
 } // namespace nyann
