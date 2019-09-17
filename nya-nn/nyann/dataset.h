@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "utils/exceptions.h"
+#include "utils/Size.h"
 
 namespace nyann {
 	template<typename _DT>
@@ -18,7 +19,57 @@ namespace nyann {
 	class DataSet : public std::vector<DataRow<_DT>>
 	{
 	public:
-		using std::vector<DataRow<_DT>>::vector;
+		DataSet() {}
+		DataSet(std::initializer_list<DataRow<_DT>> il)
+			: std::vector<DataRow<_DT>>(il)
+		{}
+
+		DataSet(int size, const std::allocator<_DT>& allocator = std::allocator<_DT>())
+			: std::vector<DataRow<_DT>>(size, allocator)
+		{}
+		DataSet(const DataSet<_DT>& dataset)
+			: std::vector<DataRow<_DT>>(dataset)
+		{}
+
+		// For now only two dimensional
+		DataSet(nyann::Size size)
+		{
+			if (size == Size() || size[0] == 0)
+				return;
+
+			for (int i = 0; i < size[0]; i++)
+			{
+				if (size.size() == 1)
+					push_back({});
+				else
+					push_back(DataRow<_DT>(size[1]));
+			}
+		}
+		static DataSet<_DT> zeros_like(const DataSet<_DT>& dataset)
+		{
+			nyann::Size size_of_dataset;
+			size_of_dataset.push_back(dataset.size());
+			if (dataset.size() >= 1)
+				size_of_dataset.push_back(dataset[0].size());
+
+			return DataSet<_DT>(size_of_dataset);
+		}
+		static DataSet<_DT> ones_like(const DataSet<_DT>& dataset)
+		{
+			DataSet<_DT> result = DataSet<_DT>::zeros_like(dataset);
+			for (int i = 0; i < result.get_size()[0]; i++)
+				for (int j = 0; j < result.get_size()[1]; j++)
+					result[i][j] = 1;
+			return result;
+		}
+		Size get_size() const
+		{
+			Size s;
+			s.push_back(size());
+			if (size() >= 1)
+				s.push_back(operator[](0).size());
+			return s;
+		}
 	};
 
 	template<typename _DT>
