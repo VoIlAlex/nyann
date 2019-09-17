@@ -50,7 +50,7 @@ namespace nyann {
 						X = row[0];
 						y = row[1];
 						y_pred = predict({ X })[0];
-						std::vector<_DT> errors = abs(y - y_pred);
+						std::vector<_DT> errors = y_pred - y;
 						// TODO: derivatives based on activation function
 						std::vector<double> derivatives;
 						for (auto it = m_layers.rbegin(); it != m_layers.rend(); it++)
