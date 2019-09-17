@@ -36,6 +36,49 @@ TEST(TrainDataSet, Construction)
 	};
 }
 
+TEST(TrainDataSet, GetInput)
+{
+	nyann::TrainDataSet<double> dataset = {
+		{{1.5, 1.5}, {0.}},
+		{{1.5, 0.5}, {1.}},
+		{{0.5, 1.5}, {1.}},
+		{{0.5, 0.5}, {0.}}
+	};
+
+	nyann::DataSet<double> expected_input = {
+		{1.5, 1.5},
+		{1.5, 0.5},
+		{0.5, 1.5},
+		{0.5, 0.5}
+	};
+	ASSERT_EQ(
+		dataset.get_input(),
+		expected_input
+	);
+}
+
+TEST(TrainDataSet, GetOutput)
+{
+	nyann::TrainDataSet<double> dataset = {
+		{{1.5, 1.5}, {0.}},
+		{{1.5, 0.5}, {1.}},
+		{{0.5, 1.5}, {1.}},
+		{{0.5, 0.5}, {0.}}
+	};
+
+	nyann::DataSet<double> expected_output = {
+		{0.},
+		{1.},
+		{1.},
+		{0.}
+	};
+
+	auto output = dataset.get_output();
+	bool equality = output == expected_output;
+
+	ASSERT_TRUE(equality);
+}
+
 TEST(Size, Construction)
 {
 	nyann::Size size{ 2, 5, 10 };
