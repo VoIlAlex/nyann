@@ -36,7 +36,7 @@ namespace nyann {
 			m_optimizer = optimizer;
 		}
 
-		void fit(const TrainDataSet<_DT>& dataset, int epochs, int batch_size = 1)
+		void fit(const TrainDataSet<_DT>& dataset, int epochs, int batch_size = 1, double lr = 0.001)
 		{
 			while (epochs--)
 			{
@@ -58,7 +58,8 @@ namespace nyann {
 							derivatives = std::vector<double>(errors.size(), 1.0);
 							errors = (*it)->back_propagation(
 								errors,
-								derivatives
+								derivatives,
+								lr
 							);
 						}
 					}
