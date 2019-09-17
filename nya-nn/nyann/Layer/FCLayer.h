@@ -26,11 +26,19 @@ namespace nyann
 
 		virtual DataSet<_DT_OUT> operator() (const DataSet<_DT_IN>& input) override
 		{
-			return {};
+			m_input = input;
+
+			DataSet<_DT_OUT> results(input.get_size());
+
+			// process row by row
+			for (int k = 0; k < results.get_size()[0]; k++)
+				results[k] = operator()(input[k], false);
+
+			return results;
 		}
 
 		// for now on-line learning
-		virtual DataRow<_DT_OUT> operator() (const DataRow<_DT_IN>& input) override
+		virtual DataRow<_DT_OUT> operator() (const DataRow<_DT_IN>& input, bool save = true) override
 		{
 			DataRow<_DT_OUT> output(m_size_out);
 			for (int j = 0; j < m_size_out; j++)
@@ -42,7 +50,8 @@ namespace nyann
 
 			// save data 
 			// for back propagation
-			m_input = input;
+			if (save)
+				m_input = input;
 			return output;
 		}
 
