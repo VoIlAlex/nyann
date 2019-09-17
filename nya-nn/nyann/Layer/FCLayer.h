@@ -83,6 +83,56 @@ namespace nyann
 
 			return errors_here;
 		}
+
+		virtual DataSet<double> back_propagation(
+			const DataSet<double>& errors,
+			const DataSet<double>& derivatives, // d(yj) / d(Sj) - caused by activation function
+			double lr = 0.01
+		) override
+		{
+			auto& input = std::get<DataSet<_DT_IN>>(m_input);
+			auto weights_copy = m_weights;
+
+			// update weights
+			for (int j = 0; j < m_size_out; j++)
+			{
+				for (int i = 0; i < m_size_in; i++)
+				{
+					double derivative_by_weight = 0;
+					for (int k = 0; k < derivatives.size(); k++)
+						derivative_by_weight += errors[k][j] * derivatives[k][j] * input[k][i];
+
+
+					m_weights[i][j] -= lr * derivative_by_weight;
+				}
+
+				double derivative_by_bias = 0;
+				for (int k = 0; k < derivatives.size(); k++)
+					derivative_by_bias -= errors[k][j] * derivatives[k][j];
+
+				m_biases[j] -= lr * derivative_by_bias;
+			}
+
+			// Errors on this layer
+			// (they are calculated by errors
+			// from the next layer)
+			DataSet<double> errors_here(errors.size());
+			for (int k = 0; k < errors.size(); k++)
+			{
+				for (int i = 0; i < m_size_in; i++)
+				{
+					double error_k_i = 0;
+
+					for (int j = 0; j < m_size_out; j++)
+						error_k_i += errors[k][j] * derivatives[k][j] * weights_copy[i][j];
+
+					errors_here[k].push_back(error_k_i);
+				}
+			}
+
+			return errors_here;
+		}
+
 		std::vector<std::vector<double>> get_weights() const
 		{
 			return m_weights;
@@ -100,6 +150,7 @@ namespace nyann
 		{
 			return m_biases;
 		}
+
 
 	private:
 		void fill_weights_random()
