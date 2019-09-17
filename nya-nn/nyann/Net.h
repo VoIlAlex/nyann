@@ -40,7 +40,7 @@ namespace nyann {
 		{
 			while (epochs--)
 			{
-				if (batch_size == 0)
+				if (batch_size == 1)
 				{
 					DataRow<_DT> X;
 					DataRow<_DT> y;
