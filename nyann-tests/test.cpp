@@ -107,6 +107,41 @@ TEST(FCLayer, BackPropagationRow)
 	);
 }
 
+TEST(FCLayer, BatchProcessing)
+{
+	nyann::FCLayer<double> layer({ 2, 1 });
+	nyann::TrainDataSet<double> dataset = {
+		{{1.5, 1.5}, {0.}},
+		{{1.5, 0.5}, {1.}},
+		{{0.5, 1.5}, {1.}},
+		{{0.5, 0.5}, {0.}}
+	};
+	nyann::DataSet<double> result = layer(dataset.get_input());
+	ASSERT_NE(result, nyann::DataSet<double>());
+}
+
+TEST(FCLayer, BatchBackPropagation)
+{
+	nyann::FCLayer<double> layer({ 2, 1 });
+	nyann::TrainDataSet<double> dataset = {
+		{{1.5, 1.5}, {0.}},
+		{{1.5, 0.5}, {1.}},
+		{{0.5, 1.5}, {1.}},
+		{{0.5, 0.5}, {0.}}
+	};
+	auto input = dataset.get_input();
+	auto output = dataset.get_output();
+	auto result = layer(input);
+	auto errors = result - output;
+	auto derivatives = nyann::DataSet<double>::ones_like(errors);
+	auto initial_weights = layer.get_weights();
+	layer.back_propagation(
+		errors,
+		derivatives
+	);
+	ASSERT_TRUE(initial_weights != layer.get_weights());
+}
+
 
 TEST(Net, Construction)
 {
