@@ -161,8 +161,8 @@ TEST(Net, LayersSetting)
 
 TEST(Net, Fitting)
 {
-	nyann::Layer<double>* layer_1 = new nyann::FCLayer<double>(nyann::Size(2, 2));
-	nyann::Layer<double>* layer_2 = new nyann::FCLayer<double>(nyann::Size(2, 1));
+	nyann::Layer<double>* layer_1 = new nyann::FCLayer<double>(nyann::Size{ 2, 2 });
+	nyann::Layer<double>* layer_2 = new nyann::FCLayer<double>(nyann::Size{ 2, 1 });
 	nyann::Net net;
 	net.add_layer(layer_1);
 	net.add_layer(layer_2);
@@ -182,33 +182,31 @@ TEST(Net, Prediction)
 {
 	// Create a model
 
-	nyann::Layer<double>* layer_1 = new nyann::FCLayer<double>(nyann::Size(2, 2));
-	nyann::Layer<double>* layer_2 = new nyann::FCLayer<double>(nyann::Size(2, 1));
+	nyann::Layer<double>* layer_1 = new nyann::FCLayer<double>(nyann::Size{ 2, 1 });
+
 	nyann::Net net;
 
 	net.add_layer(layer_1);
-	net.add_layer(layer_2);
-
 
 	// Train the model
 
 	nyann::TrainDataSet<double> dataset = {
-		{{1.5, 1.5}, {0.}},
-		{{1.5, 0.5}, {1.}},
-		{{0.5, 1.5}, {1.}},
-		{{0.5, 0.5}, {0.}}
+		{{1.5, 1.5}, {1.}},
+		{{1.5, 0.5}, {0.}},
+		{{0.5, 1.5}, {0.}},
+		{{0.5, 0.5}, {-1.}}
 	};
 
-	net.fit(dataset, 100);
+	net.fit(dataset, 10000, 1, 0.003);
 
 
 	// Test the model
 
 	double precision = 0.5;
 	nyann::TrainDataSet<double> test_dataset = {
-		{{1.5, 1.5}, {0.}},
-		{{1.5, 0.5}, {1.}},
-		{{0.5, 1.5}, {1.}},
+		{{1.5, 1.5}, {1.}},
+		{{1.5, 0.5}, {0.}},
+		{{0.5, 1.5}, {0.}},
 		{{0.5, 0.5}, {0.}}
 	};
 
@@ -219,6 +217,10 @@ TEST(Net, Prediction)
 		input = { data[0] };
 		expected_value = data[1][0];
 		predicted_value = net.predict(input)[0][0];
+		if (abs(predicted_value - 0) < abs(predicted_value - 1))
+			predicted_value = 0;
+		else
+			predicted_value = 1;
 		ASSERT_NEAR(expected_value, predicted_value, precision);
 	}
 }
