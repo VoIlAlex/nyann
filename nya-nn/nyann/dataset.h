@@ -130,7 +130,7 @@ namespace nyann {
 
 	// used in evaluation of results
 	template<typename _DT>
-	double operator-(const DataSet<_DT>& left, const DataSet<_DT>& right)
+	double difference(const DataSet<_DT>& left, const DataSet<_DT>& right)
 	{
 		if (left.size() != right.size())
 			throw DifferentSizeError();
@@ -140,6 +140,22 @@ namespace nyann {
 			for (int j = 0; j < left.front().size(); j++)
 				error += left[i][j] - right[i][j];
 		return error;
+	}
+
+
+	template<typename _DT>
+	DataSet<_DT> operator-(const DataSet<_DT>& left, const DataSet<_DT>& right)
+	{
+		if (left.size() != right.size())
+			throw DifferentSizeError();
+
+		DataSet<_DT> result = DataSet<_DT>::zeros_like(left);
+
+		for (int i = 0; i < left.get_size()[0]; i++)
+			for (int j = 0; j < left.get_size()[1]; j++)
+				result[i][j] = left[i][j] - right[i][j];
+
+		return result;
 	}
 
 } // namespace nyann
