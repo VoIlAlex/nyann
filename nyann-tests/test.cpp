@@ -89,14 +89,14 @@ TEST(FCLayer, Construction)
 	nyann::FCLayer<double> layer({ 10, 10 });
 }
 
-TEST(FCLayer, Processing)
+TEST(FCLayer, ProcessingRow)
 {
 	nyann::FCLayer<double> layer({ 5, 1 });
 	nyann::DataRow<double> input = { 1.0, 2.0, 3.0, 4.0, 5.0 };
 	nyann::DataRow<double> output = layer(input);
 }
 
-TEST(FCLayer, BackPropagation)
+TEST(FCLayer, BackPropagationRow)
 {
 	nyann::FCLayer<double> layer({ 5, 1 });
 	nyann::DataRow<double> input = { 1.0, 2.0, 3.0, 4.0, 5.0 };
