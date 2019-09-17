@@ -83,6 +83,24 @@ namespace nyann
 
 			return errors_here;
 		}
+		std::vector<std::vector<double>> get_weights() const
+		{
+			return m_weights;
+		}
+		std::vector<std::vector<double>>& get_weights()
+		{
+			return m_weights;
+		}
+
+		std::vector<double> get_biases() const
+		{
+			return m_biases;
+		}
+		std::vector<double>& get_biases()
+		{
+			return m_biases;
+		}
+
 	private:
 		void fill_weights_random()
 		{
