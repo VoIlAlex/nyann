@@ -10,3 +10,4 @@
 #include "nyann/Optimizer.h"
 #include "nyann/Net.h"
 #include "nyann/utils.h"
+#include "nyann/ActivationFunction.h"
