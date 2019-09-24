@@ -19,7 +19,10 @@ namespace nyann
 		int m_size_out;
 		std::vector<std::vector<double>> m_weights;
 		std::vector<double> m_biases;
-		std::variant<DataSet<_DT_IN>, DataRow<_DT_IN>> m_input; // cached data
+
+		// cached data
+		std::variant<DataSet<_DT_IN>, DataRow<_DT_IN>> m_input;
+		std::variant<DataSet<_DT_OUT>, DataRow<_DT_OUT>> m_output;
 	public:
 		FCLayer(const Size& size_in, const Size& size_out);
 		FCLayer(const Size& size_in_out);
@@ -28,13 +31,15 @@ namespace nyann
 		{
 			m_input = input;
 
-			DataSet<_DT_OUT> results(input.get_size());
+			DataSet<_DT_OUT> outputs(input.get_size());
 
 			// process row by row
-			for (int k = 0; k < results.get_size()[0]; k++)
-				results[k] = operator()(input[k], false);
+			for (int k = 0; k < outputs.get_size()[0]; k++)
+				outputs[k] = operator()(input[k], false);
 
-			return results;
+			m_output = outputs;
+
+			return outputs;
 		}
 
 		// for now on-line learning
@@ -46,12 +51,17 @@ namespace nyann
 				for (int i = 0; i < m_size_in; i++)
 					output[j] += m_weights[i][j] * input[i];
 				output[j] -= m_biases[j];
+				if (m_activation_function != nullptr)
+					output[j] = m_activation_function->operator()(output[j]);
 			}
 
 			// save data 
 			// for back propagation
 			if (save)
+			{
 				m_input = input;
+				m_output = output;
+			}
 			return output;
 		}
 
@@ -86,12 +96,25 @@ namespace nyann
 
 		virtual DataSet<double> back_propagation(
 			const DataSet<double>& errors,
-			const DataSet<double>& derivatives, // d(yj) / d(Sj) - caused by activation function
 			double lr = 0.01
 		) override
 		{
-			auto& input = std::get<DataSet<_DT_IN>>(m_input);
+ 			auto& input = std::get<DataSet<_DT_IN>>(m_input);
+			auto& output = std::get<DataSet<_DT_OUT>>(m_output);
 			auto weights_copy = m_weights;
+
+
+			// get derivatives
+			// from activation 
+			// function
+			DataSet<double> derivatives = DataSet<double>::ones_like(errors);
+			if (m_activation_function != nullptr)
+				for (int i = 0; i < derivatives.size(); i++)
+					for (int j = 0; j < derivatives[0].size(); j++)
+					{
+						derivatives[i][j] = m_activation_function->derivative(output[i][j]);
+					}
+
 
 			// update weights
 			for (int j = 0; j < m_size_out; j++)
@@ -101,7 +124,6 @@ namespace nyann
 					double derivative_by_weight = 0;
 					for (int k = 0; k < derivatives.size(); k++)
 						derivative_by_weight += errors[k][j] * derivatives[k][j] * input[k][i];
-
 
 					m_weights[i][j] -= lr * derivative_by_weight;
 				}
