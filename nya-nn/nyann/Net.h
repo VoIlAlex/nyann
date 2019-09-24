@@ -70,15 +70,18 @@ namespace nyann {
 
 		nyann::DataSet<_DT> predict(const DataSet<_DT>& input)
 		{
-			if (input.size() == 1)
-			{
-				nyann::DataRow<_DT> result = input[0];
-				for (Layer<_DT>* layer : m_layers)
-					result = (*layer)(result);
-				return { result };
-			}
-			// TODO
-			else return {};
+			nyann::DataSet<_DT> result = input;
+			for (Layer<_DT>* layer : m_layers)
+				result = (*layer)(result);
+			return result;
+		}
+
+		void add_activation_function(ActivationFunction<_DT>* activation_function, int idx = -1)
+		{
+			if (idx == -1)
+				m_layers.back()->add_activation_function(activation_function);
+			else
+				m_layers[idx]->add_activation_function(activation_function)
 		}
 
 		~Net()
