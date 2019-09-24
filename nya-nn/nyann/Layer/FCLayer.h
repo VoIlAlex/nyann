@@ -51,8 +51,8 @@ namespace nyann
 				for (int i = 0; i < m_size_in; i++)
 					output[j] += m_weights[i][j] * input[i];
 				output[j] -= m_biases[j];
-				if (m_activation_function != nullptr)
-					output[j] = m_activation_function->operator()(output[j]);
+				if (this->m_activation_function != nullptr)
+					output[j] = this->m_activation_function->operator()(output[j]);
 			}
 
 			// save data 
@@ -99,7 +99,7 @@ namespace nyann
 			double lr = 0.01
 		) override
 		{
- 			auto& input = std::get<DataSet<_DT_IN>>(m_input);
+			auto& input = std::get<DataSet<_DT_IN>>(m_input);
 			auto& output = std::get<DataSet<_DT_OUT>>(m_output);
 			auto weights_copy = m_weights;
 
@@ -108,11 +108,11 @@ namespace nyann
 			// from activation 
 			// function
 			DataSet<double> derivatives = DataSet<double>::ones_like(errors);
-			if (m_activation_function != nullptr)
+			if (this->m_activation_function != nullptr)
 				for (int i = 0; i < derivatives.size(); i++)
 					for (int j = 0; j < derivatives[0].size(); j++)
 					{
-						derivatives[i][j] = m_activation_function->derivative(output[i][j]);
+						derivatives[i][j] = this->m_activation_function->derivative(output[i][j]);
 					}
 
 
