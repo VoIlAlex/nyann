@@ -40,9 +40,9 @@ namespace nyann {
 			for (int i = 0; i < size[0]; i++)
 			{
 				if (size.size() == 1)
-					push_back({});
+					this->push_back({});
 				else
-					push_back(DataRow<_DT>(size[1]));
+					this->push_back(DataRow<_DT>(size[1]));
 			}
 		}
 		static DataSet<_DT> zeros_like(const DataSet<_DT>& dataset)
@@ -74,9 +74,9 @@ namespace nyann {
 		Size get_size() const
 		{
 			Size s;
-			s.push_back(size());
-			if (size() >= 1)
-				s.push_back(operator[](0).size());
+			s.push_back(this->size());
+			if (this->size() >= 1)
+				s.push_back(this->operator[](0).size());
 			return s;
 		}
 	};

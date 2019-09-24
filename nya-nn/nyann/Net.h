@@ -81,7 +81,7 @@ namespace nyann {
 			if (idx == -1)
 				m_layers.back()->add_activation_function(activation_function);
 			else
-				m_layers[idx]->add_activation_function(activation_function)
+				m_layers[idx]->add_activation_function(activation_function);
 		}
 
 		~Net()
