@@ -4,6 +4,7 @@
 #include "Layer.h"
 #include "Loss.h"
 #include "Optimizer.h"
+#include "ActivationFunction.h"
 
 
 namespace nyann {
@@ -40,33 +41,29 @@ namespace nyann {
 		{
 			while (epochs--)
 			{
-				if (batch_size == 1)
+				for (int i = 0; i < batch_size; i++)
 				{
-					DataRow<_DT> X;
-					DataRow<_DT> y;
-					DataRow<_DT> y_pred;
-					for (DataSet<_DT> row : dataset)
+					DataSet<_DT> X;
+					DataSet<_DT> y;
+					DataSet<_DT> y_pred;
+					DataSet<_DT> errors;
+
+					for (int j = i * batch_size; j < i * batch_size + batch_size; j++)
 					{
-						X = row[0];
-						y = row[1];
-						y_pred = predict({ X })[0];
-						std::vector<_DT> errors = y_pred - y;
-						// TODO: derivatives based on activation function
-						std::vector<double> derivatives;
-						for (auto it = m_layers.rbegin(); it != m_layers.rend(); it++)
-						{
-							derivatives = std::vector<double>(errors.size(), 1.0);
-							errors = (*it)->back_propagation(
-								errors,
-								derivatives,
-								lr
-							);
-						}
+						X.push_back(dataset[j][0]);
+						y.push_back(dataset[j][1]);
 					}
-				}
-				else
-				{
-					// TODO
+
+					y_pred = predict(X);
+					errors = y_pred - y;
+
+					for (auto it = m_layers.rbegin(); it != m_layers.rend(); it++)
+					{
+						errors = (*it)->back_propagation(
+							errors,
+							lr
+						);
+					}
 				}
 			}
 		}
