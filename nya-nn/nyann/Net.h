@@ -39,8 +39,14 @@ namespace nyann {
 
 		void fit(const TrainDataSet<_DT>& dataset, int epochs, int batch_size = 1, double lr = 0.001)
 		{
+			DataSet<_DT> input = dataset.get_input();
+			DataSet<_DT> output = dataset.get_output();
 			while (epochs--)
 			{
+				double error = difference(output, predict(input));
+
+				std::cout << "[INFO] Epoch " << epochs + 1 << "..." << std::endl;
+				std::cout << "[INFO] Error: " << error << std::endl;
 				for (int i = 0; i < batch_size; i++)
 				{
 					DataSet<_DT> X;
