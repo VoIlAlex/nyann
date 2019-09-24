@@ -62,5 +62,14 @@
     <ClInclude Include="nyann\utils\exceptions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="nyann\ActivationFunction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="nyann\ActivationFunction\BinaryActivation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="nyann\ActivationFunction\ReLU.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
