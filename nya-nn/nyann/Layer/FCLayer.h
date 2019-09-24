@@ -178,7 +178,7 @@ namespace nyann
 		void fill_weights_random()
 		{
 			std::default_random_engine random_engine;
-			std::normal_distribution distribution(0.0, 1.0);
+			std::normal_distribution distribution(1 / sqrt(m_size_in), 1 / sqrt(m_size_in));
 			auto generator = std::bind(distribution, random_engine);
 			for (int j = 0; j < m_size_out; j++)
 			{
