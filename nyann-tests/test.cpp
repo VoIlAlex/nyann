@@ -226,3 +226,51 @@ TEST(Net, Prediction_1)
 		ASSERT_NEAR(expected_value, predicted_value, precision);
 	}
 }
+
+
+TEST(Net, PredictionWithActivation)
+{
+	nyann::TrainDataSet<double> dataset = {
+		{{1.5, 1.5}, {1.}},
+		{{1.5, 0.5}, {0.}},
+		{{0.5, 1.5}, {0.}},
+		{{0.5, 0.5}, {0.}}
+	};
+
+	nyann::Net net;
+
+	nyann::Layer<double>* layer_1 = new nyann::FCLayer<double>(nyann::Size{ 2, 5 });
+	layer_1->add_activation_function(new nyann::ReLU<double>());
+	nyann::Layer<double>* layer_2 = new nyann::FCLayer<double>(nyann::Size{ 5, 5 });
+	layer_2->add_activation_function(new nyann::ReLU<double>());
+	nyann::Layer<double>* layer_3 = new nyann::FCLayer<double>(nyann::Size{ 5, 1 });
+	layer_3->add_activation_function(new nyann::ReLU<double>());
+
+	net.add_layer(layer_1);
+	net.add_layer(layer_2);
+	net.add_layer(layer_3);
+
+	net.fit(dataset, 1000, 2, 0.03);
+
+	double precision = 0.5;
+	nyann::TrainDataSet<double> test_dataset = {
+		{{1.5, 1.5}, {1.}},
+		{{1.5, 0.5}, {0.}},
+		{{0.5, 1.5}, {0.}},
+		{{0.5, 0.5}, {0.}}
+	};
+
+	nyann::DataSet<double> input;
+	for (auto& row : test_dataset)
+		input.push_back(row[0]);
+
+	nyann::DataSet<double> expected_output;
+	for (auto& row : test_dataset)
+		expected_output.push_back(row[1]);
+
+	nyann::DataSet<double> output = net.predict(input);
+
+	double diff = nyann::DataSet<double>::difference(output, expected_output);
+
+	EXPECT_LT(diff, 1.0 * output.size());
+}
