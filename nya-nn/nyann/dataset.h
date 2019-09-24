@@ -94,9 +94,9 @@ namespace nyann {
 	template<typename _DT>
 	DataSet<_DT> abs(const DataSet<_DT>& dataset)
 	{
-		DataSet<_DT> result = dataset;
+		DataSet<_DT> result;
 		for (auto& row : dataset)
-			row = abs(row);
+			result.push_back(abs(row));
 		return result;
 	}
 	////////////////////////////
