@@ -133,11 +133,9 @@ TEST(FCLayer, BatchBackPropagation)
 	auto output = dataset.get_output();
 	auto result = layer(input);
 	auto errors = result - output;
-	auto derivatives = nyann::DataSet<double>::ones_like(errors);
 	auto initial_weights = layer.get_weights();
 	layer.back_propagation(
-		errors,
-		derivatives
+		errors
 	);
 	ASSERT_TRUE(initial_weights != layer.get_weights());
 }
