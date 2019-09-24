@@ -11,3 +11,8 @@
 #include "nyann/Net.h"
 #include "nyann/utils.h"
 #include "nyann/ActivationFunction.h"
+
+
+// extra
+
+#include "nyann-python/wrappers/DataSetGeneration.h"
