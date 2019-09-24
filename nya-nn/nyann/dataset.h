@@ -62,6 +62,15 @@ namespace nyann {
 					result[i][j] = 1;
 			return result;
 		}
+		static _DT difference(const DataSet<_DT>& left, const DataSet<_DT>& right)
+		{
+			_DT difference = _DT();
+			DataSet<_DT> diff_dataset = abs(left - right);
+			for (int i = 0; i < diff_dataset.size(); i++)
+				for (int j = 0; j < diff_dataset[0].size(); j++)
+					difference += diff_dataset[i][j];
+			return difference;
+		}
 		Size get_size() const
 		{
 			Size s;
