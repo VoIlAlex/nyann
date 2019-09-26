@@ -152,6 +152,9 @@
     <ClInclude Include="nyann\ActivationFunction\ReLU.h" />
     <ClInclude Include="nyann\DataSet.h" />
     <ClInclude Include="nyann\DataSet\TrainDataSet.h" />
+    <ClInclude Include="nyann\drafts.h" />
+    <ClInclude Include="nyann\drafts\DataSet_draft.h" />
+    <ClInclude Include="nyann\Layer\ConvLayer.h" />
     <ClInclude Include="nyann\Layer\FCLayer.h" />
     <ClInclude Include="nyann\Layer.h" />
     <ClInclude Include="nyann\Loss.h" />

@@ -74,5 +74,14 @@
     <ClInclude Include="nyann-python\wrappers\DataSetGeneration.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="nyann\Layer\ConvLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="nyann\drafts\DataSet_draft.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="nyann\drafts.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
