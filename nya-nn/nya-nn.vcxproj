@@ -149,7 +149,9 @@
     <ClInclude Include="nyann.h" />
     <ClInclude Include="nyann\ActivationFunction.h" />
     <ClInclude Include="nyann\ActivationFunction\BinaryActivation.h" />
+    <ClInclude Include="nyann\ActivationFunction\BipolarActivation.h" />
     <ClInclude Include="nyann\ActivationFunction\ReLU.h" />
+    <ClInclude Include="nyann\ActivationFunction\SigmoidActivation.h" />
     <ClInclude Include="nyann\DataSet.h" />
     <ClInclude Include="nyann\DataSet\TrainDataSet.h" />
     <ClInclude Include="nyann\drafts.h" />
