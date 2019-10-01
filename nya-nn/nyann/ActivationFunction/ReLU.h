@@ -34,6 +34,16 @@ namespace nyann {
 		{
 			return (y > 0 ? 1 : m_k);
 		}
+		DataSet<_DT> operator()(const DataSet<_DT>& sums) override
+		{
+			// TODO: implementation
+			return {};
+		}
+		virtual DataSet<_DT> derivative(const DataSet<_DT>& Y) override
+		{
+			// TODO: implementation
+			return {};
+		}
 	};
 
 } // namespace nyann
