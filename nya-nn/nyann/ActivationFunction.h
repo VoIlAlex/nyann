@@ -26,4 +26,5 @@ namespace nyann {
 
 // Subclasses of the ActivationFunction class
 #include "ActivationFunction/BinaryActivation.h"
+#include "ActivationFunction/BipolarActivation.h"
 #include "ActivationFunction/ReLU.h"
