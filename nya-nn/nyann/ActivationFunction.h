@@ -28,3 +28,4 @@ namespace nyann {
 #include "ActivationFunction/BinaryActivation.h"
 #include "ActivationFunction/BipolarActivation.h"
 #include "ActivationFunction/ReLU.h"
+#include "ActivationFunction/SigmoidActivation.h"
