@@ -62,7 +62,7 @@ namespace nyann {
 					result[i][j] = 1;
 			return result;
 		}
-		static _DT difference(const DataSet<_DT>& left, const DataSet<_DT>& right)
+		static _DT abs_difference(const DataSet<_DT>& left, const DataSet<_DT>& right)
 		{
 			_DT difference = _DT();
 			DataSet<_DT> diff_dataset = abs(left - right);
@@ -138,8 +138,8 @@ namespace nyann {
 	}
 
 	// used in evaluation of results
-	template<typename _DT>
-	double difference(const DataSet<_DT>& left, const DataSet<_DT>& right)
+	/*template<typename _DT>
+	double abs_difference(const DataSet<_DT>& left, const DataSet<_DT>& right)
 	{
 		if (left.size() != right.size())
 			throw DifferentSizeError();
@@ -149,7 +149,7 @@ namespace nyann {
 			for (int j = 0; j < left.front().size(); j++)
 				error += left[i][j] - right[i][j];
 		return error;
-	}
+	}*/
 
 
 	template<typename _DT>

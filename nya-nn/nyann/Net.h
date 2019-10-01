@@ -43,10 +43,10 @@ namespace nyann {
 			DataSet<_DT> output = dataset.get_output();
 			while (epochs--)
 			{
-				double error = difference(output, predict(input));
+				double difference = DataSet<double>::abs_difference(output, predict(input));
 
 				std::cout << "[INFO] Epoch " << epochs + 1 << "..." << std::endl;
-				std::cout << "[INFO] Error: " << error << std::endl;
+				std::cout << "[INFO] Error: " << difference << std::endl;
 				for (int i = 0; i < batch_size; i++)
 				{
 					DataSet<_DT> X;
