@@ -47,7 +47,7 @@ namespace nyann {
 
 				std::cout << "[INFO] Epoch " << epochs + 1 << "..." << std::endl;
 				std::cout << "[INFO] Error: " << difference << std::endl;
-				for (int i = 0; i < batch_size; i++)
+				for (int i = 0; i < dataset.size() / batch_size; i++)
 				{
 					DataSet<_DT> X;
 					DataSet<_DT> y;
