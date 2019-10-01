@@ -26,4 +26,6 @@ namespace nyann {
 		using IndexSizeError::IndexSizeError;
 	};
 
+	class NotImplementedError : public ::std::exception {};
+
 } // namespace nyann
