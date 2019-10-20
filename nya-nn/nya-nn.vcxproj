@@ -145,6 +145,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="labs\labs.h" />
     <ClInclude Include="nyann-python\wrappers\DataSetGeneration.h" />
     <ClInclude Include="nyann.h" />
     <ClInclude Include="nyann\ActivationFunction.h" />
@@ -152,6 +153,7 @@
     <ClInclude Include="nyann\ActivationFunction\BipolarActivation.h" />
     <ClInclude Include="nyann\ActivationFunction\ReLU.h" />
     <ClInclude Include="nyann\ActivationFunction\SigmoidActivation.h" />
+    <ClInclude Include="nyann\ActivationFunction\SoftMax.h" />
     <ClInclude Include="nyann\DataSet.h" />
     <ClInclude Include="nyann\DataSet\TrainDataSet.h" />
     <ClInclude Include="nyann\drafts.h" />
@@ -165,6 +167,7 @@
     <ClInclude Include="nyann\Optimizer.h" />
     <ClInclude Include="nyann\Optimizer\SGDOptimizer.h" />
     <ClInclude Include="nyann\utils.h" />
+    <ClInclude Include="nyann\utils\constants.h" />
     <ClInclude Include="nyann\utils\exceptions.h" />
     <ClInclude Include="nyann\utils\io.h" />
     <ClInclude Include="nyann\utils\Size.h" />
