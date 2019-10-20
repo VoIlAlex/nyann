@@ -13,6 +13,7 @@
 #include "nyann/ActivationFunction.h"
 
 
-// extra
+// python integration
 
 #include "nyann-python/wrappers/DataSetGeneration.h"
+#include "nyann-python/wrappers/plot.h"

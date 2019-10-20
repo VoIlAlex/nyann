@@ -8,7 +8,7 @@
 */
 
 #include "nyann.h"
-#include "labs/labs.h"
+#include "examples/labs.h"
 
 int main()
 {

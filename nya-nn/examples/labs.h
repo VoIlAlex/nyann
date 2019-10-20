@@ -23,11 +23,14 @@ public:
 			{{-1, -1}, {0}},
 			{{1, -1}, {1}} };
 
-		net.fit(dataset,
+		auto output_to_plot = net.fit(dataset,
 			-1,		// train until error become 0
 			1,		// batch size
-			0.3		// learning rate
+			0.3,	// learning rate
+			0		// required error
 		);
+
+		nyann::python::plot(output_to_plot);
 
 		nyann::DataSet<double> expected_output = dataset.get_output();
 		nyann::DataSet<double> input = dataset.get_input();
@@ -80,7 +83,9 @@ public:
 		nyann::Layer<double>* l_2 = new nyann::FCLayer<double>(nyann::Size{ 2, 1 });
 		net.add_layer(l_2);
 
-		net.fit(dataset_train, -1, 1, 0.01, 0.2);
+		auto output_to_plot = net.fit(dataset_train, -1, 1, 0.01, 0.2);
+
+		nyann::python::plot({ output_to_plot.begin() + 1, output_to_plot.end() });
 
 		nyann::DataSet<double> input = dataset_test.get_input();
 		nyann::DataSet<double> expected_output = dataset_test.get_output();
