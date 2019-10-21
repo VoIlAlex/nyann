@@ -270,6 +270,50 @@ namespace nyann {
 			m_size = datasets_sizes;
 			m_data = merged_data;
 		}
+		_DT& at_index(const std::vector<int>& idx)
+		{
+			if (idx.size() != m_size.size())
+				throw DifferentSizeError(""); // TODO: exception message 
+
+			NestedDataSet value = operator[](idx[0]);
+			for (auto it = idx.begin() + 1; it != idx.end(); it++)
+				value = value[*it];
+
+			return value.value();
+		}
+
+		const _DT& at_index(const std::vector<int>& idx) const
+		{
+			if (idx.size() != m_size.size())
+				throw DifferentSizeError();
+
+			NestedDataSet value = operator[](idx[0]);
+			for (auto it = idx.begin() + 1; it != idx.end(); it++)
+				value = value[*it];
+
+			return value.value();
+		}
+
+		// Operators
+		NestedDataSet operator[](int idx)
+		{
+			return NestedDataSet(this, std::vector<Slice>{ idx });
+		}
+
+		NestedDataSet operator[](const Slice& idx)
+		{
+			return NestedDataSet(this, { idx });
+		}
+		NestedDataSet operator[](int idx) const
+		{
+			return NestedDataSet(this, std::vector<Slice>{ idx });
+		}
+
+		NestedDataSet operator[](const Slice& idx) const
+		{
+			return NestedDataSet(this, { idx });
+		}
+
 		class NestedDataSet
 		{
 			DataSet_draft<_DT>* m_parent;
