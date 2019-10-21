@@ -37,41 +37,79 @@ namespace nyann {
 			m_optimizer = optimizer;
 		}
 
-		void fit(const TrainDataSet<_DT>& dataset, int epochs, int batch_size = 1, double lr = 0.001)
+		std::vector<_DT> fit(const TrainDataSet<_DT>& dataset, int epochs, int batch_size = 1, double lr = 0.001, double required_error = 0)
 		{
 			DataSet<_DT> input = dataset.get_input();
 			DataSet<_DT> output = dataset.get_output();
-			while (epochs--)
-			{
-				double difference = DataSet<double>::abs_difference(output, predict(input));
-
-				std::cout << "[INFO] Epoch " << epochs + 1 << "..." << std::endl;
-				std::cout << "[INFO] Error: " << difference << std::endl;
-				for (int i = 0; i < dataset.size() / batch_size; i++)
+			std::vector<_DT> error_dynamic;
+			// TODO: here is a lot of duplicate code. Optimize it.
+			if (epochs != -1)
+				for (int ep = 0; ep < epochs; ep++)
 				{
-					DataSet<_DT> X;
-					DataSet<_DT> y;
-					DataSet<_DT> y_pred;
-					DataSet<_DT> errors;
-
-					for (int j = i * batch_size; j < i * batch_size + batch_size; j++)
+					_DT difference = DataSet<_DT>::abs_difference(output, predict(input));
+					error_dynamic.push_back(difference);
+					std::cout << "[INFO] Epoch " << ep + 1 << "..." << std::endl;
+					std::cout << "[INFO] Error: " << difference << std::endl;
+					for (int i = 0; i < dataset.size() / batch_size; i++)
 					{
-						X.push_back(dataset[j][0]);
-						y.push_back(dataset[j][1]);
-					}
+						DataSet<_DT> X;
+						DataSet<_DT> y;
+						DataSet<_DT> y_pred;
+						DataSet<_DT> errors;
 
-					y_pred = predict(X);
-					errors = y_pred - y;
+						for (int j = i * batch_size; j < i * batch_size + batch_size; j++)
+						{
+							X.push_back(dataset[j][0]);
+							y.push_back(dataset[j][1]);
+						}
 
-					for (auto it = m_layers.rbegin(); it != m_layers.rend(); it++)
-					{
-						errors = (*it)->back_propagation(
-							errors,
-							lr
-						);
+						y_pred = predict(X);
+						errors = y_pred - y;
+
+						for (auto it = m_layers.rbegin(); it != m_layers.rend(); it++)
+						{
+							errors = (*it)->back_propagation(
+								errors,
+								lr);
+						}
 					}
 				}
+			else // number of epochs here is required error
+			{
+				_DT difference;
+				do
+				{
+					epochs++;
+					difference = DataSet<_DT>::abs_difference(output, predict(input));
+					error_dynamic.push_back(difference);
+					std::cout << "[INFO] Epoch " << epochs + 1 << "..." << std::endl;
+					std::cout << "[INFO] Error: " << difference << std::endl;
+					for (int i = 0; i < dataset.size() / batch_size; i++)
+					{
+						DataSet<_DT> X;
+						DataSet<_DT> y;
+						DataSet<_DT> y_pred;
+						DataSet<_DT> errors;
+
+						for (int j = i * batch_size; j < i * batch_size + batch_size; j++)
+						{
+							X.push_back(dataset[j][0]);
+							y.push_back(dataset[j][1]);
+						}
+
+						y_pred = predict(X);
+						errors = y_pred - y;
+
+						for (auto it = m_layers.rbegin(); it != m_layers.rend(); it++)
+						{
+							errors = (*it)->back_propagation(
+								errors,
+								lr);
+						}
+					}
+				} while (difference > required_error); // number of epochs here is required error
 			}
+			return error_dynamic;
 		}
 
 		nyann::DataSet<_DT> predict(const DataSet<_DT>& input)
