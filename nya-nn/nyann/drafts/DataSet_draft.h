@@ -1,10 +1,26 @@
 #pragma once
 
 #include "..//utils/Size.h"
+#include "..//utils/exceptions.h"
 
 namespace nyann {
+	/////////////////////
+	// Classes summary //
+	/////////////////////
+	class Slice;
 
-	class Slice : std::vector<int>
+	template<typename _DT>
+	class DataSet_draft;
+
+	//////////////////////////
+	// Function definitions //
+	//////////////////////////
+
+
+
+	/////////////
+	// Classes //
+	/////////////
 	class Index : ::std::vector<int>
 	{
 		std::vector<int> m_initial_state;
