@@ -277,6 +277,13 @@ namespace nyann {
 			return m_size;
 		}
 
+		// TODO(feature): change shape of the 
+		// data set when changing size()
+		void resize(const Size& new_size)
+		{
+			throw nyann::NotImplementedError("");
+		}
+
 		_DT& at_index(const std::vector<int>& idx)
 		{
 			if (idx.size() != m_size.size())
@@ -324,124 +331,663 @@ namespace nyann {
 		class NestedDataSet
 		{
 			DataSet_draft<_DT>* m_parent;
-			std::vector<Slice> m_idxs;
+			const DataSet_draft<_DT>* m_parent_const;
+			std::vector<Slice> m_slices;
+			bool m_is_const;
 		public:
 			NestedDataSet(DataSet_draft<_DT>* parent, const std::vector<Slice>& idxs = {})
-				: m_parent(parent),
-				m_idxs(idxs)
+				:
+				m_parent(parent),
+				m_parent_const(nullptr),
+				m_slices(idxs),
+				m_is_const(false)
+			{}
+
+			NestedDataSet(const DataSet_draft<_DT>* parent, const std::vector<Slice>& idxs = {})
+				:
+				m_parent(nullptr),
+				m_parent_const(parent),
+				m_slices(idxs),
+				m_is_const(true)
 			{}
 
 			// TODO: reconsider the condition of 
 			// getting the result. It might appear 
-			// that somewhere in m_idxs is actual Slice
+			// that somewhere in m_slices is actual Slice
 			// so you cannot convert a real slice into a number, can you?
-			operator _DT()
+			//operator _DT()
+			//{
+			//	// bad size of the coordinate
+			//	if (!m_is_const)
+			//	{
+			//		if (m_slices.size() != m_parent->size().size())
+			//		throw ConversionError();
+			//	}
+			//	else if (m_is_const)
+			//	{
+			//		if (m_slices.size() != m_parent_const->size().size())
+			//		throw ConversionError();
+			//	}
+
+			//	int flat_idx = get_flat_index();
+
+			//	return m_parent->m_data[flat_idx];
+			//}
+
+			_DT& value()
 			{
 				// bad size of the coordinate
-				if (m_idxs.size() != m_parent->m_size.size())
-					throw ConversionError();
+				if (!m_is_const)
+				{
+					if (m_slices.size() != m_parent->size().size())
+						throw ConversionError();
+				}
+				else if (m_is_const)
+				{
+					if (m_slices.size() != m_parent_const->size().size())
+						throw ConversionError();
+				}
 
-				// flatten the index
-				int flat_idx = 0;
-				for (int i = 0, deg = m_idxs.size() - 1; i < m_idxs.size(); i++, deg--)
-					flat_idx += pow(10, deg) * m_idxs[i];
+				int flat_idx = get_flat_index();
 
 				return m_parent->m_data[flat_idx];
 			}
 
-			operator std::vector<_DT>()
+			const _DT& value() const
 			{
 				// bad size of the coordinate
-				if (m_idxs.size() != m_parent->m_size.size())
-					throw ConversionError();
+				if (!m_is_const)
+				{
+					if (m_slices.size() != m_parent->size().size())
+						throw ConversionError();
+				}
+				else if (m_is_const)
+				{
+					if (m_slices.size() != m_parent_const->size().size())
+						throw ConversionError();
+				}
 
+				int flat_idx = get_flat_index();
 
+				return m_parent->m_data[flat_idx];
 			}
 
-			NestedDataSet operator[](const Slice& i)
+			const _DT& value_const() const
+			{
+				// bad size of the coordinate
+				if (!m_is_const)
+				{
+					if (m_slices.size() != m_parent->size().size())
+						throw ConversionError();
+				}
+				else if (m_is_const)
+				{
+					if (m_slices.size() != m_parent_const->size().size())
+						throw ConversionError();
+				}
+
+				int flat_idx = get_flat_index();
+
+				return m_parent_const->m_data[flat_idx];
+			}
+
+			operator DataSet_draft<_DT>()
+			{
+				// Complete indexes
+				for (int i = m_slices.size(); i < m_parent->size().size(); i++)
+					m_slices.push_back({ 0, m_parent->size()[i] });
+
+				// Calculate the size 
+				// of resultant dataset
+				Size size;
+				for (auto slice : m_slices)
+				{
+					if (!slice.is_index())
+						size.push_back(slice.width());
+				}
+
+				DataSet_draft<_DT> dataset(size);
+
+				std::vector<int> current_idx;
+				std::vector<int> current_result_idx;
+				/*for (int i = 0; i < m_slices.size(); i++)
+				{
+					if (m_slices[i].is_index())
+					{
+						current_idx.push_back(m_slices[i]);
+						if (current_idx.size() == m_parent->m_size())
+							dataset.at_index(current_result_idx) = m_parent->at_index(current_idx);
+					}
+					else
+					{
+						for (int j = m_slices[i][0], k = 0; j < m_slices[i][1]; j += m_slices[i][2], k++)
+						{
+							current_result_idx
+						}
+					}
+
+				}*/
+
+				// TODO: create the dataset
+
+				return dataset;
+			}
+
+			NestedDataSet operator[](const Slice& i) const
 			{
 				// if index size already 
 				// reached its high border
-				if (m_idxs.size() == m_parent->m_size.size())
-					throw IndexOverflowError();
+				if (m_slices.size() == m_parent->m_size.size())
+					throw IndexOverflowError("Bad size of indexing sequence");
 
 				// create the complex
 				// index
-				std::vector<Slice> next_idxs = m_idxs;
+				std::vector<Slice> next_idxs = m_slices;
 				next_idxs.push_back(i);
 
 				return NestedDataSet(m_parent, next_idxs);
 			}
 
-			NestedDataSet operator[](int i)
+			NestedDataSet operator[](int i) const
 			{
 				// if index size already 
 				// reached its high border
-				if (m_idxs.size() == m_parent->m_size.size())
-					throw IndexOverflowError();
+
+				if (m_is_const)
+				{
+					if(m_slices.size() == m_parent_const->m_size.size())
+					throw IndexOverflowError("Bad size of indexing sequence");
+				}
+				else
+				{
+					if (m_slices.size() == m_parent->m_size.size())
+						throw IndexOverflowError("Bad size of indexing sequence");
+				}
+
 
 				// create the complex
 				// index
-				std::vector<Slice> next_idxs = m_idxs;
+				std::vector<Slice> next_idxs = m_slices;
 				next_idxs.push_back(i);
 
+				if (m_is_const)
+					return NestedDataSet(m_parent_const, next_idxs);
 				return NestedDataSet(m_parent, next_idxs);
 			}
 
 
+			class iterator
+			{
+				/*NestedDataSet* m_dataset;
+				int m_position;
+			public:*/
+				//iterator(NestedDataSet* dataset, int position = 0)
+				//	: m_dataset(dataset), m_position(position)
+				//{}
+
+				//iterator(const iterator& other)
+				//	: m_dataset(other.m_dataset), m_position(other.m_position)
+				//{}
+
+				//NestedDataSet& operator*()
+				//{
+				//	return m_dataset->operator[](m_position);
+				//}
+
+				//const NestedDataSet& operator*() const
+				//{
+				//	return m_dataset->operator[](m_position);
+				//}
+				//NestedDataSet* operator->()
+				//{
+				//	return *m_dataset->operator[](m_position);
+				//}
+
+				//iterator& operator++()
+				//{
+				//	m_position++;
+				//	return *this;
+				//}
+
+				//iterator operator++(int)
+				//{
+				//	iterator temp(*this);
+				//	operator++();
+				//	return temp;
+				//}
+
+				//// Logic operations
+				//bool operator<(const iterator& other) const
+				//{
+				//	return m_position < other.m_position;
+				//}
+				//bool operator>(const iterator& other) const
+				//{
+				//	return m_position > other.m_position;
+				//}
+				//bool operator==(const iterator& other) const
+				//{
+				//	return (m_dataset == other.m_dataset && m_position == other.m_position);
+				//}
+				//bool operator!=(const iterator& other) const
+				//{
+				//	return !(operator==(other));
+				//}
+				//bool operator<=(const iterator& other) const
+				//{
+				//	return (operator<(other) || operator==(other));
+				//}
+				//bool operator>=(const iterator& other) const
+				//{
+				//	return (operator>(other) || operator==(other));
+				//}
+				NestedDataSet* m_dataset;
+				const NestedDataSet* m_dataset_const;
+				int m_position;
+				bool m_is_dataset_const;
+
+				// It's for constructions in methods
+				iterator() :
+					m_dataset(nullptr),
+					m_dataset_const(nullptr),
+					m_position(0),
+					m_is_dataset_const(false)
+				{}
+
+			public:
+
+				
+				iterator(NestedDataSet* dataset, int position = 0)
+					:
+					m_dataset(dataset),
+					m_dataset_const(nullptr),
+					m_position(position),
+					m_is_dataset_const(false)
+				{}
+
+				iterator(const NestedDataSet* dataset, int position = 0)
+					:
+					m_dataset(nullptr),
+					m_dataset_const(dataset),
+					m_position(position),
+					m_is_dataset_const(true)
+				{}
+
+				iterator(const iterator& other)
+					:
+					m_dataset(other.m_dataset),
+					m_dataset_const(other.m_dataset_const),
+					m_position(other.m_position),
+					m_is_dataset_const(other.m_is_dataset_const)
+				{}
+
+				NestedDataSet operator*()
+				{
+					if (m_is_dataset_const)
+						return m_dataset_const->operator[](m_position);
+					return m_dataset->operator[](m_position);
+				}
+
+				/*const NestedDataSet& operator*() const
+				{
+					if (m_is_dataset_const)
+						return m_dataset_const->operator[](m_position);
+					return m_dataset->operator[](m_position);
+				}*/
+
+				NestedDataSet* operator->()
+				{
+					return *m_dataset->operator[](m_position);
+				}
+
+				NestedDataSet* operator->() const
+				{
+					if (m_is_dataset_const)
+						return m_dataset_const->operator[](m_position);
+					return m_dataset->operator[](m_position);
+				}
+
+				//iterator& operator++()
+				//{
+				//	m_position++;
+				//	return *this;
+				//}
+
+				//iterator operator++(int)
+				//{
+				//	iterator temp(*this);
+				//	operator++();
+				//	return temp;
+				//}
+
+				// Logic operations
+				bool operator<(const iterator& other) const
+				{
+					return m_position < other.m_position;
+				}
+				bool operator>(const iterator& other) const
+				{
+					return m_position > other.m_position;
+				}
+				bool operator==(const iterator& other) const
+				{
+					if (m_is_dataset_const)
+					{
+						if (other.m_is_dataset_const)
+						{
+							return (m_dataset_const == other.m_dataset_const && m_position == other.m_position);
+						}
+						else
+						{
+							return (m_dataset_const == other.m_dataset && m_position == other.m_position);
+						}
+					}
+					else
+					{
+						if (other.m_is_dataset_const)
+						{
+							return (m_dataset == other.m_dataset_const && m_position == other.m_position);
+						}
+						else
+						{
+							return (m_dataset == other.m_dataset && m_position == other.m_position);
+						}
+					}
+
+				}
+				bool operator!=(const iterator& other) const
+				{
+					return !(operator==(other));
+				}
+				bool operator<=(const iterator& other) const
+				{
+					return (operator<(other) || operator==(other));
+				}
+				bool operator>=(const iterator& other) const
+				{
+					return (operator>(other) || operator==(other));
+				}
+
+				// Arithmetic operations
+				iterator operator-(int value) const
+				{
+					if (m_position - value < 0)
+						throw std::out_of_range("Iterator is out of range");
+					iterator iter(this, m_position - value);
+					return iter;
+				}
+				iterator operator+(int value) const
+				{
+					iterator iter(this, m_position + value);
+					return iter;
+				}
+				iterator& operator++()
+				{
+					m_position++;
+					return *this;
+				}
+				iterator operator++(int)
+				{
+					iterator temp (*this);
+					m_position++;
+					return temp;
+				}
+				iterator& operator--()
+				{
+					if(m_position - 1 < 0)
+						throw std::out_of_range("Iterator is out of range");
+					m_position--;
+					return *this;
+				}
+				iterator operator--(int)
+				{
+					if (m_position - 1 < 0)
+						throw std::out_of_range("Iterator is out of range");
+					iterator temp(*this);
+					m_position--;
+					return temp;
+				}
+
+			};
+
+			// Iteration tools
+			iterator begin() const
+			{
+				return iterator(this);
+			}
+
+			iterator end() const
+			{
+				if (m_slices.empty())
+					return iterator(this);
+				if (m_is_const)
+				{
+					return iterator(this, m_parent_const->size()[m_slices.size()]);
+				}
+				else
+				{
+					return iterator(this, m_parent->size()[m_slices.size()]);
+				}
+			}
+
+		private:
+			int get_flat_index() const
+			{
+				int flat_idx = 0;
+				for (int i = m_slices.size() - 1, offset_size = 1; i >= 0; i--)
+				{
+					flat_idx += offset_size * int(m_slices[i]);
+					if (m_is_const)
+						offset_size *= m_parent_const->m_size[i];
+					else
+						offset_size *= m_parent->m_size[i];
+				}
+				return flat_idx;
+			}
 		};
 
-		DataSet_draft() {}
-
-		DataSet_draft(const Size& size)
-			: m_size(size)
+		template<typename _DT>
+		bool operator==(const DataSet_draft<_DT>& left) const
 		{
-			int flat_size = 1;
-			for (int i = 0; i < size.size(); i++)
-				flat_size *= size[i];
-			m_data.resize(flat_size);
+			return m_data == left.m_data && m_size == left.m_size;
 		}
 
-		DataSet_draft(const Size& size, const DataSet_draft<_DT>& dataset)
+		class iterator
 		{
-			// TODO: size correctess checking
-			m_data = dataset.m_data;
-			m_size = size;
+			DataSet_draft<_DT>* m_dataset;
+			const DataSet_draft<_DT>* m_dataset_const;
+			int m_position;
+			bool m_is_dataset_const;
+		public:
+			iterator(DataSet_draft<_DT>* dataset, int position = 0)
+				: 
+				m_dataset(dataset), 
+				m_dataset_const(nullptr),
+				m_position(position),
+				m_is_dataset_const(false)
+			{}
+
+			iterator(const DataSet_draft<_DT>* dataset, int position = 0)
+				:
+				m_dataset(nullptr),
+				m_dataset_const(dataset),
+				m_position(position),
+				m_is_dataset_const(true)
+			{}
+
+			iterator(const iterator& other)
+				:
+				m_dataset(other.m_dataset),
+				m_dataset_const(other.m_dataset_const),
+				m_position(other.m_position),
+				m_is_dataset_const(other.m_is_dataset_const)
+			{}
+
+			iterator(const iterator* other)
+				:
+				m_dataset(other->m_dataset),
+				m_dataset_const(other->m_dataset_const),
+				m_position(other->m_position),
+				m_is_dataset_const(other->m_is_dataset_const)
+			{
+
+			}
+
+			NestedDataSet operator*() const
+			{
+				if (m_is_dataset_const)
+					return m_dataset_const->operator[](m_position);
+				return m_dataset->operator[](m_position);
+			}
+
+			NestedDataSet operator*()
+			{
+				if (m_is_dataset_const)
+					return m_dataset_const->operator[](m_position);
+				return m_dataset->operator[](m_position);
+			}
+
+			/*const NestedDataSet operator*() const
+			{
+				if (m_is_dataset_const)
+					return m_dataset_const->operator[](m_position);
+				return m_dataset->operator[](m_position);
+			}*/
+
+			NestedDataSet* operator->()
+			{
+				return *m_dataset->operator[](m_position);
+			}
+
+			NestedDataSet* operator->() const
+			{
+				if (m_is_dataset_const)
+					return m_dataset_const->operator[](m_position);
+				return m_dataset->operator[](m_position);
+			}
+
+			// Logic operations
+			bool operator<(const iterator& other) const
+			{
+				return m_position < other.m_position;
+			}
+			bool operator>(const iterator& other) const
+			{
+				return m_position > other.m_position;
+			}
+			bool operator==(const iterator& other) const
+			{
+				if (m_is_dataset_const)
+				{
+					if (other.m_is_dataset_const)
+					{
+						return (m_dataset_const == other.m_dataset_const && m_position == other.m_position);
+					}
+					else
+					{
+						return (m_dataset_const == other.m_dataset && m_position == other.m_position);
+					}
+				}
+				else
+				{
+					if (other.m_is_dataset_const)
+					{
+						return (m_dataset == other.m_dataset_const && m_position == other.m_position);
+					}
+					else
+					{
+						return (m_dataset == other.m_dataset && m_position == other.m_position);
+					}
+				}
+				
+			}
+			bool operator!=(const iterator& other) const
+			{
+				return !(operator==(other));
+			}
+			bool operator<=(const iterator& other) const
+			{
+				return (operator<(other) || operator==(other));
+			}
+			bool operator>=(const iterator& other) const
+			{
+				return (operator>(other) || operator==(other));
+			}
+
+
+			// Arithmetic operations
+			iterator operator-(int value) const
+			{
+				if (m_position - value < 0)
+					throw std::out_of_range("Iterator is out of range");
+				iterator iter(*this);
+				iter.m_position = m_position - value;
+				return iter;
+			}
+			iterator operator+(int value) const
+			{
+				iterator iter(*this);
+				iter.m_position = m_position - value;
+				return iter;
+			}
+			iterator& operator++()
+			{
+				m_position++;
+				return *this;
+			}
+			iterator operator++(int)
+			{
+				iterator temp(*this);
+				m_position++;
+				return temp;
+			}
+			iterator& operator--()
+			{
+				if (m_position - 1 < 0)
+					throw std::out_of_range("Iterator is out of range");
+				m_position--;
+				return *this;
+			}
+			iterator operator--(int)
+			{
+				if (m_position - 1 < 0)
+					throw std::out_of_range("Iterator is out of range");
+				iterator temp(*this);
+				m_position--;
+				return temp;
+			}
+		};
+
+		// iteration tools
+
+		iterator begin()
+		{
+			return iterator(this);
 		}
 
-		///////////////////
-		// constructors  //
-		// for different //
-		// dimensions    //
-		///////////////////
-
-		// 1D dataset
-		DataSet_draft(std::initializer_list<_DT> il)
-			: m_data(il)
-		{}
-
-		// ND dataset
-		DataSet_draft(std::initializer_list<DataSet_draft<_DT>> il)
+		iterator end()
 		{
-			std::vector<_DT> merged_data;
-			for (auto dataset : il)
-				merged_data.insert(merged_data.end(), dataset.m_data.begin(), dataset.m_data.end());
-			int datasets_count = il.end() - il.begin();
-			Size datasets_sizes = il.begin()->m_size;
-			datasets_sizes.insert(datasets_sizes.begin(), datasets_count);
-			m_size.insert(m_size.begin(), datasets_sizes.begin(), datasets_sizes.end());
+			if (!size().empty())
+				return iterator(this, size().front());
+			return iterator(this);
 		}
 
-		NestedDataSet operator[](int i)
+		const iterator begin() const
 		{
-			return NestedDataSet(this, std::vector<Slice>{ i });
+			return iterator(this);
 		}
 
-		NestedDataSet operator[](const Slice& i)
+		const iterator end() const
 		{
-			return NestedDataSet(this, { i });
+			if (!size().empty())
+				return iterator(this, size().front());
+			return iterator(this);
 		}
+
+
 
 	};
+
+
 
 } // namespace nyann
