@@ -18,6 +18,9 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="nyann\drafts\io_draft.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="nyann.h">
@@ -99,6 +102,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="nyann-python\wrappers\plot.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="nyann\drafts\io_draft.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
