@@ -340,3 +340,8 @@ ASALocalRun/
 healthchecksdb
 
 packages/
+
+.vscode/
+data/
+tmp*
+temp*
