@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="test_DataSet.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="test_utils.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="test_Net.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="test_goal.cpp">
+      <Filter>usage</Filter>
+    </ClCompile>
+    <ClCompile Include="test_drafts.cpp">
+      <Filter>drafts</Filter>
+    </ClCompile>
+    <ClCompile Include="test_inbox.cpp" />
+    <ClCompile Include="test_usage.cpp">
+      <Filter>usage</Filter>
+    </ClCompile>
+    <ClCompile Include="test_FCLayer.cpp">
+      <Filter>framework\Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="test_BinaryActivation.cpp">
+      <Filter>framework\ActivationFunction</Filter>
+    </ClCompile>
+    <ClCompile Include="template_test.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="framework">
+      <UniqueIdentifier>{2854a7d9-42da-4d2c-b863-7a0275371958}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="drafts">
+      <UniqueIdentifier>{b24fae67-e75e-41a4-b08a-69b92a711b18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="usage">
+      <UniqueIdentifier>{ba1ebc07-f856-47c1-87cd-1bddf8cfa168}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="framework\Layer">
+      <UniqueIdentifier>{22827d19-3625-4528-9ecd-9bf08d651442}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="framework\ActivationFunction">
+      <UniqueIdentifier>{81924430-1007-4c3c-bc88-e05266207eb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="logs">
+      <UniqueIdentifier>{eb980a94-5c16-446e-8771-4982895961be}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="logs\tests_main_log.log">
+      <Filter>logs</Filter>
+    </Text>
+  </ItemGroup>
+</Project>
