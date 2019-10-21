@@ -270,6 +270,13 @@ namespace nyann {
 			m_size = datasets_sizes;
 			m_data = merged_data;
 		}
+
+		// Methods
+		Size size() const
+		{
+			return m_size;
+		}
+
 		_DT& at_index(const std::vector<int>& idx)
 		{
 			if (idx.size() != m_size.size())
