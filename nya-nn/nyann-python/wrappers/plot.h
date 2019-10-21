@@ -16,7 +16,9 @@
 
 namespace nyann {
 	namespace python {
-		void plot(const std::vector<double>& inputs, const std::vector<double>& outputs)
+
+		template<typename _DT=double>
+		void plot(const std::vector<_DT>& inputs, const std::vector<_DT>& outputs)
 		{
 			// Write to the exchange file
 			size_t size = std::min(inputs.size(), outputs.size());
@@ -51,7 +53,8 @@ namespace nyann {
 			std::filesystem::remove(std::filesystem::current_path().append(".tmp_plot").string());
 		}
 
-		void plot(const std::vector<double>& outputs)
+		template<typename _DT=double>
+		void plot(const std::vector<_DT>& outputs)
 		{
 			// Write to the exchange file
 			size_t size = outputs.size();
