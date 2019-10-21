@@ -5,6 +5,140 @@
 namespace nyann {
 
 	class Slice : std::vector<int>
+	class Index : ::std::vector<int>
+	{
+		std::vector<int> m_initial_state;
+	public:
+		//using std::vector<int>::vector;
+		Index() {}
+
+		Index(int count, int value)
+			: 
+			::std::vector<int>::vector(count, value)
+		{}
+
+		Index(std::initializer_list<int> il)
+			:
+			::std::vector<int>::vector(il),
+			m_initial_state(il)
+		{
+		}
+
+		Index(const Index& index)
+			:
+			::std::vector<int>::vector(index),
+			m_initial_state(index.m_initial_state)
+		{}
+
+		Index(Index&& index) noexcept
+			:
+			::std::vector<int>::vector(std::move(index)),
+			m_initial_state(std::move(index))
+		{}
+
+		bool operator==(const Index& other) const 
+		{
+			if (size() != other.size())
+				return false;
+			for (int i = 0; i < size(); i++)
+				if (at(i) != other[i])
+					return false;
+			return true;
+		}
+		bool operator!=(const Index& other) const 
+		{
+			return !operator==(other);
+		}
+		bool operator<(const Index& other) const 
+		{
+			if (size() != other.size())
+			{
+				// If the other index
+				// has the size of lower
+				// dimension then it's 
+				// considered as highest
+				return size() > other.size();
+			}
+
+			// find first difference
+			for (int i = 0; i < size(); i++)
+			{
+				if (at(i) != other[i])
+					return at(i) < other[i];
+			}
+		}
+		bool operator>(const Index& other) const 
+		{
+			return !(operator>(other));
+		}
+
+		bool operator<= (const Index& other) const 
+		{
+			return operator<(other) || operator==(other);
+		}
+
+		bool operator>= (const Index& other) const 
+		{
+			return operator>(other) || operator==(other);
+		}
+
+		Index& increment(const Index& max = Index())
+		{
+			if (max == Index())
+			{
+				back()++;
+				return *this;
+			}
+			for (int decrease_idx = size() - 1;; decrease_idx--)
+			{
+				if (decrease_idx == -1)
+					throw std::out_of_range("Index has reached its max value");
+
+				if (at(decrease_idx) < max.at(decrease_idx))
+				{
+					at(decrease_idx)++;
+					break;
+				}
+			}
+			return *this;
+		}
+
+		Index& decrement(const Index& min = Index())
+		{
+			int decrease_idx = size() - 1;
+			for (;; decrease_idx--)
+			{
+				
+				if (decrease_idx == -1)
+					throw std::out_of_range("Index has reached its min value");
+
+				if ((min.empty() && at(decrease_idx) != 0) ||
+					(!min.empty() && at(decrease_idx) > min[decrease_idx]))
+				{
+					at(decrease_idx)--;
+					break;
+				}
+				
+			}
+
+			if (decrease_idx < size() - 1)
+			{
+				for (int i = decrease_idx + 1; i < size(); i++)
+					at(i) = m_initial_state.at(i);
+			}
+
+			return *this;
+		}
+
+		// It's used for while loops
+		operator bool() const
+		{
+			for (int i = 0; i < size(); i++)
+				if (at(i) != 0)
+					return true;
+			return false;
+		}
+	};
 	{
 	public:
 		// Constructors
