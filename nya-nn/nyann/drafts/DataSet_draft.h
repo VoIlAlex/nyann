@@ -155,22 +155,46 @@ namespace nyann {
 			return false;
 		}
 	};
+
+
+	class Slice : public std::vector<int>
 	{
+		// whether it's an index
+		// not an slice
+		bool m_is_index;
 	public:
 		// Constructors
 		Slice(int start, int end, int step = 0)
-			: std::vector<int>{ start, end, step }
+			: std::vector<int>{ start, end, step }, m_is_index(false)
 		{}
 		Slice(int idx)
-			: std::vector<int>{ idx, idx + 1, 1 }
+			: std::vector<int>{ idx, idx + 1, 1 }, m_is_index(true)
 		{}
 
-		// operators
-		int& operator[](int i)
+		int width() const
 		{
-			return this->operator[](i);
+			return (this->at(1) - this->at(0)) / this->at(2);
 		}
-		operator int()
+
+		int is_index() const
+		{
+			return m_is_index;
+		}
+
+		// operators
+		using std::vector<int>::operator[];
+
+		/*int& operator[](int i)
+		{
+			return std::vector<int>::operator[](i);
+		}
+
+		const int& operator[](int i) const
+		{
+			return std::vector<int>::operator[](i);
+		}*/
+
+		operator int() const
 		{
 			return this->operator[](0);
 		}
