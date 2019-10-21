@@ -12,6 +12,9 @@ namespace nyann {
 	{
 	public:
 		using std::vector<_DT>::vector;
+		DataRow(const std::vector<_DT>& obj)
+			: std::vector<_DT>(obj)
+		{}
 	};
 
 
@@ -118,7 +121,7 @@ namespace nyann {
 	DataRow<_DT> operator-(const DataRow<_DT>& left, const DataRow<_DT>& right)
 	{
 		if (left.size() != right.size())
-			throw DifferentSizeError();
+			throw DifferentSizeError(""); // TODO: exception message
 
 		DataRow<_DT> result(left.size());
 		for (int i = 0; i < result.size(); i++)
@@ -156,7 +159,7 @@ namespace nyann {
 	DataSet<_DT> operator-(const DataSet<_DT>& left, const DataSet<_DT>& right)
 	{
 		if (left.size() != right.size())
-			throw DifferentSizeError();
+			throw DifferentSizeError(""); // TODO: exception message
 
 		DataSet<_DT> result = DataSet<_DT>::zeros_like(left);
 
