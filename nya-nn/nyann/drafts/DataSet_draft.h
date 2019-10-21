@@ -212,6 +212,64 @@ namespace nyann {
 		std::vector<_DT> m_data;
 		Size m_size;
 	public:
+		class NestedDataSet;
+
+		DataSet_draft() {}
+
+		DataSet_draft(const Size& size)
+			: m_size(size)
+		{
+			int flat_size = 1;
+			for (int i = 0; i < size.size(); i++)
+				flat_size *= size[i];
+			m_data.resize(flat_size);
+		}
+
+		DataSet_draft(const Size& size, const DataSet_draft<_DT>& dataset)
+		{
+			// TODO: size correctess checking
+			m_data = dataset.m_data;
+			m_size = size;
+		}
+
+		DataSet_draft(const DataSet_draft<_DT>& dataset)
+		{
+			m_data = dataset.m_data;
+			m_size = dataset.m_size;
+		}
+
+		DataSet_draft(DataSet_draft<_DT>&& dataset)
+		{
+			m_data = std::move(dataset.m_data);
+			m_size = std::move(dataset.m_size);
+		}
+
+
+		///////////////////
+		// constructors  //
+		// for different //
+		// dimensions    //
+		///////////////////
+
+		// 1D dataset
+		DataSet_draft(std::initializer_list<_DT> il)
+			: m_data(il)
+		{
+			m_size.push_back(il.size());
+		}
+
+		// ND dataset
+		DataSet_draft(std::initializer_list<DataSet_draft<_DT>> il)
+		{
+			std::vector<_DT> merged_data;
+			for (auto dataset : il)
+				merged_data.insert(merged_data.end(), dataset.m_data.begin(), dataset.m_data.end());
+			int datasets_count = il.end() - il.begin();
+			Size datasets_sizes = il.begin()->m_size;
+			datasets_sizes.insert(datasets_sizes.begin(), datasets_count);
+			m_size = datasets_sizes;
+			m_data = merged_data;
+		}
 		class NestedDataSet
 		{
 			DataSet_draft<_DT>* m_parent;
