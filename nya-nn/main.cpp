@@ -9,6 +9,7 @@
 
 #include "nyann.h"
 #include "examples/labs.h"
+#include "nyann/drafts.h"
 
 int main()
 {
@@ -37,6 +38,20 @@ int main()
 	std::cout << "Error: " << error << std::endl;
 	std::cin.get();*/
 
-	Lab1();
-	Lab2();
+	//Lab1();
+	//Lab2();
+	//Lab3();
+
+	nyann::DataSet_draft<double> dataset {
+		{
+			{1, 2, 3},
+			{3, 2, 1}
+		},
+		{
+			{1.0, 2.0},
+			{3.0, 4.0}
+		}
+	};
+
+	std::cout << dataset;
 }
