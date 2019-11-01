@@ -72,19 +72,21 @@ public:
 			[](double x) {
 				return 0.3 * cos(0.1 * x) + 0.06 * sin(0.1 * x);
 			},
-			100, 6);
+			100, 10);
 
 		dataset.shuffle();
 		auto [dataset_train, dataset_test] = train_test_split(dataset);
 
 		nyann::Net net;
 
-		nyann::Layer<double>* l_1 = new nyann::FCLayer<double>(nyann::Size{ 5, 2 });
+		nyann::Layer<double>* l_1 = new nyann::FCLayer<double>(nyann::Size{ 10, 3 });
+		l_1->add_activation_function(new nyann::ReLU<double>());
 		net.add_layer(l_1);
-		nyann::Layer<double>* l_2 = new nyann::FCLayer<double>(nyann::Size{ 2, 1 });
+		nyann::Layer<double>* l_2 = new nyann::FCLayer<double>(nyann::Size{ 3, 1 });
+		l_2->add_activation_function(new nyann::ReLU<double>());
 		net.add_layer(l_2);
 
-		auto output_to_plot = net.fit(dataset_train, -1, 1, 0.01, 0.2);
+		auto output_to_plot = net.fit(dataset_train, -1, 1, 0.008, 0.2);
 
 		nyann::python::plot({ output_to_plot.begin() + 1, output_to_plot.end() });
 
