@@ -786,7 +786,6 @@ namespace nyann {
 			}
 		};
 
-		template<typename _DT>
 		bool operator==(const DataSet_draft<_DT>& left) const
 		{
 			return m_data == left.m_data && m_size == left.m_size;
