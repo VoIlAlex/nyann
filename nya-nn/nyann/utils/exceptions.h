@@ -4,7 +4,11 @@
 
 namespace nyann {
 
-	class DifferentSizeError : public ::std::exception {};
+	class DifferentSizeError : public ::std::out_of_range 
+	{
+		public:
+		using ::std::out_of_range::out_of_range;
+	};
 
 	class ConversionError : public ::std::exception {};
 
