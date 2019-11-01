@@ -41,7 +41,7 @@ public:
 		std::cout << "Final absolute error: "
 			<< nyann::DataSet<double>::abs_difference(expected_output, output)
 			<< std::endl;
-		std::cout << net.str() << std::endl;
+		//std::cout << net.str() << std::endl;
 		std::cin.get();
 	}
 };
@@ -95,7 +95,7 @@ public:
 		std::cout << "Final absolute error: "
 			<< nyann::DataSet<double>::abs_difference(expected_output, output)
 			<< std::endl;
-		std::cout << net.str() << std::endl;
+		//std::cout << net.str() << std::endl;
 		std::cin.get();
 	}
 };
@@ -187,7 +187,7 @@ public:
 		std::cout << "Final absolute error: "
 			<< nyann::DataSet<double>::abs_difference(expected_output, output)
 			<< std::endl;
-		std::cout << net.str() << std::endl;
+		//std::cout << net.str() << std::endl;
 		std::cin.get();
 	}
 
