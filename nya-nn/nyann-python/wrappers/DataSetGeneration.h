@@ -2,6 +2,7 @@
 
 #include <string>
 #include <fstream>
+#include <filesystem>
 
 namespace nyann {
 	namespace python {
