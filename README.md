@@ -27,7 +27,7 @@ wherever you want. And use header `nyann.h` to use all the facilities of the lib
 
 ## Running the tests
 
-To run the tests go to `nya-nn/nyann` folder and run the following commands:
+To run the tests go to `nyann/nyann` folder and run the following commands:
 
 ```bash
 cmake CMakeLists.txt

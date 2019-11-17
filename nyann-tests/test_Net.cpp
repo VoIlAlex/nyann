@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "..//nya-nn//nyann.h"
+#include "..//nyann//nyann.h"
 
 namespace {
 	TEST(Net, Construction)

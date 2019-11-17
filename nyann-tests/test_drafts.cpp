@@ -1,7 +1,7 @@
 #include "pch.h"
-#include "../nya-nn/nyann/drafts.h"
-#include "..//nya-nn/nyann.h"
-#include "../nya-nn/nyann/drafts/io_draft.cpp"
+#include "../nyann/nyann/drafts.h"
+#include "..//nyann/nyann.h"
+#include "../nyann/nyann/drafts/io_draft.cpp"
 
 namespace {
 	using namespace nyann;
