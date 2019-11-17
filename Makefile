@@ -11,7 +11,13 @@ bin/intermediate/io_draft.o: nya-nn/nyann/drafts/DataSet_draft.h nya-nn/nyann/dr
 clear:
 	sh clear.sh
 	
-	
+package: 
+	mkdir -p build/nyann
+	mkdir -p build/nyann/nyann
+	cp -r nya-nn/nyann build/nyann/
+	cp nya-nn/nyann.h build/nyann
+	tar cvf build/nyann.tar.gz -C build nyann
+	rm -rf build/nyann
 
 run: bin/main.exe
 	./bin/main.exe

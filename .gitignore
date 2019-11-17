@@ -350,3 +350,10 @@ temp*
 build/
 bin/
 *.*tmp*
+
+# CMake
+
+CMakeFiles/
+cmake_install.cmake
+nyann-tests/CMakeCache.txt
+nyann-tests/runTests
