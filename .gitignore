@@ -341,7 +341,12 @@ healthchecksdb
 
 packages/
 
+
+# Others
 .vscode/
 data/
 tmp*
 temp*
+build/
+bin/
+*.*tmp*
