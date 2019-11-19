@@ -39,3 +39,4 @@ namespace nyann
 
 // include subclasses of Layer
 #include "Layer/FCLayer.h"
+#include "Layer/ConvLayer1D.h"
