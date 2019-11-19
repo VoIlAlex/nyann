@@ -1,7 +1,7 @@
 /*
-    This is a controll file.
-    All the definitions here 
-    will affect behavior of 
+    This is a configuration file.
+    All the definitions and constants
+    here will affect the behavior of 
     the framework.
 */
 
