@@ -98,26 +98,74 @@ namespace nyann {
 			return operator>(other) || operator==(other);
 		}
 
-		Index& increment(const Index& max = Index())
+		//Index& increment(const Index& max = Index())
+		//{
+		//	if (max == Index())
+		//	{
+		//		back()++;
+		//		return *this;
+		//	}
+		//	int current_idx_item = max.size() - 1;
+		//	while(current_idx_item != 0)
+		//		if (at(current_idx_item) == max.at(current_idx_item))
+		//		{
+		//			current_idx_item--;
+		//		}
+		//		else
+		//		{
+		//			at(current_idx_item)++;
+		//			for (int i = current_idx_item + 1; i < max.size(); i++)
+		//				at(i) = 0;
+		//			break;
+		//		}
+		//	if (current_idx_item == 0)
+		//	{
+		//		front()++;
+		//		for (int i = current_idx_item + 1; i < max.size(); i++)
+		//			at(i) = 0;
+		//	}
+		//	return *this;
+		//}
+
+
+		Index& increment(const Index& max = Index(), std::vector<int> steps = std::vector<int>())
 		{
+			// Invariant
+			for (auto step : steps)
+				if (step < 1)
+					throw ::std::runtime_error("Wrong step");
+			
+			// Add missing
+			for (int i = steps.size(); i < max.size(); i++)
+				steps.push_back(1);
+
 			if (max == Index())
 			{
 				back()++;
 				return *this;
 			}
-			for (int decrease_idx = size() - 1;; decrease_idx--)
-			{
-				if (decrease_idx == -1)
-					throw std::out_of_range("Index has reached its max value");
-
-				if (at(decrease_idx) < max.at(decrease_idx))
+			int current_idx_item = max.size() - 1;
+			while (current_idx_item != 0)
+				if (at(current_idx_item) == max.at(current_idx_item) || at(current_idx_item) + steps.at(current_idx_item) > max.at(current_idx_item))
 				{
-					at(decrease_idx)++;
+					current_idx_item--;
+				}
+				else
+				{
+					at(current_idx_item) += steps.at(current_idx_item);
+					for (int i = current_idx_item + 1; i < max.size(); i++)
+						at(i) = 0;
 					break;
 				}
+			if (current_idx_item == 0)
+			{
+				at(current_idx_item) += steps.at(current_idx_item);
+				for (int i = current_idx_item + 1; i < max.size(); i++)
+					at(i) = 0;
 			}
 			return *this;
 		}
+
 
 		Index& decrement(const Index& min = Index())
 		{
