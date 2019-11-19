@@ -123,7 +123,6 @@ namespace {
 		EXPECT_EQ(value, 111);
 	}
 
-
 	TEST(DataSet_draft, IO_formatting)
 	{
 		nyann::DataSet_draft<double> dataset = {
@@ -137,40 +136,5 @@ namespace {
 		EXPECT_EQ(ss.str(), "[[1, 2]\n[3, 4]]\n");
 	}
 
-	TEST(Index, Increment)
-	{
-		nyann::Index max_idx = { 2, 1, 4, 2 };
-		nyann::Index idx = { 0, 0, 0, 0 };
-		int count_of_increments = 0;
-		while (idx <= max_idx && ++count_of_increments)
-			idx.increment(max_idx);
-		ASSERT_EQ(count_of_increments, 3 * 2 * 5 * 3);
-	}
-
-	TEST(Index, IncrementWithSteps)
-	{
-		nyann::Index max_idx = { 2, 1, 4, 2 };
-		nyann::Index idx = { 0, 0, 0, 0 };
-		nyann::Index steps = { 2, 1, 2, 2 };
-		int count_of_increments = 0;
-		while (idx <= max_idx && ++count_of_increments)
-			idx.increment(max_idx, steps);
-		ASSERT_EQ(count_of_increments, 2 * 2 * 3 * 2);
-	}
-
-	TEST(Index, Decrement)
-	{
-		nyann::Index idx = { 1, 2, 3, 4 };
-		int count = 0;
-
-		while (idx.decrement() >= nyann::Index{0, 0, 0, 0})
-			count++;
-
-		// minus 2 because
-		// the initial value
-		// is skipped as well as
-		// the min value, i.e.
-		// nyann::Index{0, 0, 0, 0}
-		EXPECT_EQ(count, 2 * 3 * 4 * 5 - 1);
-	}
+	
 } // namespace

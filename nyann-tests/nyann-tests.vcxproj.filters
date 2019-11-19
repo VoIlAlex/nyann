@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -28,6 +28,9 @@
       <Filter>framework\ActivationFunction</Filter>
     </ClCompile>
     <ClCompile Include="template_test.cpp" />
+    <ClCompile Include="test_Index.cpp">
+      <Filter>framework\utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -53,6 +56,9 @@
     </Filter>
     <Filter Include="logs">
       <UniqueIdentifier>{eb980a94-5c16-446e-8771-4982895961be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="framework\utils">
+      <UniqueIdentifier>{58e8dd79-a964-4b98-9730-df415ba8f170}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
