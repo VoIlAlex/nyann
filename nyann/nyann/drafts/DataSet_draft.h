@@ -21,7 +21,7 @@ namespace nyann {
 	/////////////
 	// Classes //
 	/////////////
-	class Index : ::std::vector<int>
+	class Index : public ::std::vector<int>
 	{
 		std::vector<int> m_initial_state;
 	public:
