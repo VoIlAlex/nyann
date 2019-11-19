@@ -579,16 +579,16 @@ namespace nyann {
 
 				DataSet_draft<_DT> dataset(result_size);
 
-				Index max_idx(size.size());
+				Index<unsigned int> max_idx(size.size());
 				for (int i = 0; i < m_slices.size(); i++)
 					max_idx[i] = m_slices[i].to_value() - 1;
 
-				Index max_result_idx(result_size.size());
+				Index<unsigned int> max_result_idx(result_size.size());
 				for (int i = 0; i < result_size.size(); i++)
 					if (!m_slices[i].is_index())
 						max_result_idx[i] = m_slices[i].width();
 
-				Index current_idx(size.size());
+				Index<unsigned int> current_idx(size.size());
 				//std::vector<int> current_result_idx;
 				/*for (int i = 0; i < m_slices.size(); i++)
 				{
@@ -608,11 +608,11 @@ namespace nyann {
 
 				}*/
 
-				std::vector<int> steps(size.size());
+				std::vector<unsigned int> steps(size.size());
 				for (int i = 0; i < size.size(); i++)
 					steps[i] = m_slices[i].step_value();
 
-				Index current_result_idx(result_size.size());
+				Index<unsigned int> current_result_idx(result_size.size());
 				// TODO: create the dataset
 				while (current_idx <= max_idx)
 				{
