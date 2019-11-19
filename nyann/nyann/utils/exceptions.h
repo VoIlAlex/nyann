@@ -4,9 +4,16 @@
 
 namespace nyann {
 
-	class DifferentSizeError : public ::std::exception {};
+	class DifferentSizeError : public ::std::out_of_range 
+	{
+		public:
+		using ::std::out_of_range::out_of_range;
+	};
 
-	class ConversionError : public ::std::exception {};
+	class ConversionError : public ::std::runtime_error {
+		public:
+		using ::std::runtime_error::runtime_error;
+	};
 
 	class IndexError : public ::std::out_of_range
 	{
@@ -26,6 +33,9 @@ namespace nyann {
 		using IndexSizeError::IndexSizeError;
 	};
 
-	class NotImplementedError : public ::std::exception {};
+	class NotImplementedError : public ::std::runtime_error {
+		public:
+		using ::std::runtime_error::runtime_error;
+	};
 
 } // namespace nyann

@@ -89,7 +89,7 @@ namespace nyann {
 	{
 		DataRow<_DT> result = datarow;
 		for (int i = 0; i < result.size(); i++)
-			result[i] = ::abs(result[i]);
+			result[i] = result[i] > 0 ? result[i] : -result[i];
 		return result;
 	}
 

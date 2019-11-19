@@ -341,7 +341,20 @@ healthchecksdb
 
 packages/
 
+
+# Others
 .vscode/
 data/
 tmp*
 temp*
+build/
+bin/
+*.*tmp*
+
+# CMake
+
+CMakeFiles/
+cmake_install.cmake
+nyann-tests/CMakeCache.txt
+nyann-tests/runTests
+nyann-tests/Makefile

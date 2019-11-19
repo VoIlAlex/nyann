@@ -30,8 +30,11 @@ namespace nyann {
 			exchange_file.close();
 
 			// Compose the command
+#ifdef __GNUC__
+			std::string command = "python3 \"nyann-python/plot.py\"";
+#else
 			std::string command = "python \"nyann-python\\plot.py\"";
-
+#endif
 			// convert all to
 			// string arguments
 			// for the python script
@@ -66,8 +69,11 @@ namespace nyann {
 			exchange_file.close();
 
 			// Compose the command
+#ifdef __GNUC__
+			std::string command = "python3 \"nyann-python/plot.py\"";
+#else
 			std::string command = "python \"nyann-python\\plot.py\"";
-
+#endif
 			// convert all to
 			// string arguments
 			// for the python script

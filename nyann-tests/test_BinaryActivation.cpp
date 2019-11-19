@@ -1,6 +1,6 @@
 #include "pch.h"
-#include "../nya-nn/nyann/drafts.h"
-#include "..//nya-nn/nyann.h"
+#include "../nyann/nyann/drafts.h"
+#include "..//nyann/nyann.h"
 
 namespace {
 

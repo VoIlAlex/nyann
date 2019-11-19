@@ -4,7 +4,7 @@
 #include <vector>
 #include <random>
 
-#include "..//DataSet.h" // for DataSet
+#include "../dataset.h" // for DataSet
 
 namespace nyann {
 

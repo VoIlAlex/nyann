@@ -361,12 +361,12 @@ namespace nyann {
 			//	if (!m_is_const)
 			//	{
 			//		if (m_slices.size() != m_parent->size().size())
-			//		throw ConversionError();
+			//		throw ConversionError("");
 			//	}
 			//	else if (m_is_const)
 			//	{
 			//		if (m_slices.size() != m_parent_const->size().size())
-			//		throw ConversionError();
+			//		throw ConversionError("");
 			//	}
 
 			//	int flat_idx = get_flat_index();
@@ -380,12 +380,12 @@ namespace nyann {
 				if (!m_is_const)
 				{
 					if (m_slices.size() != m_parent->size().size())
-						throw ConversionError();
+						throw ConversionError("");
 				}
 				else if (m_is_const)
 				{
 					if (m_slices.size() != m_parent_const->size().size())
-						throw ConversionError();
+						throw ConversionError("");
 				}
 
 				int flat_idx = get_flat_index();
@@ -399,12 +399,12 @@ namespace nyann {
 				if (!m_is_const)
 				{
 					if (m_slices.size() != m_parent->size().size())
-						throw ConversionError();
+						throw ConversionError("");
 				}
 				else if (m_is_const)
 				{
 					if (m_slices.size() != m_parent_const->size().size())
-						throw ConversionError();
+						throw ConversionError("");
 				}
 
 				int flat_idx = get_flat_index();
@@ -418,12 +418,12 @@ namespace nyann {
 				if (!m_is_const)
 				{
 					if (m_slices.size() != m_parent->size().size())
-						throw ConversionError();
+						throw ConversionError("");
 				}
 				else if (m_is_const)
 				{
 					if (m_slices.size() != m_parent_const->size().size())
-						throw ConversionError();
+						throw ConversionError("");
 				}
 
 				int flat_idx = get_flat_index();
@@ -786,7 +786,6 @@ namespace nyann {
 			}
 		};
 
-		template<typename _DT>
 		bool operator==(const DataSet_draft<_DT>& left) const
 		{
 			return m_data == left.m_data && m_size == left.m_size;
