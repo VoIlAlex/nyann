@@ -3,6 +3,17 @@
 
 namespace {
 
+	TEST(Index, Construction)
+	{
+		nyann::Index<unsigned int> idx_1;
+		nyann::Index<unsigned int> idx_2 = { 2, 1, 4, 2 };
+		nyann::Index<unsigned int> idx_3 (idx_2);
+		nyann::Index<unsigned int> idx_4 (std::move(idx_3));
+		std::vector<unsigned int> vec_idx = { 1, 3, 4, 6 };
+		nyann::Index<unsigned int> idx_5 (vec_idx);
+		nyann::Index<unsigned int> idx_6 (std::move(vec_idx));
+	}
+
 	TEST(Index, Increment)
 	{
 		nyann::Index<unsigned int>  max_idx = { 2, 1, 4, 2 };
