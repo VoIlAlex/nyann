@@ -162,6 +162,7 @@
     <ClInclude Include="nyann\drafts\DataSet_draft.h" />
     <ClInclude Include="nyann\drafts\io_draft.h" />
     <ClInclude Include="nyann\Layer\ConvLayer.h" />
+    <ClInclude Include="nyann\Layer\ConvLayer1D.h" />
     <ClInclude Include="nyann\Layer\FCLayer.h" />
     <ClInclude Include="nyann\Layer.h" />
     <ClInclude Include="nyann\Loss.h" />
@@ -176,6 +177,7 @@
     <ClInclude Include="nyann\utils\Index.h" />
     <ClInclude Include="nyann\utils\io.h" />
     <ClInclude Include="nyann\utils\Size.h" />
+    <ClInclude Include="nyann\utils\Slice.h" />
     <ClInclude Include="nyann\_config.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
