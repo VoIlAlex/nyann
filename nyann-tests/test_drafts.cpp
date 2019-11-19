@@ -147,6 +147,17 @@ namespace {
 		ASSERT_EQ(count_of_increments, 3 * 2 * 5 * 3);
 	}
 
+	TEST(Index, IncrementWithSteps)
+	{
+		nyann::Index max_idx = { 2, 1, 4, 2 };
+		nyann::Index idx = { 0, 0, 0, 0 };
+		nyann::Index steps = { 2, 1, 2, 2 };
+		int count_of_increments = 0;
+		while (idx <= max_idx && ++count_of_increments)
+			idx.increment(max_idx, steps);
+		ASSERT_EQ(count_of_increments, 2 * 2 * 3 * 2);
+	}
+
 	TEST(Index, Decrement)
 	{
 		nyann::Index idx = { 1, 2, 3, 4 };
