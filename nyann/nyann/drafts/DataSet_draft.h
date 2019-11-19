@@ -212,7 +212,7 @@ namespace nyann {
 		bool m_is_index;
 	public:
 		// Constructors
-		Slice(int start, int end, int step = 0)
+		Slice(int start, int end, int step = 1)
 			: std::vector<int>{ start, end, step }, m_is_index(false)
 		{}
 		Slice(int idx)
