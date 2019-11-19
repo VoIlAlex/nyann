@@ -284,13 +284,13 @@ namespace nyann {
 	class DataSet_draft
 	{
 		std::vector<_DT> m_data;
-		Size m_size;
+		Size<> m_size;
 	public:
 		class NestedDataSet;
 
 		DataSet_draft() {}
 
-		DataSet_draft(const Size& size)
+		DataSet_draft(const Size<>& size)
 			: m_size(size)
 		{
 			int flat_size = 1;
@@ -299,7 +299,7 @@ namespace nyann {
 			m_data.resize(flat_size);
 		}
 
-		DataSet_draft(const Size& size, const DataSet_draft<_DT>& dataset)
+		DataSet_draft(const Size<>& size, const DataSet_draft<_DT>& dataset)
 		{
 			// TODO: size correctess checking
 			m_data = dataset.m_data;
@@ -339,21 +339,21 @@ namespace nyann {
 			for (auto dataset : il)
 				merged_data.insert(merged_data.end(), dataset.m_data.begin(), dataset.m_data.end());
 			int datasets_count = il.end() - il.begin();
-			Size datasets_sizes = il.begin()->m_size;
+			Size<> datasets_sizes = il.begin()->m_size;
 			datasets_sizes.insert(datasets_sizes.begin(), datasets_count);
 			m_size = datasets_sizes;
 			m_data = merged_data;
 		}
 
 		// Methods
-		Size size() const
+		Size<> size() const
 		{
 			return m_size;
 		}
 
 		// TODO(feature): change shape of the 
 		// data set when changing size()
-		void resize(const Size& new_size)
+		void resize(const Size<>& new_size)
 		{
 			throw nyann::NotImplementedError("");
 		}
@@ -569,13 +569,13 @@ namespace nyann {
 
 				// Calculate the size 
 				// of resultant dataset
-				Size size;
+				Size<> size;
 				for (auto slice : m_slices)
 					size.push_back(slice.width());
 
 				// Size of the resulting 
 				// array
-				Size result_size;
+				Size<> result_size;
 				for (auto slice : m_slices)
 					if (!slice.is_index())
 						result_size.push_back(slice.width());

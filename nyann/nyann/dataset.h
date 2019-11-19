@@ -35,9 +35,9 @@ namespace nyann {
 		{}
 
 		// For now only two dimensional
-		DataSet(nyann::Size size)
+		DataSet(nyann::Size<> size)
 		{
-			if (size == Size() || size[0] == 0)
+			if (size == Size<>() || size[0] == 0)
 				return;
 
 			for (int i = 0; i < size[0]; i++)
@@ -50,7 +50,7 @@ namespace nyann {
 		}
 		static DataSet<_DT> zeros_like(const DataSet<_DT>& dataset)
 		{
-			nyann::Size size_of_dataset;
+			nyann::Size<> size_of_dataset;
 			size_of_dataset.push_back(dataset.size());
 			if (dataset.size() >= 1)
 				size_of_dataset.push_back(dataset[0].size());
@@ -74,15 +74,15 @@ namespace nyann {
 					difference += diff_dataset[i][j];
 			return difference;
 		}
-		Size get_size() const
+		Size<> get_size() const
 		{
-			Size s;
+			Size<> s;
 			s.push_back(this->size());
 			if (this->size() >= 1)
 				s.push_back(this->operator[](0).size());
 			return s;
 		}
-		Size shape() const
+		Size<> shape() const
 		{
 			return get_size();
 		}

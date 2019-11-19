@@ -24,8 +24,8 @@ namespace nyann
 		std::variant<DataSet<_DT_IN>, DataRow<_DT_IN>> m_input;
 		std::variant<DataSet<_DT_OUT>, DataRow<_DT_OUT>> m_output;
 	public:
-		FCLayer(const Size& size_in, const Size& size_out);
-		FCLayer(const Size& size_in_out);
+		FCLayer(const Size<>& size_in, const Size<>& size_out);
+		FCLayer(const Size<>& size_in_out);
 
 		virtual DataSet<_DT_OUT> operator() (const DataSet<_DT_IN>& input) override
 		{
@@ -192,7 +192,7 @@ namespace nyann
 	};
 
 	template<typename _DT_IN, typename _DT_OUT>
-	FCLayer<_DT_IN, _DT_OUT>::FCLayer(const Size& size_in, const Size& size_out)
+	FCLayer<_DT_IN, _DT_OUT>::FCLayer(const Size<>& size_in, const Size<>& size_out)
 		: m_weights(size_in), m_biases(size_out),
 		m_size_in(size_in), m_size_out(size_out)
 	{
@@ -202,7 +202,7 @@ namespace nyann
 	}
 
 	template<typename _DT_IN, typename _DT_OUT>
-	FCLayer<_DT_IN, _DT_OUT>::FCLayer(const Size& size_in_out)
+	FCLayer<_DT_IN, _DT_OUT>::FCLayer(const Size<>& size_in_out)
 		: m_weights(size_in_out[0]), m_biases(size_in_out[1]),
 		m_size_in(size_in_out[0]), m_size_out(size_in_out[1])
 	{
