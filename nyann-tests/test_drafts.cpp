@@ -137,6 +137,16 @@ namespace {
 		EXPECT_EQ(ss.str(), "[[1, 2]\n[3, 4]]\n");
 	}
 
+	TEST(Index, Increment)
+	{
+		nyann::Index max_idx = { 2, 1, 4, 2 };
+		nyann::Index idx = { 0, 0, 0, 0 };
+		int count_of_increments = 0;
+		while (idx <= max_idx && ++count_of_increments)
+			idx.increment(max_idx);
+		ASSERT_EQ(count_of_increments, 3 * 2 * 5 * 3);
+	}
+
 	TEST(Index, Decrement)
 	{
 		nyann::Index idx = { 1, 2, 3, 4 };
