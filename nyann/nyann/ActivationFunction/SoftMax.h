@@ -12,7 +12,7 @@ class SoftMax : public ActivationFunction<_DT>
 public:
 	_DT operator()(const _DT &sum) override
 	{
-		throw NotImplementedError("Single processing isn't supported");
+		throw NotImplementedError("Single processing isn't supported by SoftMax");
 	}
 	_DT derivative(const _DT &y) override
 	{
