@@ -52,6 +52,7 @@
     <ClCompile Include="test_goal.cpp" />
     <ClCompile Include="test_Index.cpp" />
     <ClCompile Include="test_Net.cpp" />
+    <ClCompile Include="test_Size.cpp" />
     <ClCompile Include="test_Slice.cpp" />
     <ClCompile Include="test_usage.cpp" />
     <ClCompile Include="test_utils.cpp" />

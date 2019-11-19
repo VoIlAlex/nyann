@@ -37,6 +37,9 @@
     <ClCompile Include="test_Slice.cpp">
       <Filter>framework\utils</Filter>
     </ClCompile>
+    <ClCompile Include="test_Size.cpp">
+      <Filter>framework\utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
