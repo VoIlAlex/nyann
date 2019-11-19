@@ -533,15 +533,29 @@ namespace nyann {
 				// of resultant dataset
 				Size size;
 				for (auto slice : m_slices)
-				{
-					if (!slice.is_index())
-						size.push_back(slice.width());
-				}
+					size.push_back(slice.width());
+
+				/*
+					TODO: Here size if not correct 
+					because indexes are not included 
+					in shape of final data. Like 
+					x = [[1, 2], [3, 4]]
+					x[{0, 2}][0] = [1, 3], but not [[1], [3]]
+					You task is correct this.
+				*/
 
 				DataSet_draft<_DT> dataset(size);
 
-				std::vector<int> current_idx;
-				std::vector<int> current_result_idx;
+				Index max_idx(size.size());
+				for (int i = 0; i < m_slices.size(); i++)
+					max_idx[i] = m_slices[i].to_value() - 1;
+
+				Index max_result_idx(size.size());
+				for (int i = 0; i < m_slices.size(); i++)
+					max_result_idx[i] = m_slices[i].width();
+
+				Index current_idx(size.size());
+				//std::vector<int> current_result_idx;
 				/*for (int i = 0; i < m_slices.size(); i++)
 				{
 					if (m_slices[i].is_index())
@@ -560,7 +574,22 @@ namespace nyann {
 
 				}*/
 
+				std::vector<int> steps(size.size());
+				for (int i = 0; i < size.size(); i++)
+					steps[i] = m_slices[i].step_value();
+
+				Index current_result_idx(size.size());
 				// TODO: create the dataset
+				while (current_idx <= max_idx)
+				{
+					if (m_is_const)
+						dataset.at_index(current_result_idx) = m_parent_const->at_index(current_idx);
+					else
+						dataset.at_index(current_result_idx) = m_parent->at_index(current_idx);
+
+					current_result_idx.increment(max_result_idx);
+					current_idx.increment(max_idx, steps);
+				}
 
 				return dataset;
 			}
