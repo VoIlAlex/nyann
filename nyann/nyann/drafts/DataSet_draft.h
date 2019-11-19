@@ -28,7 +28,7 @@ namespace nyann {
 		//using std::vector<int>::vector;
 		Index() {}
 
-		Index(int count, int value)
+		Index(int count, int value=0)
 			: 
 			::std::vector<int>::vector(count, value)
 		{}
