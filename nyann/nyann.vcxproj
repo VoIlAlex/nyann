@@ -170,10 +170,13 @@
     <ClInclude Include="nyann\Optimizer.h" />
     <ClInclude Include="nyann\Optimizer\SGDOptimizer.h" />
     <ClInclude Include="nyann\utils.h" />
+    <ClInclude Include="nyann\utils\bool_operations.h" />
     <ClInclude Include="nyann\utils\constants.h" />
     <ClInclude Include="nyann\utils\exceptions.h" />
+    <ClInclude Include="nyann\utils\Index.h" />
     <ClInclude Include="nyann\utils\io.h" />
     <ClInclude Include="nyann\utils\Size.h" />
+    <ClInclude Include="nyann\_config.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

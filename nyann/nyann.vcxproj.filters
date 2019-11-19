@@ -107,5 +107,14 @@
     <ClInclude Include="nyann\drafts\io_draft.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="nyann\_config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="nyann\utils\bool_operations.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="nyann\utils\Index.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
