@@ -65,11 +65,11 @@ namespace {
 
 		nyann::Net net;
 
-		nyann::Layer<double>* layer_1 = new nyann::FCLayer<double>(nyann::Size{ 2, 20 });
+		nyann::Layer<double>* layer_1 = new nyann::FCLayer<double>(nyann::Size{ 2, 3 });
 		layer_1->add_activation_function(new nyann::ReLU<double>());
-		nyann::Layer<double>* layer_2 = new nyann::FCLayer<double>(nyann::Size{ 20, 20 });
+		nyann::Layer<double>* layer_2 = new nyann::FCLayer<double>(nyann::Size{ 3, 3 });
 		layer_2->add_activation_function(new nyann::ReLU<double>());
-		nyann::Layer<double>* layer_3 = new nyann::FCLayer<double>(nyann::Size{ 20, 1 });
+		nyann::Layer<double>* layer_3 = new nyann::FCLayer<double>(nyann::Size{ 3, 1 });
 		layer_3->add_activation_function(new nyann::ReLU<double>());
 
 		net.add_layer(layer_1);
