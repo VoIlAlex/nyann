@@ -22,7 +22,7 @@ namespace nyann {
 		DataSet<_DT> operator()(const DataSet<_DT>& sums) override
 		{
 			DataSet<_DT> results = DataSet<_DT>::ones_like(sums);
-#ifdef DRAFT_DATASET
+#ifdef DRAFT_DATASET_2_0_0_ALPHA_TEST
 			for (auto it = sums.begin(-1); it != sums.end(-1); it++)
 				results.push_to(it.location(), this->operator()(*it));
 #endif
@@ -31,7 +31,7 @@ namespace nyann {
 		DataSet<_DT> derivative(const DataSet<_DT>& Y) override
 		{
 			DataSet<_DT> results = DataSet<_DT>::ones_like(Y);
-#ifdef DRAFT_DATASET
+#ifdef DRAFT_DATASET_2_0_0_ALPHA_TEST
 			for (auto it = Y.begin(-1); it != Y.end(-1); it++)
 				results.push_to(it.location(), this->derivative(*it));
 #endif
