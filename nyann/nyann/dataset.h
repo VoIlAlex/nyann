@@ -82,6 +82,10 @@ namespace nyann {
 				s.push_back(this->operator[](0).size());
 			return s;
 		}
+		Size shape() const
+		{
+			return get_size();
+		}
 	};
 
 	template<typename _DT>
