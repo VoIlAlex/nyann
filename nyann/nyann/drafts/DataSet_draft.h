@@ -3,11 +3,13 @@
 #include "..//utils/Size.h"
 #include "..//utils/exceptions.h"
 #include "..//utils/Index.h"
+#include "..//utils/Slice.h"
 
 namespace nyann {
 	/////////////////////
 	// Classes summary //
 	/////////////////////
+	template<typename _DT>
 	class Slice;
 
 	template<typename _DT>
@@ -216,61 +218,61 @@ namespace nyann {
 	//};
 
 
-	class Slice : public std::vector<int>
-	{
-		// whether it's an index
-		// not an slice
-		bool m_is_index;
-	public:
-		// Constructors
-		Slice(int start, int end, int step = 1)
-			: std::vector<int>{ start, end, step }, m_is_index(false)
-		{}
-		Slice(int idx)
-			: std::vector<int>{ idx, idx + 1, 1 }, m_is_index(true)
-		{}
+	//class Slice : public std::vector<int>
+	//{
+	//	// whether it's an index
+	//	// not an slice
+	//	bool m_is_index;
+	//public:
+	//	// Constructors
+	//	Slice(int start, int end, int step = 1)
+	//		: std::vector<int>{ start, end, step }, m_is_index(false)
+	//	{}
+	//	Slice(int idx)
+	//		: std::vector<int>{ idx, idx + 1, 1 }, m_is_index(true)
+	//	{}
 
-		int width() const
-		{
-			return (this->at(1) - this->at(0)) / this->at(2);
-		}
+	//	int width() const
+	//	{
+	//		return (this->at(1) - this->at(0)) / this->at(2);
+	//	}
 
-		int from_value() const
-		{
-			return at(0);
-		}
-		int to_value() const
-		{
-			return at(1);
-		}
-		int step_value() const
-		{
-			return at(2);
-		}
+	//	int from_value() const
+	//	{
+	//		return at(0);
+	//	}
+	//	int to_value() const
+	//	{
+	//		return at(1);
+	//	}
+	//	int step_value() const
+	//	{
+	//		return at(2);
+	//	}
 
-		int is_index() const
-		{
-			return m_is_index;
-		}
+	//	int is_index() const
+	//	{
+	//		return m_is_index;
+	//	}
 
-		// operators
-		using std::vector<int>::operator[];
+	//	// operators
+	//	using std::vector<int>::operator[];
 
-		/*int& operator[](int i)
-		{
-			return std::vector<int>::operator[](i);
-		}
+	//	/*int& operator[](int i)
+	//	{
+	//		return std::vector<int>::operator[](i);
+	//	}
 
-		const int& operator[](int i) const
-		{
-			return std::vector<int>::operator[](i);
-		}*/
+	//	const int& operator[](int i) const
+	//	{
+	//		return std::vector<int>::operator[](i);
+	//	}*/
 
-		operator int() const
-		{
-			return this->operator[](0);
-		}
-	};
+	//	operator int() const
+	//	{
+	//		return this->operator[](0);
+	//	}
+	//};
 
 	/*
 		Dataset represents arbitrary
@@ -402,23 +404,22 @@ namespace nyann {
 			NestedDataSet value = operator[](idx[0]);
 			for (auto it = idx.begin() + 1; it != idx.end(); it++)
 				value = value[*it];
-
 			return value.value();
 		}
 
 		// Operators
-		NestedDataSet operator[](int idx)
+		NestedDataSet operator[](unsigned int idx)
 		{
-			return NestedDataSet(this, std::vector<Slice>{ idx });
+			return NestedDataSet(this, std::vector<Slice<>>{ idx });
 		}
 
-		NestedDataSet operator[](const Slice& idx)
+		NestedDataSet operator[](const Slice<>& idx)
 		{
 			return NestedDataSet(this, { idx });
 		}
-		NestedDataSet operator[](int idx) const
+		NestedDataSet operator[](unsigned int idx) const
 		{
-			return NestedDataSet(this, std::vector<Slice>{ idx });
+			return NestedDataSet(this, std::vector<Slice<>>{ idx });
 		}
 
 		//NestedDataSet operator[](const Index& idx)
@@ -431,7 +432,7 @@ namespace nyann {
 		//	return NestedDataSet(this, idx);
 		//}
 
-		NestedDataSet operator[](const Slice& idx) const
+		NestedDataSet operator[](const Slice<>& idx) const
 		{
 			return NestedDataSet(this, { idx });
 		}
@@ -440,10 +441,10 @@ namespace nyann {
 		{
 			DataSet_draft<_DT>* m_parent;
 			const DataSet_draft<_DT>* m_parent_const;
-			std::vector<Slice> m_slices;
+			std::vector<Slice<unsigned int>> m_slices;
 			bool m_is_const;
 		public:
-			NestedDataSet(DataSet_draft<_DT>* parent, const std::vector<Slice>& idxs = {})
+			NestedDataSet(DataSet_draft<_DT>* parent, const std::vector<Slice<>>& idxs = {})
 				:
 				m_parent(parent),
 				m_parent_const(nullptr),
@@ -451,7 +452,7 @@ namespace nyann {
 				m_is_const(false)
 			{}
 
-			NestedDataSet(const DataSet_draft<_DT>* parent, const std::vector<Slice>& idxs = {})
+			NestedDataSet(const DataSet_draft<_DT>* parent, const std::vector<Slice<>>& idxs = {})
 				:
 				m_parent(nullptr),
 				m_parent_const(parent),
@@ -564,7 +565,7 @@ namespace nyann {
 			{
 				// Complete indexes
 				for (int i = m_slices.size(); i < m_parent->size().size(); i++)
-					m_slices.push_back({ 0, m_parent->size()[i] });
+					m_slices.push_back({ 0, static_cast<unsigned int>(m_parent->size()[i]) });
 
 				// Calculate the size 
 				// of resultant dataset
@@ -639,7 +640,7 @@ namespace nyann {
 				return dataset;
 			}
 
-			NestedDataSet operator[](const Slice& i) const
+			NestedDataSet operator[](const Slice<>& i) const
 			{
 				// if index size already 
 				// reached its high border
@@ -648,7 +649,7 @@ namespace nyann {
 
 				// create the complex
 				// index
-				std::vector<Slice> next_idxs = m_slices;
+				std::vector<Slice<>> next_idxs = m_slices;
 				next_idxs.push_back(i);
 
 				return NestedDataSet(m_parent, next_idxs);
@@ -673,7 +674,7 @@ namespace nyann {
 
 				// create the complex
 				// index
-				std::vector<Slice> next_idxs = m_slices;
+				std::vector<Slice<>> next_idxs = m_slices;
 				next_idxs.push_back(i);
 
 				if (m_is_const)
