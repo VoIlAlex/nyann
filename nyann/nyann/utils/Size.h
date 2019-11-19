@@ -5,26 +5,27 @@
 
 namespace nyann {
 
-	class Size : public std::vector<int>
+	template<typename _DT=unsigned int>
+	class Size : public std::vector<_DT>
 	{
 	public:
-		using std::vector<int>::vector;
+		using std::vector<_DT>::vector;
 		// zero if not
 		// presented
-		int operator[](int i) const
+		_DT operator[](int i) const
 		{
 			try
 			{
-				return std::vector<int>::at(i);
+				return std::vector<_DT>::at(i);
 			}
 			catch (std::out_of_range&)
 			{
 				return 0;
 			}
 		}
-		int& operator[](int i)
+		_DT& operator[](int i)
 		{
-			return std::vector<int>::at(i);
+			return std::vector<_DT>::at(i);
 		}
 	};
 
