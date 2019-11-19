@@ -422,6 +422,27 @@ namespace nyann {
 				m_is_const(true)
 			{}
 
+			//NestedDataSet(DataSet_draft<_DT>* parent, const Index& idx = {})
+			//	:
+			//	m_parent(parent),
+			//	m_parent_const(nullptr),
+			//	m_slices(idx.size()),
+			//	m_is_const(false)
+			//{
+			//	for (int i = 0; i < idx.size(); i++)
+			//		m_slices[i] = Slice(idx);
+			//}
+
+			//NestedDataSet(const DataSet_draft<_DT>* parent, const Index& idx = {})
+			//	:
+			//	m_parent(nullptr),
+			//	m_parent_const(parent),
+			//	m_slices(idx.size()),
+			//	m_is_const(true)
+			//{
+			//	for (int i = 0; i < idx.size(); i++)
+			//		m_slices[i] = Slice(idx);
+			//}
 			// TODO: reconsider the condition of 
 			// getting the result. It might appear 
 			// that somewhere in m_slices is actual Slice
