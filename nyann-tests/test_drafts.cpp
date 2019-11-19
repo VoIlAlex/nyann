@@ -163,7 +163,7 @@ namespace {
 		nyann::Index idx = { 1, 2, 3, 4 };
 		int count = 0;
 
-		while (idx.decrement() != nyann::Index{0, 0, 0, 0})
+		while (idx.decrement() >= nyann::Index{0, 0, 0, 0})
 			count++;
 
 		// minus 2 because
@@ -171,6 +171,6 @@ namespace {
 		// is skipped as well as
 		// the min value, i.e.
 		// nyann::Index{0, 0, 0, 0}
-		EXPECT_EQ(count, 2 * 3 * 4 * 5 - 2);
+		EXPECT_EQ(count, 2 * 3 * 4 * 5 - 1);
 	}
 } // namespace
