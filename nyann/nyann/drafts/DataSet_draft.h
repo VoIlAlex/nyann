@@ -360,7 +360,7 @@ namespace nyann {
 		const _DT& at_index(const std::vector<int>& idx) const
 		{
 			if (idx.size() != m_size.size())
-				throw DifferentSizeError();
+				throw DifferentSizeError("");
 
 			NestedDataSet value = operator[](idx[0]);
 			for (auto it = idx.begin() + 1; it != idx.end(); it++)
