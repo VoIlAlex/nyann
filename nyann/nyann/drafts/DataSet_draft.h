@@ -369,6 +369,32 @@ namespace nyann {
 			return value.value();
 		}
 
+		template<typename _DT_IDX>
+		_DT& at_index(const Index<_DT_IDX>& idx)
+		{
+			if (idx.size() != m_size.size())
+				throw DifferentSizeError(""); // TODO: exception message 
+
+			NestedDataSet value = operator[](idx[0]);
+			for (auto it = idx.begin() + 1; it != idx.end(); it++)
+				value = value[*it];
+
+			return value.value();
+		}
+
+		template<typename _DT_IDX>
+		const _DT& at_index(const Index<_DT_IDX>& idx) const 
+		{
+			if (idx.size() != m_size.size())
+				throw DifferentSizeError(""); // TODO: exception message 
+
+			NestedDataSet value = operator[](idx[0]);
+			for (auto it = idx.begin() + 1; it != idx.end(); it++)
+				value = value[*it];
+
+			return value.value();
+		}
+
 		// Operators
 		NestedDataSet operator[](int idx)
 		{
