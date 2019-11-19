@@ -224,6 +224,19 @@ namespace nyann {
 			return (this->at(1) - this->at(0)) / this->at(2);
 		}
 
+		int from_value() const
+		{
+			return at(0);
+		}
+		int to_value() const
+		{
+			return at(1);
+		}
+		int step_value() const
+		{
+			return at(2);
+		}
+
 		int is_index() const
 		{
 			return m_is_index;
