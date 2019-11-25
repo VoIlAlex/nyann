@@ -9,7 +9,20 @@ find_package(GTest REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
 
 # Link runTests with what we want to test and the GTest and pthread library
-add_executable(runTests test_BinaryActivation.cpp test_DataSet.cpp test_drafts.cpp test_FCLayer.cpp test_goal.cpp test_inbox.cpp test_Net.cpp test_usage.cpp test_utils.cpp)
+add_executable(runTests 
+test_BinaryActivation.cpp
+test_ConvLayer1D.cpp
+test_DataSet.cpp 
+test_drafts.cpp 
+test_FCLayer.cpp 
+test_goal.cpp 
+test_inbox.cpp 
+test_Net.cpp 
+test_Size.cpp
+test_Slice.cpp
+test_usage.cpp 
+test_utils.cpp
+)
 # add_executable(runTests test_BinaryActivation.cpp)
 # add_executable(runTests test_DataSet.cpp)
 # add_executable(runTests test_drafts.cpp)
