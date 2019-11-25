@@ -67,7 +67,7 @@ namespace nyann
 
 		virtual std::vector<double> back_propagation(
 			const std::vector<double>& errors,
-			const std::vector<double>& derivitives, // d(yj) / d(Sj) - caused by activation function
+			const std::vector<double>& derivatives, // d(yj) / d(Sj) - caused by activation function
 			double lr = 0.01
 		) override
 		{
@@ -78,8 +78,8 @@ namespace nyann
 			for (int j = 0; j < m_size_out; j++)
 			{
 				for (int i = 0; i < m_size_in; i++)
-					m_weights[i][j] -= lr * errors[j] * derivitives[j] * input[i];
-				m_biases[j] += lr * errors[j] * derivitives[j];
+					m_weights[i][j] -= lr * errors[j] * derivatives[j] * input[i];
+				m_biases[j] += lr * errors[j] * derivatives[j];
 			}
 
 			// clear cached data
@@ -89,7 +89,7 @@ namespace nyann
 			std::vector<double> errors_here(m_size_in);
 			for (int i = 0; i < m_size_in; i++)
 				for (int j = 0; j < m_size_out; j++)
-					errors_here[i] += errors[j] * derivitives[j] * m_weights[i][j];
+					errors_here[i] += errors[j] * derivatives[j] * m_weights[i][j];
 
 			return errors_here;
 		}
