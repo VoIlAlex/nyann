@@ -30,29 +30,29 @@ namespace nyann {
 		}
 		const _DT& from_value() const
 		{
-			return at(0);
+			return this->at(0);
 		}
 		const _DT& to_value() const
 		{
-			return at(1);
+			return this->at(1);
 		}
 		const _DT& step_value() const
 		{
-			return at(2);
+			return this->at(2);
 		}
 
 		// Mutable getters
 		_DT& from_value()
 		{
-			return at(0);
+			return this->at(0);
 		}
 		_DT& to_value()
 		{
-			return at(1);
+			return this->at(1);
 		}
 		_DT& step_value()
 		{
-			return at(2);
+			return this->at(2);
 		}
 		bool& is_index()
 		{
