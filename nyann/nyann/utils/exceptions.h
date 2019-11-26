@@ -2,6 +2,9 @@
 #include <exception>
 #include <stdexcept>
 
+// For all the framework configurations
+#include "../_config.h"
+
 namespace nyann {
 
 	class DifferentSizeError : public ::std::out_of_range 

@@ -10,6 +10,10 @@
 */
 
 #pragma once
+
+// For all the framework configurations
+#include "../../nyann/_config.h"
+
 #include <vector>
 #include <filesystem>
 #include <fstream>

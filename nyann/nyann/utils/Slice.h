@@ -1,6 +1,9 @@
 #pragma once
 #include <vector>
 
+// For all the framework configurations
+#include "../_config.h"
+
 namespace nyann {
 
 	template<typename _DT=unsigned int>

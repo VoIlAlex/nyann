@@ -1,5 +1,10 @@
 #pragma once
 
+
+// For all the framework configurations
+#include "_config.h"
+
+
 // Utility headers
 #include "utils/Size.h"
 #include "utils/io.h"

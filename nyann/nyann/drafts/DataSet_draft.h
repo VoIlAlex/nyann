@@ -1,5 +1,8 @@
 #pragma once
 
+// For all the framework configurations
+#include "../_config.h"
+
 #include "..//utils/Size.h"
 #include "..//utils/exceptions.h"
 #include "..//utils/Index.h"

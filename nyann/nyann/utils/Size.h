@@ -3,6 +3,9 @@
 #include <vector>
 #include <stdexcept>
 
+// For all the framework configurations
+#include "../_config.h"
+
 namespace nyann {
 
 	template<typename _DT=unsigned int>

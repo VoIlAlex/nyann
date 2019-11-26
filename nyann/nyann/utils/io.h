@@ -1,6 +1,10 @@
 #pragma once
 #include <iostream>
 
+// For all the framework configurations
+#include "../_config.h"
+
+
 #include "..//dataset.h"
 
 template<typename _DT>

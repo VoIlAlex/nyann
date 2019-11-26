@@ -1,6 +1,11 @@
 #pragma once
 
 #include <vector>
+
+
+// For all the framework configurations
+#include "_config.h"
+
 #include "Layer.h"
 #include "Loss.h"
 #include "Optimizer.h"

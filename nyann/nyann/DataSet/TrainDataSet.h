@@ -4,6 +4,9 @@
 #include <vector>
 #include <random>
 
+// For all the framework configurations
+#include "../_config.h"
+
 #include "../dataset.h" // for DataSet
 
 namespace nyann {

@@ -4,6 +4,10 @@
 #include <variant>
 #include <random>
 
+// For all the framework configurations
+#include "../_config.h"
+
+
 #include "..//Layer.h" // for Layer
 #include "..//utils.h" // for Size
 #include "..//dataset.h" // for DataSet
@@ -64,7 +68,7 @@ namespace nyann
 			}
 			return output;
 		}
-
+# ifndef DEPRECATED_LAYER_ROW_PROCESSING
 		virtual std::vector<double> back_propagation(
 			const std::vector<double>& errors,
 			const std::vector<double>& derivatives, // d(yj) / d(Sj) - caused by activation function
@@ -93,7 +97,7 @@ namespace nyann
 
 			return errors_here;
 		}
-
+#endif
 		virtual DataSet<double> back_propagation(
 			const DataSet<double>& errors,
 			double lr = 0.01
