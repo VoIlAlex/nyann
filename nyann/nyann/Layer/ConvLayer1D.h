@@ -52,6 +52,7 @@ namespace nyann {
 
 		// Not implemented and deprecated
 		// functions. Forget about those
+#ifndef DEPRECATED_LAYER_ROW_PROCESSING
 		virtual DataRow<_DT> operator() (const DataRow<_DT>&, bool save = true) override
 		{
 			throw NotImplementedError("Row processing is not supported by ConvLayer1D.");
@@ -66,7 +67,7 @@ namespace nyann {
 			throw NotImplementedError("Row backpropatation is not supported by ConvLayer1D.");
 			return {};
 		}
+#endif
 	};
-
 
 } // namespace nyann
