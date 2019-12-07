@@ -137,7 +137,7 @@ namespace nyann {
 		//}
 
 
-		Index<_DT>& increment(const Index<_DT>& max = Index(), std::vector<_DT> steps = std::vector<_DT>())
+		Index<_DT>& increment(Index<_DT> min = Index(), const Index<_DT>& max = Index(), std::vector<_DT> steps = std::vector<_DT>())
 		{
 			// Invariant
 			for (auto step : steps)
@@ -147,6 +147,9 @@ namespace nyann {
 			// Add missing
 			for (int i = steps.size(); i < max.size(); i++)
 				steps.push_back(1);
+
+			for (int i = min.size(); i < this->size(); i++)
+				min.push_back(_DT());
 
 			if (max == Index<_DT>())
 			{
@@ -163,18 +166,17 @@ namespace nyann {
 				{
 					this->at(current_idx_item) += steps.at(current_idx_item);
 					for (int i = current_idx_item + 1; i < max.size(); i++)
-						this->at(i) = 0;
+						this->at(i) = min.at(i);
 					break;
 				}
 			if (current_idx_item == 0)
 			{
 				this->at(current_idx_item) += steps.at(current_idx_item);
 				for (int i = current_idx_item + 1; i < max.size(); i++)
-					this->at(i) = 0;
+					this->at(i) = min.at(i);
 			}
 			return *this;
 		}
-
 
 		Index<_DT>& decrement(const Index<_DT>& min = Index<_DT>())
 		{
