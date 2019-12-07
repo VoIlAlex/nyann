@@ -798,14 +798,15 @@ namespace nyann {
 
 				// create the complex
 				// index
-				std::vector<Slice<>> next_idxs = m_slices;
+				std::vector<Slice<>> next_idxs(m_slices);
 				next_idxs.push_back(i);
-
+				NestedDataSet result;
 				if (m_is_const)
-					return NestedDataSet(m_parent_const, next_idxs);
-				return NestedDataSet(m_parent, next_idxs);
+					result = NestedDataSet(m_parent_const, next_idxs);
+				else
+					result = NestedDataSet(m_parent, next_idxs);
+				return result;
 			}
-
 
 			class iterator
 			{
