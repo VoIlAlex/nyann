@@ -940,6 +940,13 @@ namespace nyann {
 				}
 			}
 
+			static DataSet_draft<_DT> ones_like(const DataSet_draft<_DT>& other) 
+			{
+				DataSet_draft<_DT> newDataset;
+				newDataset.m_data = std::vector<_DT>(intother.m_data.size(), _DT(1));
+				newDataset.m_size = other.m_size;
+			}
+
 		private:
 			int get_flat_index() const
 			{
