@@ -524,6 +524,12 @@ namespace nyann {
 				other.m_slices.clear();
 				other.m_is_const = false;
 			}
+
+			void set_parent(DataSet_draft<_DT>* parent)
+			{
+				m_parent = parent;
+			}
+
 			//NestedDataSet(DataSet_draft<_DT>* parent, const Index& idx = {})
 			//	:
 			//	m_parent(parent),
