@@ -58,10 +58,10 @@ namespace nyann {
 	std::ostream& operator<<(std::ostream& stream, const DataSet_draft<_DT>& dataset)
 	{
 		stream << "[";
-		for (auto it = dataset.begin(); it != dataset.end(); it++)
+		for (int i = 0; i < dataset.size()[0]; i++)
 		{
-			stream << *it;
-			if (it != dataset.end() - 1)
+			stream << dataset[i];
+			if (i != dataset.size()[0] - 1)
 				std::endl(stream);
 		}
 		stream << "]";
