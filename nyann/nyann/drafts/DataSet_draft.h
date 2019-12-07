@@ -354,6 +354,11 @@ namespace nyann {
 			return m_size;
 		}
 
+		Size<> get_size() const
+		{
+			return m_size;
+		}
+
 		// TODO(feature): change shape of the 
 		// data set when changing size()
 		void resize(const Size<>& new_size)
