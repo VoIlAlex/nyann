@@ -94,6 +94,32 @@ namespace {
 		EXPECT_EQ(expected_dataset_slice, dataset_slice);
 	}
 
+	TEST(DataSet_draft, SizeGetting_1)
+	{
+		DataSet_draft<double> dataset = {
+			{1, 2, 3, 4},
+			{1, 2, 3, 4},
+			{1, 2, 3, 4},
+			{1, 2, 3, 4}
+		};
+		nyann::Size<> size = dataset.size();
+		nyann::Size<> expected_size = nyann::Size<>{ 4, 4 };
+		ASSERT_EQ(size, expected_size);
+	}
+
+	TEST(DataSet_draft, SizeGetting_2)
+	{
+		DataSet_draft<double> dataset = {
+			{1, 2, 3, 4},
+			{1, 2, 3, 4},
+			{1, 2, 3, 4},
+			{1, 2, 3, 4}
+		};
+		nyann::Size<> size = dataset.get_size();
+		nyann::Size<> expected_size = nyann::Size<>{ 4, 4 };
+		ASSERT_EQ(size, expected_size);
+	}
+
 	TEST(DataSet_draft, AtIndex)
 	{
 		DataSet_draft<double> dataset_3 = {
