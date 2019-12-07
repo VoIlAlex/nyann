@@ -136,5 +136,18 @@ namespace {
 		EXPECT_EQ(ss.str(), "[[1, 2]\n[3, 4]]\n");
 	}
 
+	TEST(DataSet_draft, Iteration_default)
+	{
+		DataSet_draft<double> dataset = {
+			{1, 2, 3, 4},
+			{1, 2, 3, 4},
+			{1, 2, 3, 4},
+			{1, 2, 3, 4}
+		};
+
+		DataSet_draft<double>::iterator it(&dataset, 0);
+		ASSERT_EQ(*it, double(dataset[0][0]));
+		ASSERT_EQ(*(it + 4), double(dataset[1][0]));
+	}
 	
 } // namespace
