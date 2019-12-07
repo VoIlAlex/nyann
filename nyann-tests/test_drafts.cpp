@@ -61,7 +61,7 @@ namespace {
 		catch (std::out_of_range& err) {}
 	}
 
-	TEST(DataSet_draft, Slicing)
+	TEST(DataSet_draft, Slicing_1)
 	{
 		DataSet_draft<double> dataset_3 = {
 			{
@@ -94,6 +94,38 @@ namespace {
 		EXPECT_EQ(expected_dataset_slice, dataset_slice);
 	}
 
+	TEST(DataSet_draft, Slicing_2)
+	{
+		DataSet_draft<double> dataset_3 = {
+			{
+				{
+					{1010},
+					{001}
+				},
+				{
+					{010},
+					{011}
+				}
+			},
+			{
+				{
+					{100},
+					{101}
+				},
+				{
+					{110},
+					{111}
+				}
+			}
+		};
+
+		DataSet_draft<double> dataset_slice = dataset_3[{0, -1}][{0, -1}][0];
+		DataSet_draft<double> expected_dataset_slice = {
+			{{1010}, {010}}, {{100}, {110}}
+		};
+
+		EXPECT_EQ(expected_dataset_slice, dataset_slice);
+	}
 	TEST(DataSet_draft, SizeGetting_1)
 	{
 		DataSet_draft<double> dataset = {
