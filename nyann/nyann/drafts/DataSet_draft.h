@@ -577,6 +577,13 @@ namespace nyann {
 				m_parent->m_data.at(flat_idx) = value;
 				return *this;
 			}
+
+			NestedDataSet& set_value(const DataSet_draft& value)
+			{
+				//TODO: set subarray value
+				throw NotImplementedError("Setting value of subdataset will be implemented in the future");
+			}
+
 			operator DataSet_draft<_DT>()
 			{
 				// Complete indexes
