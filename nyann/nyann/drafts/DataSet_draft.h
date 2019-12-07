@@ -1336,8 +1336,12 @@ namespace nyann {
 
 		iterator end()
 		{
+			int max_index = 1;
+			for (size_t dim_size : size())
+				max_index *= dim_size;
+
 			if (!size().empty())
-				return iterator(this, size().front());
+				return iterator(this, max_index);
 			return iterator(this);
 		}
 
@@ -1348,8 +1352,12 @@ namespace nyann {
 
 		const iterator end() const
 		{
+			int max_index = 1;
+			for (size_t dim_size : size())
+				max_index *= dim_size;
+
 			if (!size().empty())
-				return iterator(this, size().front());
+				return iterator(this, max_index);
 			return iterator(this);
 		}
 
