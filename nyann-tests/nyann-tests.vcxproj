@@ -56,6 +56,7 @@
     <ClCompile Include="test_Slice.cpp" />
     <ClCompile Include="test_usage.cpp" />
     <ClCompile Include="test_utils.cpp" />
+    <ClCompile Include="test_utils_draft.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
