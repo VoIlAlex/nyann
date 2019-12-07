@@ -464,7 +464,15 @@ namespace nyann {
 			std::vector<Slice<unsigned int>> m_slices;
 			bool m_is_const;
 		public:
-			NestedDataSet(DataSet_draft<_DT>* parent, const std::vector<Slice<>>& idxs = {})
+			NestedDataSet()
+				:
+				m_parent(nullptr),
+				m_parent_const(nullptr),
+				m_slices(),
+				m_is_const(false)
+			{}
+
+			NestedDataSet(DataSet_draft<_DT>* parent, const std::vector<Slice<unsigned int>>& idxs)
 				:
 				m_parent(parent),
 				m_parent_const(nullptr),
@@ -472,7 +480,7 @@ namespace nyann {
 				m_is_const(false)
 			{}
 
-			NestedDataSet(const DataSet_draft<_DT>* parent, const std::vector<Slice<>>& idxs = {})
+			NestedDataSet(const DataSet_draft<_DT>* parent, const std::vector<Slice<unsigned int>>& idxs)
 				:
 				m_parent(nullptr),
 				m_parent_const(parent),
@@ -480,6 +488,42 @@ namespace nyann {
 				m_is_const(true)
 			{}
 
+			NestedDataSet(DataSet_draft<_DT>* parent)
+				:
+				m_parent(parent),
+				m_parent_const(nullptr),
+				m_slices(),
+				m_is_const(false)
+			{}
+
+			NestedDataSet(const DataSet_draft<_DT>* parent)
+				:
+				m_parent(nullptr),
+				m_parent_const(parent),
+				m_slices(),
+				m_is_const(true)
+			{}
+
+			NestedDataSet(const NestedDataSet& other)
+				:
+				m_parent(other.m_parent),
+				m_parent_const(other.m_parent_const),
+				m_slices(other.m_slices),
+				m_is_const(other.m_is_const)
+			{}
+
+			NestedDataSet(NestedDataSet&& other)
+				:
+				m_parent(other.m_parent),
+				m_parent_const(other.m_parent_const),
+				m_slices(::std::move(other.m_slices)),
+				m_is_const(other.m_is_const)
+			{
+				other.m_parent = nullptr;
+				other.m_parent_const = nullptr;
+				other.m_slices.clear();
+				other.m_is_const = false;
+			}
 			//NestedDataSet(DataSet_draft<_DT>* parent, const Index& idx = {})
 			//	:
 			//	m_parent(parent),
