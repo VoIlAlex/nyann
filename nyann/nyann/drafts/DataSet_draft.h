@@ -960,6 +960,15 @@ namespace nyann {
 				}
 			}
 
+			static _DT abs_difference(const DataSet_draft<_DT>& left, const DataSet_draft<_DT>& right)
+			{
+				_DT difference = _DT();
+				DataSet<_DT> diff_dataset = abs(left - right);
+				for (int i = 0; i < diff_dataset.size(); i++)
+					for (int j = 0; j < diff_dataset[0].size(); j++)
+						difference += diff_dataset[i][j];
+				return difference;
+			}
 			static DataSet_draft<_DT> ones_like(const DataSet_draft<_DT>& other) 
 			{
 				DataSet_draft<_DT> newDataset;
