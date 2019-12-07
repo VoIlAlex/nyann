@@ -1,5 +1,6 @@
 
 #include "DataSet_draft.h"
+#include <math.h>
 
 namespace nyann {
     
@@ -8,7 +9,7 @@ namespace nyann {
     {
         DataSet_draft<_DT> new_dataset(dataset);
         for(auto it = new_dataset.begin(); it != new_dataset.end(); it++)
-            it->set_value(abs(it->value()));
+            *it = ::abs(*it);
         return new_dataset;
     }
 
