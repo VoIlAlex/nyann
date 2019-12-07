@@ -431,6 +431,16 @@ namespace nyann {
 		{
 			return NestedDataSet(this, std::vector<Slice<>>{ idx });
 		}
+		const ::std::vector<_DT>& data() const
+		{
+			return m_data;
+		}
+
+		::std::vector<_DT>& access_data()
+		{
+			return m_data;
+		}
+
 
 		//NestedDataSet operator[](const Index& idx)
 		//{
