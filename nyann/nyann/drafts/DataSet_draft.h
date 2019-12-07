@@ -514,21 +514,18 @@ namespace nyann {
 
 			_DT& value()
 			{
+				int flat_idx = get_flat_index();
 				// bad size of the coordinate
 				if (!m_is_const)
 				{
 					if (m_slices.size() != m_parent->size().size())
 						throw ConversionError("");
+					return m_parent->m_data[flat_idx];
 				}
-				else if (m_is_const)
+				else
 				{
-					if (m_slices.size() != m_parent_const->size().size())
-						throw ConversionError("");
+					throw ConstParentError("Cannot get reference to item of a const dataset.");
 				}
-
-				int flat_idx = get_flat_index();
-
-				return m_parent->m_data[flat_idx];
 			}
 
 			const _DT& value() const
