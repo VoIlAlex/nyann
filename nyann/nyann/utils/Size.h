@@ -32,4 +32,26 @@ namespace nyann {
 		}
 	};
 
+	template<typename _DT>
+	bool operator==(const Size<_DT>& left, const Size<_DT>& right)
+	{
+		if (left.size() != right.size())
+			return false;
+		for (int i = 0; i < left.size(); i++)
+			if (left.at(i) != right.at(i))
+				return false;
+		return true;
+	}
+
+	template<typename _DT>
+	bool operator!=(const Size<_DT>& left, const Size<_DT>& right)
+	{
+		if (left.size() != right.size())
+			return true;
+		for (int i = 0; i < left.size(); i++)
+			if (left.at(i) != right.at(i))
+				return true;
+		return false;
+	}
+
 } // namespace nyann
