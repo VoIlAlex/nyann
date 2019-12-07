@@ -703,7 +703,8 @@ namespace nyann {
 					size.push_back(slice.width());
 
 				// Size of the resulting 
-				// array
+				// array. Omit indexes. Keep
+				// only slices.
 				Size<> result_size;
 				for (auto slice : m_slices)
 					if (!slice.is_index())
