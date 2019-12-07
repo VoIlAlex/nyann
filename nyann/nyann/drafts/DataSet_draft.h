@@ -540,6 +540,21 @@ namespace nyann {
 				return *this;
 			}
 
+			NestedDataSet& operator=(NestedDataSet&& other)
+			{
+				m_parent = other.m_parent;
+				m_parent_const = other.m_parent_const;
+				m_slices = other.m_slices;
+				m_is_const = other.m_is_const;
+
+				other.m_parent = nullptr;
+				other.m_parent_const = nullptr;
+				other.m_slices.clear();
+				other.m_is_const = false;
+
+				return *this;
+			}
+
 			//NestedDataSet(DataSet_draft<_DT>* parent, const Index& idx = {})
 			//	:
 			//	m_parent(parent),
