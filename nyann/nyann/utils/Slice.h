@@ -14,11 +14,14 @@ namespace nyann {
 		bool m_is_index;
 	public:
 		// Constructors
+		Slice()
+			: ::std::vector<_DT>{ 0, 1, 1 }, m_is_index(true)
+		{}
 		Slice(_DT start, _DT end, _DT step = 1)
-			: std::vector<_DT>{ start, end, step }, m_is_index(false)
+			: ::std::vector<_DT>{ start, end, step }, m_is_index(false)
 		{}
 		Slice(_DT idx)
-			: std::vector<_DT>{ idx, idx + 1, 1 }, m_is_index(true)
+			: ::std::vector<_DT>{ idx, idx + 1, 1 }, m_is_index(true)
 		{}
 
 		_DT width() const
