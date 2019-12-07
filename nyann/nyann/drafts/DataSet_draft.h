@@ -418,7 +418,9 @@ namespace nyann {
 		// Operators
 		NestedDataSet operator[](unsigned int idx)
 		{
-			return NestedDataSet(this, std::vector<Slice<>>{ idx });
+			std::vector<Slice<>> slices{ idx };
+			NestedDataSet result(this, slices);
+			return result;
 		}
 
 		NestedDataSet operator[](const Slice<>& idx)
