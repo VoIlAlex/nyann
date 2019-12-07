@@ -122,5 +122,8 @@
     <ClInclude Include="nyann\utils\Slice.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="nyann\drafts\utils_draft.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
