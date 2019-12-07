@@ -1281,7 +1281,7 @@ namespace nyann {
 			iterator operator+(int value) const
 			{
 				iterator iter(*this);
-				iter.m_position = m_position - value;
+				iter.m_position = m_position + value;
 				return iter;
 			}
 			iterator& operator++()
