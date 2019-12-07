@@ -126,6 +126,38 @@ namespace {
 
 		EXPECT_EQ(expected_dataset_slice, dataset_slice);
 	}
+
+	TEST(DataSet_draft, SplitInputOutput)
+	{
+		typedef nyann::DataSet_draft<double> dt;
+		dt dataset = {
+			{1.0, 1.0, 1.0, 3.0},
+			{2.0, 2.0, 2.0, 6.0},
+			{1.0, 2.0, 3.0, 6.0},
+			{0.0, 0.0, 0.0, 0.0}
+		};
+
+		dt X = dataset[{0, -1}][{0, 3}];
+		dt y = dataset[{0, -1}][{3, 4}];
+
+		dt X_expected = {
+			{1.0, 1.0, 1.0},
+			{2.0, 2.0, 2.0},
+			{1.0, 2.0, 3.0},
+			{0.0, 0.0, 0.0}
+		};
+
+		dt y_expected = {
+			dt{3.0},
+			dt{6.0},
+			dt{6.0},
+			dt{0.0}
+		};
+
+		EXPECT_EQ(X, X_expected);
+		EXPECT_EQ(y, y_expected);
+	}
+
 	TEST(DataSet_draft, SizeGetting_1)
 	{
 		DataSet_draft<double> dataset = {
