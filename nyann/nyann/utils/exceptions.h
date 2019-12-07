@@ -37,8 +37,13 @@ namespace nyann {
 	};
 
 	class NotImplementedError : public ::std::runtime_error {
-		public:
+	public:
 		using ::std::runtime_error::runtime_error;
 	};
+
+	class ConstParentError : public ::std::runtime_error {
+	public:
+		using ::std::runtime_error::runtime_error;
+	}
 
 } // namespace nyann
