@@ -21,8 +21,13 @@ namespace nyann
 	{
 		int m_size_in;
 		int m_size_out;
+#ifndef DEPRECATED_FCLAYER_WEIGHTS_VECTOR
 		std::vector<std::vector<double>> m_weights;
 		std::vector<double> m_biases;
+#else
+		DataSet<_DT_OUT> m_weights;
+		DataSet<_DT_OUT> m_biases;
+#endif
 
 		// cached data
 #ifndef DEPRECATED_LAYER_ROW_PROCESSING
