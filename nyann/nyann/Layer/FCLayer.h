@@ -132,7 +132,7 @@ namespace nyann
 			double lr = 0.01
 		) override
 		{
-#ifdef DEPRECATED_LAYER_ROW_PROCESSING
+#ifndef DEPRECATED_LAYER_ROW_PROCESSING
 			auto& input = std::get<DataSet<_DT_IN>>(m_input);
 			auto& output = std::get<DataSet<_DT_OUT>>(m_output);
 #else
