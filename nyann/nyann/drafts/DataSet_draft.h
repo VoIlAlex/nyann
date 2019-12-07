@@ -1222,6 +1222,19 @@ namespace nyann {
 				return m_dataset->data().at(m_position);
 			}
 
+			_DT& value()
+			{
+				return m_dataset->access_data().at(m_position);
+			}
+
+			const _DT& value_const() const
+			{
+				if (m_is_dataset_const)
+					return m_dataset_const->data().at(m_position);
+				return m_dataset->data().at(m_position);
+			}
+
+
 			// Logic operations
 			bool operator<(const iterator& other) const
 			{
