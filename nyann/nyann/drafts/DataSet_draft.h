@@ -691,6 +691,10 @@ namespace nyann {
 				for (int i = m_slices.size(); i < m_parent->size().size(); i++)
 					m_slices.push_back({ 0, static_cast<int>(m_parent->size()[i]) });
 
+				// Handle slices without right border
+				for (int i = 0; i < m_slices.size(); i++)
+					if (m_slices[i].at(1) == -1)
+						m_slices[i].at(1) = m_parent->size()[i];
 
 				// Calculate the size 
 				// of resultant dataset
