@@ -3,6 +3,11 @@
 #include <initializer_list>
 #include <vector>
 
+
+// For all the framework configurations
+#include "_config.h"
+
+
 #include "utils/exceptions.h"
 #include "utils/Size.h"
 

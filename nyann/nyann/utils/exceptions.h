@@ -2,6 +2,9 @@
 #include <exception>
 #include <stdexcept>
 
+// For all the framework configurations
+#include "../_config.h"
+
 namespace nyann {
 
 	class DifferentSizeError : public ::std::out_of_range 
@@ -34,8 +37,13 @@ namespace nyann {
 	};
 
 	class NotImplementedError : public ::std::runtime_error {
-		public:
+	public:
 		using ::std::runtime_error::runtime_error;
 	};
+
+	class ConstParentError : public ::std::runtime_error {
+	public:
+		using ::std::runtime_error::runtime_error;
+	}
 
 } // namespace nyann

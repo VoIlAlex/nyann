@@ -1,5 +1,8 @@
 #include "..//..//nyann/dataset.h"
 
+// For all the framework configurations
+#include "../../nyann/_config.h"
+
 #include <string>
 #include <fstream>
 #include <filesystem>

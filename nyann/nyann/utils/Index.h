@@ -1,6 +1,9 @@
 #pragma once
 #include <vector>
 
+// For all the framework configurations
+#include "../_config.h"
+
 namespace nyann {
 
 	template <typename _DT = unsigned int>
@@ -60,10 +63,10 @@ namespace nyann {
 
 		bool operator==(const Index<_DT>& other) const
 		{
-			if (size() != other.size())
+			if (this->size() != other.size())
 				return false;
-			for (int i = 0; i < size(); i++)
-				if (at(i) != other[i])
+			for (int i = 0; i < this->size(); i++)
+				if (this->at(i) != other.at(i))
 					return false;
 			return true;
 		}
@@ -73,20 +76,20 @@ namespace nyann {
 		}
 		bool operator<(const Index<_DT>& other) const
 		{
-			if (size() != other.size())
+			if (this->size() != other.size())
 			{
 				// If the other index
 				// has the size of lower
 				// dimension then it's 
 				// considered as highest
-				return size() > other.size();
+				return this->size() > other.size();
 			}
 
 			// find first difference
-			for (int i = 0; i < size(); i++)
+			for (int i = 0; i < this->size(); i++)
 			{
-				if (at(i) != other[i])
-					return at(i) < other[i];
+				if (this->at(i) != other.at(i))
+					return this->at(i) < other.at(i);
 			}
 		}
 		bool operator>(const Index& other) const
@@ -147,27 +150,27 @@ namespace nyann {
 
 			if (max == Index<_DT>())
 			{
-				back()++;
+				this->back()++;
 				return *this;
 			}
 			int current_idx_item = max.size() - 1;
 			while (current_idx_item != 0)
-				if (at(current_idx_item) == max.at(current_idx_item) || at(current_idx_item) + steps.at(current_idx_item) > max.at(current_idx_item))
+				if (this->at(current_idx_item) == max.at(current_idx_item) || this->at(current_idx_item) + steps.at(current_idx_item) > max.at(current_idx_item))
 				{
 					current_idx_item--;
 				}
 				else
 				{
-					at(current_idx_item) += steps.at(current_idx_item);
+					this->at(current_idx_item) += steps.at(current_idx_item);
 					for (int i = current_idx_item + 1; i < max.size(); i++)
-						at(i) = 0;
+						this->at(i) = 0;
 					break;
 				}
 			if (current_idx_item == 0)
 			{
-				at(current_idx_item) += steps.at(current_idx_item);
+				this->at(current_idx_item) += steps.at(current_idx_item);
 				for (int i = current_idx_item + 1; i < max.size(); i++)
-					at(i) = 0;
+					this->at(i) = 0;
 			}
 			return *this;
 		}
@@ -175,26 +178,26 @@ namespace nyann {
 
 		Index<_DT>& decrement(const Index<_DT>& min = Index<_DT>())
 		{
-			int decrease_idx = size() - 1;
+			int decrease_idx = this->size() - 1;
 			for (;; decrease_idx--)
 			{
 
 				if (decrease_idx == -1)
 					throw std::out_of_range("Index has reached its min value");
 
-				if ((min.empty() && at(decrease_idx) != 0) ||
-					(!min.empty() && at(decrease_idx) > min[decrease_idx]))
+				if ((min.empty() && this->at(decrease_idx) != 0) ||
+					(!min.empty() && this->at(decrease_idx) > min[decrease_idx]))
 				{
-					at(decrease_idx)--;
+					this->at(decrease_idx)--;
 					break;
 				}
 
 			}
 
-			if (decrease_idx < size() - 1)
+			if (decrease_idx < this->size() - 1)
 			{
-				for (int i = decrease_idx + 1; i < size(); i++)
-					at(i) = m_initial_state.at(i);
+				for (int i = decrease_idx + 1; i < this->size(); i++)
+					this->at(i) = m_initial_state.at(i);
 			}
 
 			return *this;
@@ -203,8 +206,8 @@ namespace nyann {
 		// It's used for while loops
 		operator bool() const
 		{
-			for (int i = 0; i < size(); i++)
-				if (at(i) != 0)
+			for (int i = 0; i < this->size(); i++)
+				if (this->at(i) != 0)
 					return true;
 			return false;
 		}

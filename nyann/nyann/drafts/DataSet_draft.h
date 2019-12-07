@@ -1,5 +1,8 @@
 #pragma once
 
+// For all the framework configurations
+#include "../_config.h"
+
 #include "..//utils/Size.h"
 #include "..//utils/exceptions.h"
 #include "..//utils/Index.h"
@@ -351,6 +354,11 @@ namespace nyann {
 			return m_size;
 		}
 
+		Size<> get_size() const
+		{
+			return m_size;
+		}
+
 		// TODO(feature): change shape of the 
 		// data set when changing size()
 		void resize(const Size<>& new_size)
@@ -506,41 +514,39 @@ namespace nyann {
 
 			_DT& value()
 			{
+				int flat_idx = get_flat_index();
 				// bad size of the coordinate
 				if (!m_is_const)
 				{
 					if (m_slices.size() != m_parent->size().size())
 						throw ConversionError("");
+					return m_parent->m_data[flat_idx];
 				}
-				else if (m_is_const)
+				else
 				{
-					if (m_slices.size() != m_parent_const->size().size())
-						throw ConversionError("");
+					throw ConstParentError("Cannot get reference to item of a const dataset.");
 				}
-
-				int flat_idx = get_flat_index();
-
-				return m_parent->m_data[flat_idx];
 			}
 
 			const _DT& value() const
 			{
+				int flat_idx = get_flat_index();
 				// bad size of the coordinate
 				if (!m_is_const)
 				{
 					if (m_slices.size() != m_parent->size().size())
 						throw ConversionError("");
+					return m_parent->m_data[flat_idx];
 				}
-				else if (m_is_const)
+				else
 				{
 					if (m_slices.size() != m_parent_const->size().size())
 						throw ConversionError("");
+					return m_parent_const->m_data[flat_idx];
 				}
-
-				int flat_idx = get_flat_index();
-
-				return m_parent->m_data[flat_idx];
 			}
+
+			
 
 			const _DT& value_const() const
 			{
@@ -559,6 +565,23 @@ namespace nyann {
 				int flat_idx = get_flat_index();
 
 				return m_parent_const->m_data[flat_idx];
+			}
+
+			NestedDataSet& set_value(const _DT& value)
+			{
+				if(m_is_const)
+					throw ConstParentError("Cannot set value to the item while dataset is const");
+				else if (m_slices.size() != m_parent->size().size())
+					throw ConversionError("");
+				int flat_idx = get_flat_index();
+				m_parent->m_data.at(flat_idx) = value;
+				return *this;
+			}
+
+			NestedDataSet& set_value(const DataSet_draft& value)
+			{
+				//TODO: set subarray value
+				throw NotImplementedError("Setting value of subdataset will be implemented in the future");
 			}
 
 			operator DataSet_draft<_DT>()
@@ -937,6 +960,42 @@ namespace nyann {
 				}
 			}
 
+			static _DT abs_difference(const DataSet_draft<_DT>& left, const DataSet_draft<_DT>& right)
+			{
+				_DT difference = _DT();
+				DataSet<_DT> diff_dataset = abs(left - right);
+				for (int i = 0; i < diff_dataset.size(); i++)
+					for (int j = 0; j < diff_dataset[0].size(); j++)
+						difference += diff_dataset[i][j];
+				return difference;
+			}
+
+
+			//////////////////////
+			// Generation tools //
+			//////////////////////
+
+			static DataSet_draft<_DT> ones_like(const DataSet_draft<_DT>& other) 
+			{
+				DataSet_draft<_DT> newDataset;
+				newDataset.m_data = std::vector<_DT>(intother.m_data.size(), _DT(1));
+				newDataset.m_size = other.m_size;
+			}
+
+			static DataSet_draft<_DT> zeros_like(const DataSet_draft<_DT>& other) 
+			{
+				DataSet_draft<_DT> newDataset;
+				newDataset.m_data = std::vector<_DT>(intother.m_data.size(), _DT(0));
+				newDataset.m_size = other.m_size;
+			}
+
+			static DataSet_draft<_DT> empty_like(const DataSet_draft<_DT>& other) 
+			{
+				DataSet_draft<_DT> newDataset;
+				newDataset.m_data = std::vector<_DT>(intother.m_data.size(), _DT());
+				newDataset.m_size = other.m_size;
+			}
+
 		private:
 			int get_flat_index() const
 			{
@@ -964,21 +1023,24 @@ namespace nyann {
 			const DataSet_draft<_DT>* m_dataset_const;
 			int m_position;
 			bool m_is_dataset_const;
+			int m_axis;
 		public:
-			iterator(DataSet_draft<_DT>* dataset, int position = 0)
+			iterator(DataSet_draft<_DT>* dataset, int position = 0, int axis = -1)
 				: 
 				m_dataset(dataset), 
 				m_dataset_const(nullptr),
 				m_position(position),
-				m_is_dataset_const(false)
+				m_is_dataset_const(false),
+				m_axis(axis)
 			{}
 
-			iterator(const DataSet_draft<_DT>* dataset, int position = 0)
+			iterator(const DataSet_draft<_DT>* dataset, int position = 0, int axis = -1)
 				:
 				m_dataset(nullptr),
 				m_dataset_const(dataset),
 				m_position(position),
-				m_is_dataset_const(true)
+				m_is_dataset_const(true),
+				m_axis(axis)
 			{}
 
 			iterator(const iterator& other)
@@ -986,7 +1048,8 @@ namespace nyann {
 				m_dataset(other.m_dataset),
 				m_dataset_const(other.m_dataset_const),
 				m_position(other.m_position),
-				m_is_dataset_const(other.m_is_dataset_const)
+				m_is_dataset_const(other.m_is_dataset_const),
+				m_axis(other.m_axis)
 			{}
 
 			iterator(const iterator* other)
@@ -994,10 +1057,9 @@ namespace nyann {
 				m_dataset(other->m_dataset),
 				m_dataset_const(other->m_dataset_const),
 				m_position(other->m_position),
-				m_is_dataset_const(other->m_is_dataset_const)
-			{
-
-			}
+				m_is_dataset_const(other->m_is_dataset_const),
+				m_axis(other->m_axis)
+			{}
 
 			NestedDataSet operator*() const
 			{
@@ -1150,10 +1212,6 @@ namespace nyann {
 			return iterator(this);
 		}
 
-
-
 	};
-
-
 
 } // namespace nyann

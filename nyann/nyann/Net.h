@@ -1,6 +1,11 @@
 #pragma once
 
 #include <vector>
+
+
+// For all the framework configurations
+#include "_config.h"
+
 #include "Layer.h"
 #include "Loss.h"
 #include "Optimizer.h"
@@ -46,7 +51,7 @@ namespace nyann {
 			if (epochs != -1)
 				for (int ep = 0; ep < epochs; ep++)
 				{
-					_DT difference = DataSet<_DT>::abs_difference(output, predict(input));
+					_DT difference = DataSet<_DT>::abs_difference(output, predict(input)) / input.size();
 					error_dynamic.push_back(difference);
 					std::cout << "[INFO] Epoch " << ep + 1 << "..." << std::endl;
 					std::cout << "[INFO] Error: " << difference << std::endl;
@@ -80,7 +85,7 @@ namespace nyann {
 				do
 				{
 					epochs++;
-					difference = DataSet<_DT>::abs_difference(output, predict(input));
+					difference = DataSet<_DT>::abs_difference(output, predict(input)) / input.size();
 					error_dynamic.push_back(difference);
 					std::cout << "[INFO] Epoch " << epochs + 1 << "..." << std::endl;
 					std::cout << "[INFO] Error: " << difference << std::endl;

@@ -10,6 +10,10 @@
 */
 
 #pragma once
+
+// For all the framework configurations
+#include "../../nyann/_config.h"
+
 #include <vector>
 #include <filesystem>
 #include <fstream>
@@ -30,8 +34,10 @@ namespace nyann {
 			exchange_file.close();
 
 			// Compose the command
-#ifdef __GNUC__
+#ifdef PYTHON_3
 			std::string command = "python3 \"nyann-python/plot.py\"";
+#elif defined(PYTHON_3_VSCODE_MANUAL_MAKE)
+			std::string command = "python3 \"nyann/nyann-python/plot.py\"";
 #else
 			std::string command = "python \"nyann-python\\plot.py\"";
 #endif
@@ -69,8 +75,10 @@ namespace nyann {
 			exchange_file.close();
 
 			// Compose the command
-#ifdef __GNUC__
+#ifdef PYTHON_3
 			std::string command = "python3 \"nyann-python/plot.py\"";
+#elif defined(PYTHON_3_VSCODE_MANUAL_MAKE)
+			std::string command = "python3 \"nyann/nyann-python/plot.py\"";
 #else
 			std::string command = "python \"nyann-python\\plot.py\"";
 #endif
@@ -92,7 +100,10 @@ namespace nyann {
 			system(command.c_str());
 
 			// Delete temp file
-			std::filesystem::remove(std::filesystem::current_path().append(".tmp_plot").string());
+			// TODO: delete this file, please
+			// std::string temp_file_path = ".tmp_plot";
+			// if (std::filesystem::exists(temp_file_path))
+			// 	std::filesystem::remove(temp_file_path);
 		}
 	} // namespace python
 } // namespace nyann

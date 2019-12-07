@@ -18,3 +18,17 @@
 // Prerelease is a testing of merging
 // with framework the framwork.
 // #define DRAFT_DATASET_2_0_0_PRERELEASE
+
+////////////
+// Python //
+////////////
+#define PYTHON_3_VSCODE_MANUAL_MAKE
+
+//#define PYTHON_3
+
+
+////////////////
+// Deprecated // 
+////////////////
+//#define DEPRECATED_LAYER_ROW_PROCESSING
+//#define DEPRECATED_FCLAYER_WEIGHTS_VECTOR

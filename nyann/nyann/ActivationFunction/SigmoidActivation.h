@@ -1,7 +1,11 @@
 #pragma once
 
-#include "..//ActivationFunction.h"
 #include <math.h>
+
+// For all the framework configurations
+#include "../_config.h"
+
+#include "..//ActivationFunction.h"
 
 
 namespace nyann {
