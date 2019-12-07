@@ -567,6 +567,16 @@ namespace nyann {
 				return m_parent_const->m_data[flat_idx];
 			}
 
+			NestedDataSet& set_value(const _DT& value)
+			{
+				if(m_is_const)
+					throw ConstParentError("Cannot set value to the item while dataset is const");
+				else if (m_slices.size() != m_parent->size().size())
+					throw ConversionError("");
+				int flat_idx = get_flat_index();
+				m_parent->m_data.at(flat_idx) = value;
+				return *this;
+			}
 			operator DataSet_draft<_DT>()
 			{
 				// Complete indexes
