@@ -1163,7 +1163,7 @@ namespace nyann {
 				m_axis(other->m_axis)
 			{}
 
-			NestedDataSet operator*() const
+			/*NestedDataSet operator*() const
 			{
 				if (m_is_dataset_const)
 					return m_dataset_const->operator[](m_position);
@@ -1175,7 +1175,9 @@ namespace nyann {
 				if (m_is_dataset_const)
 					return m_dataset_const->operator[](m_position);
 				return m_dataset->operator[](m_position);
-			}
+			}*/
+
+			
 
 			/*const NestedDataSet operator*() const
 			{
@@ -1184,16 +1186,38 @@ namespace nyann {
 				return m_dataset->operator[](m_position);
 			}*/
 
-			NestedDataSet* operator->()
+			/*::std::shared_ptr<NestedDataSet> operator->()
 			{
-				return *m_dataset->operator[](m_position);
+				return ::std::shared_ptr<NestedDataSet>(new NestedDataSet(m_dataset->operator[](m_position)));
 			}
 
-			NestedDataSet* operator->() const
+			::std::shared_ptr<NestedDataSet> operator->() const
 			{
 				if (m_is_dataset_const)
-					return m_dataset_const->operator[](m_position);
-				return m_dataset->operator[](m_position);
+					return ::std::shared_ptr<NestedDataSet>(new NestedDataSet(m_dataset_const->operator[](m_position)));
+				return ::std::shared_ptr<NestedDataSet>(new NestedDataSet(m_dataset->operator[](m_position)));
+			}*/
+
+			_DT& operator->()
+			{
+				return m_dataset->access_data().at(m_position);
+			}
+
+			const _DT& operator->() const
+			{
+				if (m_is_dataset_const)
+					return m_dataset_const->data().at(m_position);
+				return m_dataset->data().at(m_position);
+			}
+
+			_DT& operator*()
+			{
+				return m_dataset->access_data().at(m_position);
+			}
+
+			const _DT& operator*() const
+			{
+				return m_dataset->data().at(m_position);
 			}
 
 			// Logic operations
