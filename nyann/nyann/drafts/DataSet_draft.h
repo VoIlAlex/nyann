@@ -1212,10 +1212,6 @@ namespace nyann {
 			return iterator(this);
 		}
 
-
-
 	};
-
-
 
 } // namespace nyann
