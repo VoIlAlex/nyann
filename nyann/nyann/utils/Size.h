@@ -8,7 +8,7 @@
 
 namespace nyann {
 
-	template<typename _DT=unsigned int>
+	template<typename _DT=int>
 	class Size : public std::vector<_DT>
 	{
 	public:

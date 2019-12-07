@@ -6,7 +6,7 @@
 
 namespace nyann {
 
-	template<typename _DT=unsigned int>
+	template<typename _DT=int>
 	class Slice : public std::vector<_DT>
 	{
 		// whether it's an index

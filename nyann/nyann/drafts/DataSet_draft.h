@@ -416,7 +416,7 @@ namespace nyann {
 		}
 
 		// Operators
-		NestedDataSet operator[](unsigned int idx)
+		NestedDataSet operator[](int idx)
 		{
 			std::vector<Slice<>> slices{ idx };
 			NestedDataSet result(this, slices);
@@ -427,7 +427,7 @@ namespace nyann {
 		{
 			return NestedDataSet(this, { idx });
 		}
-		NestedDataSet operator[](unsigned int idx) const
+		NestedDataSet operator[](int idx) const
 		{
 			return NestedDataSet(this, std::vector<Slice<>>{ idx });
 		}
@@ -461,7 +461,7 @@ namespace nyann {
 		{
 			DataSet_draft<_DT>* m_parent;
 			const DataSet_draft<_DT>* m_parent_const;
-			std::vector<Slice<unsigned int>> m_slices;
+			std::vector<Slice<>> m_slices;
 			bool m_is_const;
 		public:
 			NestedDataSet()
@@ -472,7 +472,7 @@ namespace nyann {
 				m_is_const(false)
 			{}
 
-			NestedDataSet(DataSet_draft<_DT>* parent, const std::vector<Slice<unsigned int>>& idxs)
+			NestedDataSet(DataSet_draft<_DT>* parent, const std::vector<Slice<>>& idxs)
 				:
 				m_parent(parent),
 				m_parent_const(nullptr),
@@ -480,7 +480,7 @@ namespace nyann {
 				m_is_const(false)
 			{}
 
-			NestedDataSet(const DataSet_draft<_DT>* parent, const std::vector<Slice<unsigned int>>& idxs)
+			NestedDataSet(const DataSet_draft<_DT>* parent, const std::vector<Slice<>>& idxs)
 				:
 				m_parent(nullptr),
 				m_parent_const(parent),
@@ -689,7 +689,8 @@ namespace nyann {
 			{
 				// Complete indexes
 				for (int i = m_slices.size(); i < m_parent->size().size(); i++)
-					m_slices.push_back({ 0, static_cast<unsigned int>(m_parent->size()[i]) });
+					m_slices.push_back({ 0, static_cast<int>(m_parent->size()[i]) });
+
 
 				// Calculate the size 
 				// of resultant dataset
