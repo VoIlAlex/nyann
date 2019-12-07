@@ -20,7 +20,7 @@ namespace {
 		nyann::Index<unsigned int>  idx = { 0, 0, 0, 0 };
 		int count_of_increments = 0;
 		while (idx <= max_idx && ++count_of_increments)
-			idx.increment(max_idx);
+			idx.increment(nyann::Index(), max_idx);
 		ASSERT_EQ(count_of_increments, 3 * 2 * 5 * 3);
 	}
 
@@ -31,7 +31,7 @@ namespace {
 		nyann::Index<unsigned int>  steps = { 2, 1, 2, 2 };
 		int count_of_increments = 0;
 		while (idx <= max_idx && ++count_of_increments)
-			idx.increment(max_idx, steps);
+			idx.increment(nyann::Index(), max_idx, steps);
 		ASSERT_EQ(count_of_increments, 2 * 2 * 3 * 2);
 	}
 
