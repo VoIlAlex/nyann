@@ -725,12 +725,18 @@ namespace nyann {
 				for (int i = 0; i < m_slices.size(); i++)
 					max_idx[i] = m_slices[i].to_value() - 1;
 
+				Index<unsigned int> min_idx(size.size());
+				for (int i = 0; i < m_slices.size(); i++)
+					min_idx[i] = m_slices[i].from_value();
+
 				Index<unsigned int> max_result_idx(result_size.size());
 				for (int i = 0; i < result_size.size(); i++)
 					if (!m_slices[i].is_index())
 						max_result_idx[i] = m_slices[i].width() - 1;
 
 				Index<unsigned int> current_idx(size.size());
+				for (int i = 0; i < m_slices.size(); i++)
+					current_idx[i] = m_slices[i].from_value();
 				//std::vector<int> current_result_idx;
 				/*for (int i = 0; i < m_slices.size(); i++)
 				{
@@ -755,7 +761,8 @@ namespace nyann {
 					steps[i] = m_slices[i].step_value();
 
 				Index<unsigned int> current_result_idx(result_size.size());
-				// TODO: create the dataset
+				
+				// Dataset creation
 				while (current_idx <= max_idx)
 				{
 					if (m_is_const)
@@ -763,8 +770,8 @@ namespace nyann {
 					else
 						dataset.at_index(current_result_idx) = m_parent->at_index(current_idx);
 
-					current_result_idx.increment(max_result_idx);
-					current_idx.increment(max_idx, steps);
+					current_result_idx.increment(Index(), max_result_idx);
+					current_idx.increment(min_idx, max_idx, steps);
 				}
 
 				return dataset;
