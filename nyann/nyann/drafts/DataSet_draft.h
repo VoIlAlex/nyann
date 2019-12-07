@@ -728,7 +728,7 @@ namespace nyann {
 				Index<unsigned int> max_result_idx(result_size.size());
 				for (int i = 0; i < result_size.size(); i++)
 					if (!m_slices[i].is_index())
-						max_result_idx[i] = m_slices[i].width();
+						max_result_idx[i] = m_slices[i].width() - 1;
 
 				Index<unsigned int> current_idx(size.size());
 				//std::vector<int> current_result_idx;
