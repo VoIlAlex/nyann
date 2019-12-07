@@ -1023,21 +1023,24 @@ namespace nyann {
 			const DataSet_draft<_DT>* m_dataset_const;
 			int m_position;
 			bool m_is_dataset_const;
+			int m_axis;
 		public:
-			iterator(DataSet_draft<_DT>* dataset, int position = 0)
+			iterator(DataSet_draft<_DT>* dataset, int position = 0, int axis = -1)
 				: 
 				m_dataset(dataset), 
 				m_dataset_const(nullptr),
 				m_position(position),
-				m_is_dataset_const(false)
+				m_is_dataset_const(false),
+				m_axis(axis)
 			{}
 
-			iterator(const DataSet_draft<_DT>* dataset, int position = 0)
+			iterator(const DataSet_draft<_DT>* dataset, int position = 0, int axis = -1)
 				:
 				m_dataset(nullptr),
 				m_dataset_const(dataset),
 				m_position(position),
-				m_is_dataset_const(true)
+				m_is_dataset_const(true),
+				m_axis(axis)
 			{}
 
 			iterator(const iterator& other)
@@ -1045,7 +1048,8 @@ namespace nyann {
 				m_dataset(other.m_dataset),
 				m_dataset_const(other.m_dataset_const),
 				m_position(other.m_position),
-				m_is_dataset_const(other.m_is_dataset_const)
+				m_is_dataset_const(other.m_is_dataset_const),
+				m_axis(other.m_axis)
 			{}
 
 			iterator(const iterator* other)
@@ -1053,10 +1057,9 @@ namespace nyann {
 				m_dataset(other->m_dataset),
 				m_dataset_const(other->m_dataset_const),
 				m_position(other->m_position),
-				m_is_dataset_const(other->m_is_dataset_const)
-			{
-
-			}
+				m_is_dataset_const(other->m_is_dataset_const),
+				m_axis(other->m_axis)
+			{}
 
 			NestedDataSet operator*() const
 			{
