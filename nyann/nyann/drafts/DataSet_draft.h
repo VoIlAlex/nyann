@@ -1217,6 +1217,8 @@ namespace nyann {
 
 			const _DT& operator*() const
 			{
+				if (m_is_dataset_const)
+					return m_dataset_const->data().at(m_position);
 				return m_dataset->data().at(m_position);
 			}
 
