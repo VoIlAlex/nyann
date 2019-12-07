@@ -969,6 +969,12 @@ namespace nyann {
 						difference += diff_dataset[i][j];
 				return difference;
 			}
+
+
+			//////////////////////
+			// Generation tools //
+			//////////////////////
+
 			static DataSet_draft<_DT> ones_like(const DataSet_draft<_DT>& other) 
 			{
 				DataSet_draft<_DT> newDataset;
