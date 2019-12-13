@@ -33,20 +33,6 @@ namespace nyann
 			if (m_activation_function != nullptr)
 				delete m_activation_function;
 		}
-
-		///////////////////////////////
-		// Deprecated features		 //
-		// Will be removed in future //
-		///////////////////////////////
-
-#ifndef DEPRECATED_LAYER_ROW_PROCESSING
-		virtual DataRow<_DT_OUT> operator() (const DataRow<_DT_IN>&, bool save = true) = 0;
-		// 1-dimensional for now
-		virtual std::vector<double> back_propagation(
-			const std::vector<double>& errors,
-			const std::vector<double>& derivatives, // d(yj) / d(Sj) - caused by activation function
-			double lr = 0.01) = 0;
-#endif
 	};
 
 } // namespace nyann

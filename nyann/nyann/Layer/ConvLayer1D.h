@@ -48,26 +48,6 @@ namespace nyann {
 			// TODO: implement
 			return "";
 		}
-
-
-		// Not implemented and deprecated
-		// functions. Forget about those
-#ifndef DEPRECATED_LAYER_ROW_PROCESSING
-		virtual DataRow<_DT> operator() (const DataRow<_DT>&, bool save = true) override
-		{
-			throw NotImplementedError("Row processing is not supported by ConvLayer1D.");
-			return {};
-		}
-
-		virtual std::vector<double> back_propagation(
-			const std::vector<double>& errors,
-			const std::vector<double>& derivitives, // d(yj) / d(Sj) - caused by activation function
-			double lr = 0.01) override
-		{
-			throw NotImplementedError("Row backpropatation is not supported by ConvLayer1D.");
-			return {};
-		}
-#endif
 	};
 
 } // namespace nyann
