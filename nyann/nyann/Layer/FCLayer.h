@@ -48,7 +48,7 @@ namespace nyann
 			// in backpropagation
 			m_input = input;
 
-			DataSet<_DT_OUT> outputs(input.get_size());
+			DataSet<_DT_OUT> outputs({ input.get_size()[0], m_size_out });
 #ifndef DEPRECATED_LAYER_ROW_PROCESSING
 			// process row by row
 			for (int k = 0; k < outputs.get_size()[0]; k++)
@@ -56,19 +56,19 @@ namespace nyann
 #else
 			for (int k = 0; k < outputs.get_size()[0]; k++)
 			{
-				DataRow<_DT_OUT> output(m_size_out);
+				//DataRow<_DT_OUT> output(m_size_out);
 				for (int j = 0; j < m_size_out; j++)
 				{
 					for (int i = 0; i < m_size_in; i++)
-						output[j] += m_weights[i][j] * input[k][i];
-					output[j] -= m_biases[j];
+						outputs[k][j] += m_weights[i][j] * input[k][i];
+					outputs[k][j] -= m_biases[j];
 					if (this->m_activation_function != nullptr)
-						output[j] = this->m_activation_function->operator()(output[j]);
+						outputs[k][j] = this->m_activation_function->operator()(outputs[k][j]);
 				}
 
 				// save data 
 				// for back propagation
-				return output;
+				//return output;
 			}
 #endif
 
