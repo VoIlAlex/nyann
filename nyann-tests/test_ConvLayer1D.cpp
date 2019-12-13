@@ -95,5 +95,56 @@ namespace {
 
 		ASSERT_EQ(y.shape(), output_shape);
 	}
+#else
+	TEST(ConvLayer1D, Forward)
+	{
+		nyann::ConvLayer1D<double> layer(
+			2,		// filters in
+			3,		// filters out
+			2,		// kernel size
+			1,		// stride
+			0		// padding
+		);
+
+		nyann::ConvLayer1D<double>::input_t input = {
+			{
+				{1.0, 1.0, 1.0},
+				{1.0, 1.0, 1.0}
+			},
+			{
+				{1.0, 1.0, 1.0},
+				{1.0, 1.0, 1.0}
+			}
+		};
+
+		nyann::ConvLayer1D<double>::output_t output = layer(input);
+	}
+
+	TEST(ConvLayer1D, OutputShape)
+	{
+		nyann::ConvLayer1D<double> layer(
+			2,		// filters in
+			3,		// filters out
+			2,		// kernel size
+			1,		// stride
+			0		// padding
+		);
+
+		nyann::ConvLayer1D<double>::input_t input = {
+			{
+				{1.0, 1.0, 1.0},
+				{1.0, 1.0, 1.0}
+			},
+			{
+				{1.0, 1.0, 1.0},
+				{1.0, 1.0, 1.0}
+			}
+		};
+
+		nyann::ConvLayer1D<double>::output_t output = layer(input);
+		ASSERT_EQ(output.size(), input.size());
+		ASSERT_EQ(output.at(0).size(), 3);
+		ASSERT_EQ(output.at(0).at(0).size(), 2);
+	}
 #endif
 } // namespace 
