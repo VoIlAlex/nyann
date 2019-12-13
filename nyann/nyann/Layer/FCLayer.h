@@ -1,7 +1,6 @@
 #pragma once
 #include <vector>
 #include <functional>
-#include <variant>
 #include <random>
 
 // For all the framework configurations
