@@ -11,12 +11,12 @@ namespace {
 			{3.0, 4.0}
 		};
 	}
-
+#ifndef DEPRECATED_LAYER_ROW_PROCESSING
 	TEST(DataRow, Construction)
 	{
 		nyann::DataRow<float> row = { 1.0, 2.0, 3.0 };
 	}
-
+#endif
 	TEST(DataSet, IO)
 	{
 		nyann::DataSet<float> dataset = {

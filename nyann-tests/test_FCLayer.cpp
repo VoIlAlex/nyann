@@ -6,7 +6,7 @@ namespace {
 	{
 		nyann::FCLayer<double> layer({ 10, 10 });
 	}
-
+#ifndef DEPRECATED_LAYER_ROW_PROCESSING
 	TEST(FCLayer, ProcessingRow)
 	{
 		nyann::FCLayer<double> layer({ 5, 1 });
@@ -24,7 +24,7 @@ namespace {
 			{ 1.0 }
 		);
 	}
-
+#endif
 	TEST(FCLayer, BatchProcessing)
 	{
 		nyann::FCLayer<double> layer({ 2, 1 });
