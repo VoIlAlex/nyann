@@ -30,5 +30,5 @@
 ////////////////
 // Deprecated // 
 ////////////////
-//#define DEPRECATED_LAYER_ROW_PROCESSING
+#define DEPRECATED_LAYER_ROW_PROCESSING
 //#define DEPRECATED_FCLAYER_WEIGHTS_VECTOR
