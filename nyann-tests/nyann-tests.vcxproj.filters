@@ -43,6 +43,9 @@
     <ClCompile Include="test_utils_draft.cpp">
       <Filter>drafts</Filter>
     </ClCompile>
+    <ClCompile Include="test_TrainDataSet_draft.cpp">
+      <Filter>drafts</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />

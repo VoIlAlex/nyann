@@ -54,6 +54,7 @@
     <ClCompile Include="test_Net.cpp" />
     <ClCompile Include="test_Size.cpp" />
     <ClCompile Include="test_Slice.cpp" />
+    <ClCompile Include="test_TrainDataSet_draft.cpp" />
     <ClCompile Include="test_usage.cpp" />
     <ClCompile Include="test_utils.cpp" />
     <ClCompile Include="test_utils_draft.cpp" />
