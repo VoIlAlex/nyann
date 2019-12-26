@@ -141,10 +141,10 @@ namespace nyann {
 	template<typename _DT>
 	DataSet<_DT> abs(const DataSet<_DT>& dataset)
 	{
-		DataSet<_DT> result(dataset.get_size());
-		for (int i = 0; i < result.size(); i++)
-			for(int j = 0; j < result[i].size(); j++)
-				result[i][j] = std::abs(result[i][j]);
+		DataSet<_DT> result = dataset;
+		for (int i = 0; i < result.get_size()[0]; i++)
+			for (int j = 0; j < result.get_size()[1]; j++)
+				result[i][j] = result[i][j] >= 0 ? result[i][j]  :  -result[i][j];
 		return result;
 	}
 	////////////////////////////
