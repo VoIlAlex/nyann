@@ -11,5 +11,6 @@
 
 
 #include "drafts/DataSet_draft.h"
+#include "drafts/TrainDataSet_draft.h"
 #include "drafts/io_draft.h"
 #include "drafts/utils_draft.h"
