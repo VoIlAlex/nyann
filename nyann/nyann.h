@@ -1,6 +1,11 @@
 #pragma once
 
 
+// configuration file
+// of the project
+#include "nyann/_config.h"
+
+
 // include all the headers of 
 // nyann library
 
