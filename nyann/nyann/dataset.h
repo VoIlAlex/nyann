@@ -144,7 +144,7 @@ namespace nyann {
 		DataSet<_DT> result(dataset.get_size());
 		for (int i = 0; i < result.size(); i++)
 			for(int j = 0; j < result[i].size(); j++)
-				result[i][j] = std::abs(result[i][j]);
+				result[i][j] = std::abs(dataset[i][j]);
 		return result;
 	}
 	////////////////////////////
