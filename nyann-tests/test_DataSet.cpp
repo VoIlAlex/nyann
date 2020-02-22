@@ -5,18 +5,11 @@
 namespace {
 	TEST(DataSet, Construction)
 	{
-		nyann::DataRow<float> row = { 1.0, 2.0, 3.0 };
 		nyann::DataSet<float> dataset = {
 			{1.0, 2.0},
 			{3.0, 4.0}
 		};
 	}
-
-	TEST(DataRow, Construction)
-	{
-		nyann::DataRow<float> row = { 1.0, 2.0, 3.0 };
-	}
-
 	TEST(DataSet, IO)
 	{
 		nyann::DataSet<float> dataset = {

@@ -2,7 +2,7 @@
 
 #include <initializer_list>
 #include <vector>
-
+#include <math.h>
 
 // For all the framework configurations
 #include "_config.h"
@@ -12,6 +12,7 @@
 #include "utils/Size.h"
 
 namespace nyann {
+#ifndef DEPRECATED_LAYER_ROW_PROCESSING
 	template<typename _DT>
 	class DataRow : public std::vector<_DT>
 	{
@@ -21,24 +22,24 @@ namespace nyann {
 			: std::vector<_DT>(obj)
 		{}
 	};
+#endif
 
-
+#ifndef DEPRECATED_LAYER_ROW_PROCESSING
 	template<typename _DT>
 	class DataSet : public std::vector<DataRow<_DT>>
 	{
 	public:
 		DataSet() {}
+
 		DataSet(std::initializer_list<DataRow<_DT>> il)
 			: std::vector<DataRow<_DT>>(il)
 		{}
-
 		DataSet(int size, const std::allocator<_DT>& allocator = std::allocator<_DT>())
 			: std::vector<DataRow<_DT>>(size, allocator)
 		{}
 		DataSet(const DataSet<_DT>& dataset)
 			: std::vector<DataRow<_DT>>(dataset)
 		{}
-
 		// For now only two dimensional
 		DataSet(nyann::Size<> size)
 		{
@@ -53,6 +54,40 @@ namespace nyann {
 					this->push_back(DataRow<_DT>(size[1]));
 			}
 		}
+#else
+	template<typename _DT>
+	class DataSet : public std::vector<std::vector<_DT>>
+	{
+	public:
+		DataSet() {}
+
+		DataSet(std::initializer_list<std::vector<_DT>> il)
+			: std::vector<std::vector<_DT>>(il)
+		{}
+		DataSet(int size, const std::allocator<_DT>& allocator = std::allocator<_DT>())
+			: std::vector<std::vector<_DT>>(size, allocator)
+		{}
+		DataSet(const DataSet<_DT>& dataset)
+			: std::vector<std::vector<_DT>>(dataset)
+		{}
+		// For now only two dimensional
+		DataSet(nyann::Size<> size)
+		{
+			if (size == Size<>() || size[0] == 0)
+				return;
+
+			for (int i = 0; i < size[0]; i++)
+			{
+				if (size.size() == 1)
+					this->push_back({});
+				else
+					this->push_back(std::vector<_DT>(size[1]));
+			}
+		}
+#endif
+		
+
+		
 		static DataSet<_DT> zeros_like(const DataSet<_DT>& dataset)
 		{
 			nyann::Size<> size_of_dataset;
@@ -92,7 +127,7 @@ namespace nyann {
 			return get_size();
 		}
 	};
-
+#ifndef DEPRECATED_LAYER_ROW_PROCESSING
 	template<typename _DT>
 	DataRow<_DT> abs(const DataRow<_DT>& datarow)
 	{
@@ -101,19 +136,21 @@ namespace nyann {
 			result[i] = result[i] > 0 ? result[i] : -result[i];
 		return result;
 	}
-
+#endif
 
 	template<typename _DT>
 	DataSet<_DT> abs(const DataSet<_DT>& dataset)
 	{
-		DataSet<_DT> result;
-		for (auto& row : dataset)
-			result.push_back(abs(row));
+		DataSet<_DT> result(dataset.get_size());
+		for (int i = 0; i < result.size(); i++)
+			for(int j = 0; j < result[i].size(); j++)
+				result[i][j] = std::abs(result[i][j]);
 		return result;
 	}
 	////////////////////////////
 	// Operators overloadings //
 	////////////////////////////
+#ifndef DEPRECATED_LAYER_ROW_PROCESSING
 	template<typename _DT>
 	DataRow<_DT> operator+(const DataRow<_DT>& left, const DataRow<_DT>& right)
 	{
@@ -125,6 +162,7 @@ namespace nyann {
 			result[i] = left[i] + right[i];
 		return result;
 	}
+
 
 	template<typename _DT>
 	DataRow<_DT> operator-(const DataRow<_DT>& left, const DataRow<_DT>& right)
@@ -148,7 +186,7 @@ namespace nyann {
 
 		return result;
 	}
-
+#endif
 	// used in evaluation of results
 	/*template<typename _DT>
 	double abs_difference(const DataSet<_DT>& left, const DataSet<_DT>& right)

@@ -30,7 +30,7 @@ std::ostream& operator<<(std::ostream& stream, const nyann::DataSet<_DT>& datase
 
 	return stream;
 }
-
+#ifndef DEPRECATED_LAYER_ROW_PROCESSING
 template<typename _DT>
 std::ostream& operator<<(std::ostream& stream, const nyann::DataRow<_DT>& datarow)
 {
@@ -43,3 +43,4 @@ std::ostream& operator<<(std::ostream& stream, const nyann::DataRow<_DT>& dataro
 	stream << "]";
 	return stream;
 }
+#endif

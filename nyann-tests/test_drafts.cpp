@@ -127,6 +127,42 @@ namespace {
 		EXPECT_EQ(expected_dataset_slice, dataset_slice);
 	}
 
+	TEST(DataSet_draft, SlicingInitialization)
+	{
+		DataSet_draft<double> dataset_3 = {
+			{
+				{
+					{1010},
+					{001}
+				},
+				{
+					{010},
+					{011}
+				}
+			},
+			{
+				{
+					{100},
+					{101}
+				},
+				{
+					{110},
+					{111}
+				}
+			}
+		};
+
+		dataset_3[{0, 2}][1][{0, 2}].set_value(DataSet_draft<double>{
+			{ {0}, {0} },
+			{ {0}, {0} }
+		});
+
+		ASSERT_EQ(dataset_3[0][1][0], 0);
+		ASSERT_EQ(dataset_3[0][1][1], 0);
+		ASSERT_EQ(dataset_3[1][1][0], 0);
+		ASSERT_EQ(dataset_3[1][1][1], 0);
+	}
+
 	TEST(DataSet_draft, SplitInputOutput)
 	{
 		typedef nyann::DataSet_draft<double> dt;
@@ -238,6 +274,5 @@ namespace {
 		DataSet_draft<double>::iterator it(&dataset, 0);
 		ASSERT_EQ(*it, double(dataset[0][0]));
 		ASSERT_EQ(*(it + 4), double(dataset[1][0]));
-	}
-	
+	}	
 } // namespace
