@@ -8,7 +8,7 @@
 */
 
 #include "nyann.h"
-#include "examples/labs.h"
+#include "nyann-examples/labs.h"
 #include "nyann/drafts.h"
 
 int main()
@@ -40,18 +40,20 @@ int main()
 
 	//Lab1();
 	//Lab2();
-	//Lab3();
+	Lab3();
 
-	nyann::DataSet_draft<double> dataset {
-		{
-			{1, 2, 3},
-			{3, 2, 1}
-		},
-		{
-			{1.0, 2.0},
-			{3.0, 4.0}
-		}
-	};
+	// nyann::DataSet_draft<double> dataset {
+	// 	{{
+	// 		{1, 2, 3},
+	// 		{3, 2, 1}
+	// 	},
+	// 	{
+	// 	{
+	// 		{1.0, 2.0, 3.0},
+	// 		{3.0, 4.0, 5.0}
+	// 	}},
+	// 	}
+	// };
 
-	std::cout << dataset;
+	// std::cout << dataset;
 }
