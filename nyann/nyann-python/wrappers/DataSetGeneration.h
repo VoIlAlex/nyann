@@ -10,6 +10,7 @@
 namespace nyann {
 	namespace python {
 
+#ifndef DEPRECATED_LAYER_ROW_PROCESSING
 		template <typename _DT>
 		TrainDataSet<_DT> generate_linear_dataset(int size, int input_size, double deviation)
 		{
@@ -119,5 +120,6 @@ namespace nyann {
 			std::filesystem::remove("tmp");
 			return dataset;
 		}
+#endif
 	} // namespace python
 } // namespace nyann

@@ -27,7 +27,7 @@ public:
 		auto output_to_plot = net.fit(dataset,
 			-1,		// train until error become 0
 			1,		// batch size
-			0.3,	// learning rate
+			0.003,	// learning rate
 			0		// required error
 		);
 
@@ -52,6 +52,7 @@ class Lab2
 		const std::function<double(double)>& func, int size, int input_size, double step = 0.1)
 	{
 		nyann::TrainDataSet<double> dataset;
+#ifndef DEPRECATED_LAYER_ROW_PROCESSING
 		for (int i = 0; i < size; i++)
 		{
 			nyann::DataRow<double> X;
@@ -62,9 +63,9 @@ class Lab2
 			y = { func((i + input_size) * step) };
 			dataset.push_back({ X, y });
 		}
+#endif
 		return dataset;
 	}
-
 public:
 	Lab2()
 	{
@@ -177,7 +178,7 @@ public:
 
 		auto [dataset_train, dataset_test] = get_dataset();
 
-		auto outputs_to_plot = net.fit(dataset_train, 1000, 1, 0.05);
+		auto outputs_to_plot = net.fit(dataset_train, -1, 1, 0.005, 0);
 
 
 		nyann::DataSet<double> input = dataset_test.get_input();
