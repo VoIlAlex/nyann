@@ -175,7 +175,7 @@ namespace nyann {
 		}
 
 		std::vector<_DT> fit(
-			const nyann::TrainDataSet_draft<_DT>& dataset, 
+			const ::nyann::TrainDataSet_draft<_DT>& dataset, 
 			int epochs, 
 			int batch_size = 1, 
 			double lr = 0.001, 

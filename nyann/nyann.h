@@ -25,6 +25,7 @@
 #else
 
 #include "nyann/drafts/DataSet_draft.h"
+#include "nyann/drafts/TrainDataSet_draft.h"
 //#include "nyann/DataSet.h"
 #include "nyann/Layer.h"
 #include "nyann/Loss.h"
