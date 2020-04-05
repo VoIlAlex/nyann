@@ -12,7 +12,7 @@ public:
 	Lab1()
 	{
 		nyann::Net net;
-		nyann::Layer<double>* l_1 = new nyann::FCLayer<double>(nyann::Size{ 2, 1 });
+		nyann::Layer<double>* l_1 = new nyann::FCLayer<double>(nyann::Size<>{ 2, 1 });
 		l_1->add_activation_function(new nyann::BinaryActivation<double>());
 
 		net.add_layer(l_1);
@@ -51,7 +51,7 @@ class Lab2
 	nyann::TrainDataSet<double> generate_dataset(
 		const std::function<double(double)>& func, int size, int input_size, double step = 0.1)
 	{
-		nyann::TrainDataSet<double> dataset;
+		/*nyann::TrainDataSet<double> dataset;
 		for (int i = 0; i < size; i++)
 		{
 			nyann::DataRow<double> X;
@@ -62,7 +62,8 @@ class Lab2
 			y = { func((i + input_size) * step) };
 			dataset.push_back({ X, y });
 		}
-		return dataset;
+		return dataset;*/
+		return {};
 	}
 
 public:
@@ -79,10 +80,10 @@ public:
 
 		nyann::Net net;
 
-		nyann::Layer<double>* l_1 = new nyann::FCLayer<double>(nyann::Size{ 10, 3 });
+		nyann::Layer<double>* l_1 = new nyann::FCLayer<double>(nyann::Size<>{ 10, 3 });
 		l_1->add_activation_function(new nyann::ReLU<double>());
 		net.add_layer(l_1);
-		nyann::Layer<double>* l_2 = new nyann::FCLayer<double>(nyann::Size{ 3, 1 });
+		nyann::Layer<double>* l_2 = new nyann::FCLayer<double>(nyann::Size<>{ 3, 1 });
 		l_2->add_activation_function(new nyann::ReLU<double>());
 		net.add_layer(l_2);
 
@@ -117,13 +118,13 @@ public:
 //
 //		// TODO: correct architecture
 //		int input_size = dataset_train.get_size()[0];
-//		nyann::Layer<double>* l_1 = new nyann::FCLayer<double>(nyann::Size{ 28 * 28, 1000 });
+//		nyann::Layer<double>* l_1 = new nyann::FCLayer<double>(nyann::Size<>{ 28 * 28, 1000 });
 //		l_1->add_activation_function(new nyann::ReLU<double>());
-//		nyann::Layer<double>* l_2 = new nyann::FCLayer<double>(nyann::Size{ 1000, 1000 });
+//		nyann::Layer<double>* l_2 = new nyann::FCLayer<double>(nyann::Size<>{ 1000, 1000 });
 //		l_2->add_activation_function(new nyann::ReLU<double>());
-//		nyann::Layer<double>* l_3 = new nyann::FCLayer<double>(nyann::Size{ 1000, 1000 });
+//		nyann::Layer<double>* l_3 = new nyann::FCLayer<double>(nyann::Size<>{ 1000, 1000 });
 //		l_3->add_activation_function(new nyann::ReLU<double>());
-//		nyann::Layer<double>* l_4 = new nyann::FCLayer<double>(nyann::Size{ 1000, 10 });
+//		nyann::Layer<double>* l_4 = new nyann::FCLayer<double>(nyann::Size<>{ 1000, 10 });
 //		l_4->add_activation_function(new nyann::Softmax<double>());
 //
 //		nyann::Net net;
@@ -164,23 +165,26 @@ public:
 	{
 		nyann::Net net;
 
-		nyann::FCLayer<double> *layer_1 = new nyann::FCLayer<double>({ 4 * 4, 50 });
+		nyann::FCLayer<double> *layer_1 = new nyann::FCLayer<double>({ 4 * 4, 200 });
 		layer_1->add_activation_function(new nyann::ReLU<double>());
-		nyann::FCLayer<double> *layer_2 = new nyann::FCLayer<double>({ 50, 20 });
+		nyann::FCLayer<double> *layer_2 = new nyann::FCLayer<double>({ 200, 50 });
 		layer_2->add_activation_function(new nyann::ReLU<double>());
-		nyann::FCLayer<double> *layer_3 = new nyann::FCLayer<double>({ 20, 10 });
-		layer_3->add_activation_function(new nyann::BinaryActivation<double>());
+		nyann::FCLayer<double> *layer_3 = new nyann::FCLayer<double>({ 50, 20 });
+		layer_3->add_activation_function(new nyann::ReLU<double>());
+		nyann::FCLayer<double> *layer_4 = new nyann::FCLayer<double>({ 20, 10 });
+		//layer_4->add_activation_function(new nyann::BinaryActivation<double>());
 
 		net.add_layer(layer_1);
 		net.add_layer(layer_2);
 		net.add_layer(layer_3);
+		net.add_layer(layer_4);
 
 
 		auto [dataset_train, dataset_test] = get_dataset();
 
-		auto outputs_to_plot = net.fit(dataset_train, -1, 2, 0.2);
+		auto outputs_to_plot = net.fit(dataset_train, -1, 2, 0.001);
 
-		nyann::python::plot(outputs_to_plot);
+		///nyann::python::plot(outputs_to_plot);
 
 		nyann::DataSet<double> input = dataset_test.get_input();
 		nyann::DataSet<double> expected_output = dataset_test.get_output();

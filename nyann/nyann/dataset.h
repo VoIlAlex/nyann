@@ -127,16 +127,6 @@ namespace nyann {
 			return get_size();
 		}
 	};
-#ifndef DEPRECATED_LAYER_ROW_PROCESSING
-	template<typename _DT>
-	DataRow<_DT> abs(const DataRow<_DT>& datarow)
-	{
-		DataRow<_DT> result = datarow;
-		for (int i = 0; i < result.size(); i++)
-			result[i] = result[i] > 0 ? result[i] : -result[i];
-		return result;
-	}
-#endif
 
 	template<typename _DT>
 	DataSet<_DT> abs(const DataSet<_DT>& dataset)
@@ -221,4 +211,4 @@ namespace nyann {
 
 
 // include subclasses of DataSet
-#include "DataSet/TrainDataSet.h"
+//#include "DataSet/TrainDataSet.h"

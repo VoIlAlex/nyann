@@ -1,4 +1,8 @@
-#include "..//..//nyann/dataset.h"
+#pragma once
+
+
+
+
 
 // For all the framework configurations
 #include "../../nyann/_config.h"
@@ -9,7 +13,9 @@
 
 namespace nyann {
 	namespace python {
+#ifndef DRAFT_DATASET_2_0_0_ALPHA_TEST
 
+#include "..//..//nyann/dataset.h"		
 		template <typename _DT>
 		TrainDataSet<_DT> generate_linear_dataset(int size, int input_size, double deviation)
 		{
@@ -47,8 +53,8 @@ namespace nyann {
 			std::ifstream dataset_file("tmp");
 			std::string line_csv;
 
-			DataRow<double> input;
-			DataRow<double> output;
+			std::vector<double> input;
+			std::vector<double> output;
 
 			for (int i = 0; dataset_file >> line_csv; i++)
 			{
@@ -119,5 +125,7 @@ namespace nyann {
 			std::filesystem::remove("tmp");
 			return dataset;
 		}
+#endif
 	} // namespace python
 } // namespace nyann
+

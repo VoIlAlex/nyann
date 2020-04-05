@@ -1,6 +1,6 @@
 #pragma once
 #include <utility>
-#include "DataSet_draft.h"
+#include "./DataSet_draft.h"
 
 namespace nyann {
 	template<typename _DT>
@@ -11,12 +11,12 @@ namespace nyann {
 
 		DataSet_draft<_DT> get_input() const
 		{
-			return first;
+			return this->first;
 		}
 
 		DataSet_draft<_DT> get_output() const
 		{
-			return second;
+			return this->second;
 		}
 	};
 
@@ -29,7 +29,10 @@ namespace nyann {
 
 		TrainDataSample_draft<_DT> operator[](int i)
 		{
-			return { first[i], second[i] };
+			return TrainDataSample_draft<_DT>( 
+				DataSet_draft<_DT>(this->first[i]),
+				DataSet_draft<_DT>(this->second[i])
+			);
 		}
 	};
 

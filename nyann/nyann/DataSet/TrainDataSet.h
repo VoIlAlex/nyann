@@ -3,6 +3,8 @@
 #include <initializer_list>
 #include <vector>
 #include <random>
+#include <utility>
+
 
 // For all the framework configurations
 #include "../_config.h"
@@ -44,6 +46,9 @@ namespace nyann {
 		}
 	};
 #else
+
+#include "../drafts/DataSet_draft.h"
+
 	template<typename _DT>
 	class TrainDataSet : public std::pair<DataSet_draft<_DT>, DataSet_draft<_DT>>
 	{

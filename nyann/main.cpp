@@ -7,9 +7,12 @@
 
 */
 
+#include <iostream>
 #include "nyann.h"
-#include "examples/labs.h"
-#include "nyann/drafts.h"
+//#include "nyann/drafts/io_draft.h"
+//#include "examples/labs.h"
+//#include "nyann/drafts.h"
+//#include "nyann/drafts/DataSet_draft.h"
 
 int main()
 {
@@ -48,10 +51,10 @@ int main()
 			{3, 2, 1}
 		},
 		{
-			{1.0, 2.0},
-			{3.0, 4.0}
+			{1.0, 2.0, 2.0},
+			{3.0, 4.0, 1.0}
 		}
 	};
 
-	std::cout << dataset;
+	//std::cout << dataset;
 }

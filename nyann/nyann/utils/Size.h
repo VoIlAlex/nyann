@@ -15,11 +15,11 @@ namespace nyann {
 		using std::vector<_DT>::vector;
 		// zero if not
 		// presented
-		_DT operator[](int i) const
+		const _DT& operator[](int i) const
 		{
 			try
 			{
-				return std::vector<_DT>::at(i);
+				return { std::vector<_DT>::at(i) };
 			}
 			catch (std::out_of_range&)
 			{
@@ -28,7 +28,20 @@ namespace nyann {
 		}
 		_DT& operator[](int i)
 		{
-			return std::vector<_DT>::at(i);
+			return { std::vector<_DT>::at(i) };
+		}
+
+		size_t plain_size()
+		{
+			size_t size = this->front();
+			for (auto it = this->begin() + 1; it != this->end(); it++)
+				size *= *it;
+			return size;
+		}
+
+		operator _DT() const
+		{
+			return this->at(0);
 		}
 	};
 

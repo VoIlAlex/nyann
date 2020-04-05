@@ -13,7 +13,7 @@
 //
 // Alpha test here is test stage 
 // before merging with the framework.
-// #define DRAFT_DATASET_2_0_0_ALPHA_TEST
+ #define DRAFT_DATASET_2_0_0_ALPHA_TEST
 //
 // Prerelease is a testing of merging
 // with framework the framwork.
