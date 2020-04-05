@@ -503,7 +503,7 @@ namespace nyann {
 					else
 						dataset.at_index(current_result_idx) = m_parent->at_index(current_idx);
 
-					current_result_idx.increment(Index(), max_result_idx);
+					current_result_idx.increment(Index<>(), max_result_idx);
 					current_idx.increment(min_idx, max_idx, steps);
 				}
 

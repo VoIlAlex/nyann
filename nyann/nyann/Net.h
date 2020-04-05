@@ -47,12 +47,14 @@ namespace nyann {
 		{
 			DataSet<_DT> input = dataset.get_input();
 			DataSet<_DT> output = dataset.get_output();
+			DataSet<_DT> expected_output;
 			std::vector<_DT> error_dynamic;
 			// TODO: here is a lot of duplicate code. Optimize it.
 			if (epochs != -1)
 				for (int ep = 0; ep < epochs; ep++)
 				{
-					_DT difference = DataSet<_DT>::abs_difference(output, predict(input)) / input.size();
+					expected_output = predict(input);
+					_DT difference = DataSet<_DT>::abs_difference(output, expected_output) / input.size();
 					error_dynamic.push_back(difference);
 					std::cout << "[INFO] Epoch " << ep + 1 << "..." << std::endl;
 					std::cout << "[INFO] Error: " << difference << std::endl;
@@ -86,7 +88,8 @@ namespace nyann {
 				do
 				{
 					epochs++;
-					difference = DataSet<_DT>::abs_difference(output, predict(input)) / input.size();
+					expected_output = predict(input);
+					difference = DataSet<_DT>::abs_difference(output, expected_output) / input.size();
 					error_dynamic.push_back(difference);
 					std::cout << "[INFO] Epoch " << epochs + 1 << "..." << std::endl;
 					std::cout << "[INFO] Error: " << difference << std::endl;

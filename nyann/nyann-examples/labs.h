@@ -27,7 +27,7 @@ public:
 		auto output_to_plot = net.fit(dataset,
 			-1,		// train until error become 0
 			1,		// batch size
-			0.3,	// learning rate
+			0.003,	// learning rate
 			0		// required error
 		);
 
@@ -65,15 +65,10 @@ class Lab2
 		return dataset;*/
 		return {};
 	}
-
-public:
-	Lab2()
-	{
-		nyann::TrainDataSet<double> dataset = generate_dataset(
 			[](double x) {
 				return 0.3 * cos(0.1 * x) + 0.06 * sin(0.1 * x);
 			},
-			100, 10);
+			100, 10, 0.1);
 
 		dataset.shuffle();
 		auto [dataset_train, dataset_test] = train_test_split(dataset);
@@ -84,33 +79,10 @@ public:
 		l_1->add_activation_function(new nyann::ReLU<double>());
 		net.add_layer(l_1);
 		nyann::Layer<double>* l_2 = new nyann::FCLayer<double>(nyann::Size<>{ 3, 1 });
-		l_2->add_activation_function(new nyann::ReLU<double>());
-		net.add_layer(l_2);
 
-		auto output_to_plot = net.fit(dataset_train, -1, 1, 0.008, 0.2);
-
-		nyann::python::plot({ output_to_plot.begin() + 1, output_to_plot.end() });
-
-		nyann::DataSet<double> input = dataset_test.get_input();
-		nyann::DataSet<double> expected_output = dataset_test.get_output();
-		nyann::DataSet<double> output = net.predict(input);
-
+		auto output_to_plot = net.fit(dataset_train, 2000, 10, 0.01, 0.001);
 		std::cout << "Final absolute error: "
-			<< nyann::DataSet<double>::abs_difference(expected_output, output)
-			<< std::endl;
-		//std::cout << net.str() << std::endl;
-		std::cin.get();
-	}
-};
-
 //class Lab3
-//{
-//public:
-//	Lab3()
-//	{
-//		// I will classify handwritten digits (0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
-//
-//		// Getting a dataset
 //		nyann::TrainDataSet<double> dataset = get_dataset();
 //		auto [dataset_train, dataset_test] = train_test_split(dataset);
 //
@@ -179,20 +151,19 @@ public:
 		net.add_layer(layer_3);
 		net.add_layer(layer_4);
 
-
 		auto [dataset_train, dataset_test] = get_dataset();
 
 		auto outputs_to_plot = net.fit(dataset_train, -1, 2, 0.001);
 
 		///nyann::python::plot(outputs_to_plot);
-
-		nyann::DataSet<double> input = dataset_test.get_input();
-		nyann::DataSet<double> expected_output = dataset_test.get_output();
-		nyann::DataSet<double> output = net.predict(input);
+		std::cout << expected_output << std::endl;
+		std::cout << output << std::endl;
 
 		std::cout << "Final absolute error: "
-			<< nyann::DataSet<double>::abs_difference(expected_output, output)
+			<< nyann::DataSet<double>::abs_difference(expected_output, output) / output.size()
 			<< std::endl;
+
+		nyann::python::plot(outputs_to_plot);
 		//std::cout << net.str() << std::endl;
 		std::cin.get();
 	}
@@ -203,13 +174,8 @@ private:
 		nyann::TrainDataSet<double> train_dataset;
 		nyann::TrainDataSet<double> test_dataset;
 
-		std::filesystem::path data_folder_path = std::filesystem::path("data").append("digits");
-		std::filesystem::path test_folder_path = data_folder_path;
-		test_folder_path.append("test");
-		std::filesystem::path train_folder_path = data_folder_path;
-		train_folder_path.append("train");
-
-		std::filesystem::path cur_file_path;
+		std::string data_folder = "data/digits";
+		std::string cur_file_path;
 		int digit;
 		std::vector<double> input;
 		std::vector<double> output;
@@ -219,9 +185,8 @@ private:
 		{
 			// train sample
 			input.clear();
-			cur_file_path = train_folder_path;
-			cur_file_path.append(std::string("") + char('0' + i)).append("sample_0.txt");
-			sample_file_stream.open(cur_file_path.string());
+			cur_file_path = data_folder + '/' + "train" + '/' + char('0' + i) + '/' + "sample_0.txt";
+			sample_file_stream.open(cur_file_path);
 			while (sample_file_stream >> digit)
 				input.push_back(digit);
 			output = std::vector<double>(10, 0.0);
@@ -231,16 +196,14 @@ private:
 
 			//test sample
 			input.clear();
-			cur_file_path = test_folder_path;
-			cur_file_path.append(std::string("") + char('0' + i)).append("sample_0.txt");
-			sample_file_stream.open(cur_file_path.string());
+			cur_file_path = data_folder + '/' + "test" + '/' + char('0' + i) + '/' + "sample_0.txt";
+			sample_file_stream.open(cur_file_path);
 			while (sample_file_stream >> digit)
 				input.push_back(digit);
 			output = std::vector<double>(10, 0.0);
 			output[i] = 1.0;
 			test_dataset.push_back(nyann::DataSet<double>({ input, output }));
 			sample_file_stream.close();
-
 		}
 		return { train_dataset, test_dataset };
 	}

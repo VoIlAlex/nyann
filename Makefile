@@ -1,7 +1,7 @@
 bin/main: bin/intermediate/main.o bin/intermediate/io_draft.o
 	g++ -g -std=c++17 -lstdc++fs bin/intermediate/main.o bin/intermediate/io_draft.o -o bin/main.exe
 
-bin/intermediate/main.o: nyann/nyann.h nyann/examples/labs.h nyann/nyann/drafts.h bin/intermediate/io_draft.o
+bin/intermediate/main.o: nyann/nyann.h nyann/nyann-examples/labs.h nyann/nyann/drafts.h bin/intermediate/io_draft.o
 	g++ -g -std=c++17 -lstdc++fs -c nyann/main.cpp -o bin/intermediate/main.o
 
 # Draft stuff
