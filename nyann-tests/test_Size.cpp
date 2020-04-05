@@ -16,4 +16,12 @@ namespace {
 		ASSERT_EQ(size[2], 10);
 	}
 
+	TEST(Size, PlainSize)
+	{
+		nyann::Size<> size{ 2, 5, 10 };
+		size_t plain_size = size.plain_size();
+		size_t expected_plain_size = 100;
+		ASSERT_EQ(plain_size, 100);
+	}
+
 } // namespace
