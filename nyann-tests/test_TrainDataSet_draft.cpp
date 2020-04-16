@@ -4,7 +4,7 @@
 
 namespace {
 
-	TEST(TrainDataSample_draft, Construction)
+	/*TEST(TrainDataSample_draft, Construction)
 	{
 		nyann::TrainDataSample_draft<double> data_sample = {
 			{ {1, 2, 3}, {1, 2, 3} },
@@ -32,10 +32,10 @@ namespace {
 		nyann::DataSet_draft<double> expected_output = { {3, 2, 1}, { 3, 2, 1 } };
 
 		ASSERT_EQ(data_sample.get_output(), expected_output);
-	}
+	}*/
 
 
-	TEST(TrainDataSet_draft, Construction)
+	/*TEST(TrainDataSet_draft, Construction)
 	{
 		nyann::TrainDataSet_draft<double> train_data_set = {
 			{ { {1}, {2}, {3} }, { {4}, {5}, {6} } },
@@ -77,6 +77,6 @@ namespace {
 		nyann::DataSet_draft<double> output = data_sample.get_output();
 		nyann::DataSet_draft<double> expected_output = { {4}, {5}, {6} };
 		EXPECT_EQ(output, expected_output);
-	}
+	}*/
 
 }

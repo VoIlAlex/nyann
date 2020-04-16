@@ -61,6 +61,13 @@ namespace nyann {
 			return m_initial_state;
 		}
 
+		Index<_DT>& operator=(const Index<_DT>& index) 
+		{
+			for (int i = 0; i < index.size(); i++)
+				this->at(i) = index.at(i);
+			return *this;
+		}
+
 		bool operator==(const Index<_DT>& other) const
 		{
 			if (this->size() != other.size())
@@ -84,7 +91,8 @@ namespace nyann {
 				// considered as highest
 				return this->size() > other.size();
 			}
-
+			if (*this == other)
+				return false;
 			// find first difference
 			for (int i = 0; i < this->size(); i++)
 			{
@@ -94,7 +102,7 @@ namespace nyann {
 		}
 		bool operator>(const Index& other) const
 		{
-			return !(operator<(other));
+			return !(operator<(other)) && !(operator==(other));
 		}
 
 		bool operator<= (const Index& other) const
@@ -212,6 +220,16 @@ namespace nyann {
 				if (this->at(i) != 0)
 					return true;
 			return false;
+		}
+
+		static Index<_DT> join(const Index<_DT>& size_1, const Index<_DT> size_2)
+		{
+			Index<_DT> size_result(size_1.size() + size_2.size());
+			for (int i = 0; i < size_1.size(); i++)
+				size_result[i] = size_1[i];
+			for (int i = size_1.size(), j = 0; i < size_1.size() + size_2.size(); i++, j++)
+				size_result[i] = size_2[j];
+			return size_result;
 		}
 	};
 

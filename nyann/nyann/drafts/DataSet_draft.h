@@ -120,7 +120,7 @@ namespace nyann {
 			for (auto it = idx.begin() + 1; it != idx.end(); it++)
 				value = value[*it];
 
-			return value.value();
+			return value.value_const();
 		}
 
 		template<typename _DT_IDX>
@@ -145,7 +145,7 @@ namespace nyann {
 			NestedDataSet value = operator[](idx[0]);
 			for (auto it = idx.begin() + 1; it != idx.end(); it++)
 				value = value[*it];
-			return value.value();
+			return value.value_const();
 		}
 
 		// Operators
@@ -158,7 +158,7 @@ namespace nyann {
 
 		NestedDataSet operator[](const Slice<>& idx)
 		{
-			return NestedDataSet(this, { idx });
+			return NestedDataSet(this, std::vector<Slice<>>{ idx });
 		}
 		NestedDataSet operator[](int idx) const
 		{
@@ -256,6 +256,17 @@ namespace nyann {
 				other.m_parent_const = nullptr;
 				other.m_slices.clear();
 				other.m_is_const = false;
+			}
+
+			NestedDataSet(DataSet_draft<_DT>* parent, const Index<_DT>& index)
+				:
+				m_parent(parent),
+				m_parent_const(nullptr),
+				m_slices(index.size()),
+				m_is_const(false)
+			{
+				for (int i = 0; i < index.size(); i++)
+					m_slices[i] = Slice<>{ index[i] };
 			}
 
 			void set_parent(DataSet_draft<_DT>* parent)
@@ -421,13 +432,30 @@ namespace nyann {
 			operator DataSet_draft<_DT>()
 			{
 				// Complete indexes
-				for (int i = m_slices.size(); i < m_parent->size().size(); i++)
-					m_slices.push_back({ 0, static_cast<int>(m_parent->size()[i]) });
+				if (m_is_const)
+				{
+					for (int i = m_slices.size(); i < m_parent_const->size().size(); i++)
+						m_slices.push_back({ 0, static_cast<int>(m_parent_const->size()[i]) });
+				}
+				else 
+				{
+					for (int i = m_slices.size(); i < m_parent->size().size(); i++)
+						m_slices.push_back({ 0, static_cast<int>(m_parent->size()[i]) });
+				}
 
 				// Handle slices without right border
-				for (int i = 0; i < m_slices.size(); i++)
-					if (m_slices[i].at(1) == -1)
-						m_slices[i].at(1) = m_parent->size()[i];
+				if (m_is_const)
+				{
+					for (int i = 0; i < m_slices.size(); i++)
+						if (m_slices[i].at(1) == -1)
+							m_slices[i].at(1) = m_parent_const->size()[i];
+				}
+				else
+				{
+					for (int i = 0; i < m_slices.size(); i++)
+						if (m_slices[i].at(1) == -1)
+							m_slices[i].at(1) = m_parent->size()[i];
+				}
 
 				// Calculate the size 
 				// of resultant dataset
@@ -508,6 +536,45 @@ namespace nyann {
 				}
 
 				return dataset;
+			}
+
+			NestedDataSet& operator=(const _DT& value) {
+				int flat_idx = get_flat_index();
+				// bad size of the coordinate
+				if (!m_is_const)
+				{
+					if (m_slices.size() != m_parent->size().size())
+						throw ConversionError("");
+					m_parent->m_data[flat_idx] = value;
+				}
+					throw std::runtime_error("Parent dataset is constants.");
+				return *this;
+			}
+
+			NestedDataSet& operator=(const DataSet_draft<_DT>& dataset) {
+				int flat_idx = get_flat_index();
+				// bad size of the coordinate
+				if (!m_is_const)
+				{
+
+					// Assigned dataset should have
+					// size of nested dataset
+					size_t nested_dataset_dimension = m_parent->size().size() - m_slices.size();
+					size_t assigned_dataset_dimension = dataset.size().size();
+					if (nested_dataset_dimension != assigned_dataset_dimension)
+						throw ConversionError("");
+					for(int i = 0; i < nested_dataset_dimension; i++)
+						if (m_parent->size()[m_slices.size() + i] != dataset.size()[i])
+							throw ConversionError("Bad size");
+
+
+
+					for (int i = get_flat_index(), j = 0; i < dataset.data().size(); i++, j++)
+						m_parent->m_data[i] = dataset.m_data[i];
+				}
+				else
+					throw std::runtime_error("Parent dataset is constants.");
+				return *this;
 			}
 
 			NestedDataSet operator[](const Slice<>& i) const
@@ -808,42 +875,6 @@ namespace nyann {
 				}
 			}
 
-			static _DT abs_difference(const DataSet_draft<_DT>& left, const DataSet_draft<_DT>& right)
-			{
-				_DT difference = _DT();
-				DataSet_draft<_DT> diff_dataset = abs(left - right);
-				for (int i = 0; i < diff_dataset.size(); i++)
-					for (int j = 0; j < diff_dataset[0].size(); j++)
-						difference += diff_dataset[i][j];
-				return difference;
-			}
-
-
-			//////////////////////
-			// Generation tools //
-			//////////////////////
-
-			static DataSet_draft<_DT> ones_like(const DataSet_draft<_DT>& other) 
-			{
-				DataSet_draft<_DT> newDataset;
-				newDataset.m_data = std::vector<_DT>(other.m_data.size(), _DT(1));
-				newDataset.m_size = other.m_size;
-			}
-
-			static DataSet_draft<_DT> zeros_like(const DataSet_draft<_DT>& other) 
-			{
-				DataSet_draft<_DT> newDataset;
-				newDataset.m_data = std::vector<_DT>(other.m_data.size(), _DT(0));
-				newDataset.m_size = other.m_size;
-			}
-
-			static DataSet_draft<_DT> empty_like(const DataSet_draft<_DT>& other) 
-			{
-				DataSet_draft<_DT> newDataset;
-				newDataset.m_data = std::vector<_DT>(other.m_data.size(), _DT());
-				newDataset.m_size = other.m_size;
-			}
-
 		private:
 			int get_flat_index() const
 			{
@@ -1107,6 +1138,77 @@ namespace nyann {
 			return iterator(this);
 		}
 
+
+		//////////////////////
+		// Generation tools //
+		//////////////////////
+
+		static DataSet_draft<_DT> ones_like(const DataSet_draft<_DT>& other)
+		{
+			DataSet_draft<_DT> new_dataset;
+			new_dataset.m_data = std::vector<_DT>(other.m_data.size(), _DT(1));
+			new_dataset.m_size = other.m_size;
+			return new_dataset;
+		}
+
+		static DataSet_draft<_DT> zeros_like(const DataSet_draft<_DT>& other)
+		{
+			DataSet_draft<_DT> new_dataset;
+			new_dataset.m_data = std::vector<_DT>(other.m_data.size(), _DT(0));
+			new_dataset.m_size = other.m_size;
+			return new_dataset;
+		}
+
+		static DataSet_draft<_DT> empty_like(const DataSet_draft<_DT>& other)
+		{
+			DataSet_draft<_DT> new_dataset;
+			new_dataset.m_data = std::vector<_DT>(other.m_data.size(), _DT());
+			new_dataset.m_size = other.m_size;
+			return new_dataset;
+		}
+
+
+		DataSet_draft<_DT>& operator=(const DataSet_draft<_DT>& dataset)
+		{
+			this->m_data = dataset.m_data;
+			this->m_size = dataset.m_size;
+			return *this;
+		}
+
+
+		DataSet_draft<_DT> operator-(const DataSet_draft<_DT>& right) const
+		{
+			if (this->size() != right.size())
+				throw SizeError("Left dataset and right dataset have different sizes.");
+
+
+			DataSet_draft<_DT> result(this->size());
+			for (int i = 0; i < this->m_data.size(); i++)
+				result.m_data[i] = this->m_data[i] - right.m_data[i];
+			return result;
+		}
+
+		static DataSet_draft<_DT> abs(const DataSet_draft<_DT>& dataset)
+		{
+			DataSet_draft<_DT> result(dataset.size());
+
+			for (int i = 0; i < dataset.m_data.size(); i++)
+				result.m_data[i] = ::abs(dataset.m_data[i]);
+
+			return result;
+		}
+
+		static _DT abs_difference(const DataSet_draft<_DT>& left, const DataSet_draft<_DT>& right)
+		{
+			_DT difference = _DT();
+			DataSet_draft<_DT> diff_dataset = DataSet_draft<_DT>::abs(left - right);
+			for (auto& value : diff_dataset.m_data)
+				difference += value;
+			return difference;
+		}
 	};
+
+	
+	
 
 } // namespace nyann

@@ -2,6 +2,7 @@
 #include "..//nyann//nyann.h"
 
 namespace {
+#ifndef DRAFT_DATASET_2_0_0_ALPHA_TEST
 	TEST(Net, Prediction_1)
 	{
 		// Create a model
@@ -100,4 +101,5 @@ namespace {
 
 		EXPECT_LT(diff, 1.0 * output.size());
 	}
+#endif
 } // namespace

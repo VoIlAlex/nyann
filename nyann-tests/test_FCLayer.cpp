@@ -2,6 +2,7 @@
 #include "..//nyann//nyann.h"
 
 namespace {
+#ifndef DRAFT_DATASET_2_0_0_ALPHA_TEST
 	TEST(FCLayer, Construction)
 	{
 		nyann::FCLayer<double> layer({ 10, 10 });
@@ -38,4 +39,5 @@ namespace {
 		);
 		ASSERT_TRUE(initial_weights != layer.get_weights());
 	}
+#endif
 } // namespace

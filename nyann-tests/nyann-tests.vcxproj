@@ -38,9 +38,6 @@
   <ItemGroup>
     <ClCompile Include="template_test.cpp" />
     <ClCompile Include="test_BinaryActivation.cpp" />
-    <ClCompile Include="test_ConvLayer1D.cpp" />
-    <ClCompile Include="test_FCLayer.cpp" />
-    <ClCompile Include="test_inbox.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -49,7 +46,9 @@
     </ClCompile>
     <ClCompile Include="test_DataSet.cpp" />
     <ClCompile Include="test_drafts.cpp" />
+    <ClCompile Include="test_FCLayer.cpp" />
     <ClCompile Include="test_goal.cpp" />
+    <ClCompile Include="test_inbox.cpp" />
     <ClCompile Include="test_Index.cpp" />
     <ClCompile Include="test_Net.cpp" />
     <ClCompile Include="test_Size.cpp" />

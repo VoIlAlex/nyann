@@ -180,14 +180,14 @@ namespace nyann {
 		std::vector<_DT> fit(
 			const ::nyann::TrainDataSet_draft<_DT>& dataset, 
 			int epochs, 
-			int batch_size = 1, 
+			size_t batch_size = 1, 
 			double lr = 0.001, 
 			double required_error = 0
 		)
 		{
+			std::vector<_DT> error_dynamic;
 			DataSet_draft<_DT> input = dataset.get_input();
 			DataSet_draft<_DT> output = dataset.get_output();
-			std::vector<_DT> error_dynamic;
 			// TODO: here is a lot of duplicate code. Optimize it.
 			if (epochs != -1)
 				for (int ep = 0; ep < epochs; ep++)
@@ -196,17 +196,16 @@ namespace nyann {
 					error_dynamic.push_back(difference);
 					std::cout << "[INFO] Epoch " << ep + 1 << "..." << std::endl;
 					std::cout << "[INFO] Error: " << difference << std::endl;
-					for (int i = 0; i < dataset.size() / batch_size; i++)
+					for (int i = 0; i < dataset.samples_count() / batch_size; i++)
 					{
-						DataSet_draft<_DT> X;
-						DataSet_draft<_DT> y;
-						DataSet_draft<_DT> y_pred;
+						DataSet_draft<_DT> X(Size<>::join({ batch_size }, dataset.input_size()));
+						DataSet_draft<_DT> y(Size<>::join({ batch_size }, dataset.output_size()));
 						DataSet_draft<_DT> errors;
-
+						DataSet_draft<_DT> y_pred;
 						for (int j = i * batch_size; j < i * batch_size + batch_size; j++)
 						{
-							X.push_back(dataset[j][0]);
-							y.push_back(dataset[j][1]);
+							X[j] = dataset[j].get_input();
+							y[j] = dataset[j].get_output();
 						}
 
 						y_pred = predict(X);
@@ -230,17 +229,17 @@ namespace nyann {
 					error_dynamic.push_back(difference);
 					std::cout << "[INFO] Epoch " << epochs + 1 << "..." << std::endl;
 					std::cout << "[INFO] Error: " << difference << std::endl;
-					for (int i = 0; i < dataset.size() / batch_size; i++)
+					for (int i = 0; i < dataset.samples_count() / batch_size; i++)
 					{
-						DataSet_draft<_DT> X;
-						DataSet_draft<_DT> y;
-						DataSet_draft<_DT> y_pred;
+						DataSet_draft<_DT> X(Size<>::join({ batch_size }, dataset.input_size()));
+						DataSet_draft<_DT> y(Size<>::join({ batch_size }, dataset.output_size()));
 						DataSet_draft<_DT> errors;
+						DataSet_draft<_DT> y_pred;
 
 						for (int j = i * batch_size; j < i * batch_size + batch_size; j++)
 						{
-							X.push_back(dataset[j][0]);
-							y.push_back(dataset[j][1]);
+							X[j] = (dataset[j].get_input());
+							y[j] = (dataset[j].get_output());
 						}
 
 						y_pred = predict(X);
@@ -258,13 +257,13 @@ namespace nyann {
 			return error_dynamic;
 		}
 
-		/*nyann::DataSet_draft<_DT> predict(const DataSet_draft<_DT>& input)
+		DataSet_draft<_DT> predict(const DataSet_draft<_DT>& input)
 		{
-			nyann::DataSet_draft<_DT> result = input;
+			DataSet_draft<_DT> result = input;
 			for (Layer<_DT>* layer : m_layers)
 				result = (*layer)(result);
 			return result;
-		}*/
+		}
 
 		void add_activation_function(ActivationFunction<_DT>* activation_function, int idx = -1)
 		{

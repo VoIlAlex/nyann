@@ -23,7 +23,7 @@ namespace nyann {
 			return y * (1 - y);
 		}
 
-		DataSet<_DT> operator()(const DataSet<_DT>& sums) override
+		/*DataSet<_DT> operator()(const DataSet<_DT>& sums) override
 		{
 			DataSet<_DT> results = DataSet<_DT>::ones_like(sums);
 #ifdef DRAFT_DATASET_2_0_0_ALPHA_TEST
@@ -40,7 +40,7 @@ namespace nyann {
 				results.push_to(it.location(), this->derivative(*it));
 #endif
 			return results;
-		}
+		}*/
 	};
 
 } // namespace nyann

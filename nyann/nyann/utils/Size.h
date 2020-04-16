@@ -8,7 +8,7 @@
 
 namespace nyann {
 
-	template<typename _DT=int>
+	template<typename _DT=size_t>
 	class Size : public std::vector<_DT>
 	{
 	public:
@@ -42,6 +42,16 @@ namespace nyann {
 		operator _DT() const
 		{
 			return this->at(0);
+		}
+
+		static Size<_DT> join(const Size<_DT>& size_1, const Size<_DT> size_2)
+		{
+			Size<_DT> size_result(size_1.size() + size_2.size());
+			for (int i = 0; i < size_1.size(); i++)
+				size_result[i] = size_1[i];
+			for (int i = size_1.size(), j = 0; i < size_1.size() + size_2.size(); i++, j++)
+				size_result[i] = size_2[j];
+			return size_result;
 		}
 	};
 

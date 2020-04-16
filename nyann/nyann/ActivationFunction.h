@@ -52,17 +52,15 @@ namespace nyann {
 		virtual DataSet_draft<_DT> operator()(const DataSet_draft<_DT>& sums)
 		{
 			DataSet_draft<_DT> results = DataSet_draft<_DT>::ones_like(sums);
-			for (int i = 0; i < sums.get_size()[0]; i++)
-				for (int j = 0; j < sums.get_size()[1]; i++)
-					results[i][j] = operator()(sums[i][j]);
+			for (int i = 0; i < sums.data().size(); i++)
+				results.access_data()[i] = operator()(sums.data()[i]);
 			return results;
 		}
 		virtual DataSet_draft<_DT> derivative(const DataSet_draft<_DT>& Y)
 		{
 			DataSet_draft<_DT> results = DataSet_draft<_DT>::ones_like(Y);
-			for (int i = 0; i < Y.get_size()[0]; i++)
-				for (int j = 0; j < Y.get_size()[1]; i++)
-					results[i][j] = derivative(Y[i][j]);
+			for (int i = 0; i < Y.data().size(); i++)
+				results.access_data()[i] = operator()(Y.data()[i]);
 			return results;
 		}
 		// TODO: save activation function 
@@ -83,3 +81,4 @@ namespace nyann {
 #include "ActivationFunction/BipolarActivation.h"
 #include "ActivationFunction/ReLUActivation.h"
 #include "ActivationFunction/SigmoidActivation.h"
+#include "ActivationFunction/LinearActivation.h"

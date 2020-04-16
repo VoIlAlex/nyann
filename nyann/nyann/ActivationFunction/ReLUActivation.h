@@ -10,8 +10,6 @@ namespace nyann {
 	template<typename _DT>
 	class ReLU : public ActivationFunction<_DT>
 	{
-
-		DataSet<_DT> m_outputs;
 		double m_k;
 	public:
 		ReLU(double k = 0.2)
@@ -37,16 +35,16 @@ namespace nyann {
 		{
 			return (y > 0 ? 1 : m_k);
 		}
-		DataSet<_DT> operator()(const DataSet<_DT>& sums) override
-		{
-			// TODO: implementation
-			return {};
-		}
-		virtual DataSet<_DT> derivative(const DataSet<_DT>& Y) override
-		{
-			// TODO: implementation
-			return {};
-		}
+		//DataSet<_DT> operator()(const DataSet<_DT>& sums) override
+		//{
+		//	// TODO: implementation
+		//	return {};
+		//}
+		//virtual DataSet<_DT> derivative(const DataSet<_DT>& Y) override
+		//{
+		//	// TODO: implementation
+		//	return {};
+		//}
 	};
 
 } // namespace nyann

@@ -9,6 +9,7 @@
 namespace nyann
 {
 
+#ifndef DRAFT_DATASET_2_0_0_ALPHA_TEST
 // TODO: Test SoftMax
 template <typename _DT>
 class SoftMax : public ActivationFunction<_DT>
@@ -50,5 +51,6 @@ public:
 		return results;
 	}
 };
+#endif
 
 } // namespace nyann

@@ -45,13 +45,15 @@ namespace nyann
 		ActivationFunction<_DT_IN>* m_activation_function;
 	public:
 		Layer()
-			: m_activation_function(nullptr) {}
+			: m_activation_function(new LinearActivation<_DT_OUT>()) {}
 		virtual DataSet_draft<_DT_OUT> operator() (const DataSet_draft<_DT_IN>&) = 0;
 		virtual DataSet_draft<double> back_propagation(
 			const DataSet_draft<double>& errors,
 			double lr = 0.01) = 0;
 		void add_activation_function(ActivationFunction<_DT_IN>* activation_function)
 		{
+			if (m_activation_function != nullptr)
+				delete m_activation_function;
 			m_activation_function = activation_function;
 		}
 		~Layer()

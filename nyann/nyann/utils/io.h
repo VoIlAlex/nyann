@@ -7,6 +7,8 @@
 
 #include "..//dataset.h"
 
+#ifndef DRAFT_DATASET_2_0_0_ALPHA_TEST
+
 template<typename _DT>
 std::ostream& operator<<(std::ostream& stream, const nyann::DataSet<_DT>& dataset)
 {
@@ -30,3 +32,5 @@ std::ostream& operator<<(std::ostream& stream, const nyann::DataSet<_DT>& datase
 
 	return stream;
 }
+
+#endif

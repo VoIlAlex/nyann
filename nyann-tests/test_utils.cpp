@@ -2,8 +2,6 @@
 #include "..//nyann//nyann.h"
 
 namespace {
-	
-
 	TEST(FrameworkExceptions, DifferentSizeError)
 	{
 		try
@@ -75,5 +73,4 @@ namespace {
 			EXPECT_EQ(std::string(e.what()), "Error");
 		}
 	}
-
 } // namespace

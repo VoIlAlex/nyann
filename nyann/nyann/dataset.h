@@ -11,6 +11,7 @@
 #include "utils/exceptions.h"
 #include "utils/Size.h"
 
+#ifndef DRAFT_DATASET_2_0_0_ALPHA_TEST
 namespace nyann {
 #ifndef DEPRECATED_LAYER_ROW_PROCESSING
 	template<typename _DT>
@@ -209,6 +210,6 @@ namespace nyann {
 
 } // namespace nyann
 
-
 // include subclasses of DataSet
-//#include "DataSet/TrainDataSet.h"
+#include "DataSet/TrainDataSet.h"
+#endif

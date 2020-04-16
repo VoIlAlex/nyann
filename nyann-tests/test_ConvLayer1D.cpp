@@ -48,12 +48,12 @@ namespace {
 		};
 		nyann::DataSet_draft<double> y = layer(X);
 
-		nyann::Size output_shape;
+		nyann::Size<> output_shape;
 		output_shape.push_back(2); // batch size
 		output_shape.push_back(2); // width
 		output_shape.push_back(3); // filters
 
-		ASSERT_EQ(y.shape(), output_shape);
+		ASSERT_EQ(y.size(), output_shape);
 	}
 #elif defined(DRAFT_DATASET_2_0_0_PRERELEASE)
 	TEST(ConvLayer1D, BatchProcessing)

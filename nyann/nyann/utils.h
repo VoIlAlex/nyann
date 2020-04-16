@@ -11,3 +11,4 @@
 #include "utils/exceptions.h"
 #include "utils/Index.h"
 #include "utils/Slice.h"
+#include "utils/conversion.h"

@@ -2,6 +2,7 @@
 #include "..//nyann//nyann.h"
 
 namespace {
+#ifndef DRAFT_DATASET_2_0_0_ALPHA_TEST
 	TEST(Net, Construction)
 	{
 		nyann::Net net;
@@ -54,4 +55,6 @@ namespace {
 		std::vector<double> errors = net.fit(dataset, 10);
 		ASSERT_EQ(errors.size(), 10);
 	}
+#else
+#endif
 } // namespace

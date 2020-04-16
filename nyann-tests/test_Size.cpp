@@ -24,4 +24,12 @@ namespace {
 		ASSERT_EQ(plain_size, 100);
 	}
 
+	TEST(Size, Join)
+	{
+		nyann::Size<> size_1{ 1, 2, 3 };
+		nyann::Size<> size_2{ 4, 5, 6 };
+		nyann::Size<> expected_joint_size{ 1, 2, 3, 4, 5, 6 };
+		ASSERT_EQ(nyann::Size<>::join(size_1, size_2), expected_joint_size);
+	}
+
 } // namespace

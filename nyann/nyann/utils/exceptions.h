@@ -17,6 +17,11 @@ namespace nyann {
 		public:
 		using ::std::runtime_error::runtime_error;
 	};
+	
+	class SizeError : public ::std::runtime_error {
+	public:
+		using ::std::runtime_error::runtime_error;
+	};
 
 	class IndexError : public ::std::out_of_range
 	{
@@ -27,7 +32,9 @@ namespace nyann {
 	class IndexSizeError : public IndexError
 	{
 	public:
-		using IndexError::IndexError;
+		IndexSizeError(const std::string &message)
+			:
+			IndexError(message.c_str()) {}
 	};
 
 	class IndexOverflowError : public IndexSizeError

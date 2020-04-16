@@ -54,7 +54,7 @@ namespace nyann {
 		{
 			return 1.0;
 		}
-		DataSet_draft<_DT> operator()(const DataSet_draft<_DT>& sums) override
+		/*DataSet_draft<_DT> operator()(const DataSet_draft<_DT>& sums) override
 		{
 
 			DataSet_draft<_DT> results = DataSet_draft<_DT>::ones_like(sums);
@@ -72,7 +72,7 @@ namespace nyann {
 				for (int j = 0; j < Y.get_size()[1]; i++)
 					results[i][j] = derivative(Y[i][j]);
 			return results;
-		}
+		}*/
 	};
 #endif
 } // namespace nyann

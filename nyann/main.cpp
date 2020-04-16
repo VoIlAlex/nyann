@@ -45,16 +45,32 @@ int main()
 	//Lab2();
 	//Lab3();
 
-	nyann::DataSet_draft<double> dataset {
+	nyann::TrainDataSet_draft<double> dataset {
 		{
-			{1, 2, 3},
-			{3, 2, 1}
+			nyann::DataSet_draft<double>{0, 0},
+			nyann::DataSet_draft<double>{0, 1},
+			nyann::DataSet_draft<double>{1, 0},
+			nyann::DataSet_draft<double>{1, 1}
 		},
 		{
-			{1.0, 2.0, 2.0},
-			{3.0, 4.0, 1.0}
+			nyann::DataSet_draft<double>{0},
+			nyann::DataSet_draft<double>{1},
+			nyann::DataSet_draft<double>{1},
+			nyann::DataSet_draft<double>{0}
 		}
 	};
+
+	nyann::Net<double> net;
+	nyann::Layer<double> * layer_1 = new nyann::FCLayer<double>(nyann::Size<>{ 2 }, nyann::Size<>{ 1 });
+	layer_1->add_activation_function(new nyann::SigmoidActivation<double>());
+	net.add_layer(layer_1);
+
+	net.fit(
+		dataset,
+		1000,
+		1,
+		0.01
+	);
 
 	//std::cout << dataset;
 }
