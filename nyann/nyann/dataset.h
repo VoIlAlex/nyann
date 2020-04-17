@@ -441,7 +441,7 @@ namespace nyann {
 				if (m_is_const)
 					throw std::runtime_error("Parent dataset is constants.");
 
-				DataSet_draft* parent = m_parent;
+				DataSet* parent = m_parent;
 
 				Index<> start_dataset_index(m_is_const ? m_parent_const->size().size() : m_parent->size().size());
 				start_dataset_index.reserve(parent->size().size());
