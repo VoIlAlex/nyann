@@ -7,8 +7,9 @@
 
 #include "..//dataset.h"
 
-#ifndef DRAFT_DATASET_2_0_0_ALPHA_TEST
-
+#ifdef DRAFT_DATASET_2_0_0_ALPHA_TEST
+#elif defined(DRAFT_DATASET_2_0_0_PRERELEASE)
+#else
 template<typename _DT>
 std::ostream& operator<<(std::ostream& stream, const nyann::DataSet<_DT>& dataset)
 {
@@ -32,5 +33,4 @@ std::ostream& operator<<(std::ostream& stream, const nyann::DataSet<_DT>& datase
 
 	return stream;
 }
-
 #endif

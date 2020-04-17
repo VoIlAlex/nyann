@@ -425,9 +425,55 @@ namespace nyann {
 
 			NestedDataSet& set_value(const DataSet_draft& value)
 			{
-				//TODO: set subarray value
-				throw NotImplementedError("Setting value of subdataset will be implemented in the future");
+
+				if (m_is_const)
+					throw std::runtime_error("Parent dataset is constants.");
+
+				DataSet_draft* parent = m_parent;
+
+				Index<> start_dataset_index(m_is_const ? m_parent_const->size().size() : m_parent->size().size());
+				start_dataset_index.reserve(parent->size().size());
+
+				Index<> max_dataset_index(m_is_const ? m_parent_const->size().size() : m_parent->size().size());
+				max_dataset_index.reserve(parent->size().size());
+
+				Index<> start_value_index(value.size().size(), 0);
+				Index<> dataset_size(parent->size().size());
+				for (int i = 0; i < parent->size().size(); i++)
+					dataset_size[i] = parent->size()[i];
+
+				Index<> max_value_index(value.size().size());
+				for (int i = 0; i < value.size().size(); i++)
+					max_value_index[i] = value.size()[i];
+				
+				for (int i = 0; i < m_slices.size(); i++)
+				{
+					start_dataset_index[i] = m_slices[i].from_value();
+					max_dataset_index[i] = m_slices[i].to_value();
+				}
+				for (int i = m_slices.size(); i < parent->size().size(); i++)
+				{
+					start_dataset_index[i] = 0;
+					max_dataset_index[i] = parent->size()[i];
+				}
+				
+				Index<> current_dataset_index = start_dataset_index;
+				Index<> current_value_index = start_value_index;
+				for (size_t plain_dataset_index, plain_value_index;
+					current_dataset_index.all_lower(max_dataset_index);
+				)
+				{
+					plain_dataset_index = current_dataset_index.plain(dataset_size);
+					plain_value_index = current_value_index.plain(max_value_index);
+					parent->access_data()[plain_dataset_index] = value.data()[plain_value_index];
+					current_dataset_index.increment(start_dataset_index, max_dataset_index, {}, true);
+					current_value_index.increment(start_value_index, max_value_index, {}, true);
+				}
+
+				return *this;
 			}
+
+
 
 			operator DataSet_draft<_DT>()
 			{
@@ -535,6 +581,13 @@ namespace nyann {
 					current_idx.increment(min_idx, max_idx, steps);
 				}
 
+				Size<> new_size;
+				new_size.reserve(dataset.size().size());
+				for (int i = 0; i < dataset.size().size(); i++)
+					if (!m_slices[i].is_index())
+						new_size.push_back(dataset.size()[i]);
+				dataset.m_size = new_size;
+
 				return dataset;
 			}
 
@@ -612,7 +665,7 @@ namespace nyann {
 				// create the complex
 				// index
 				std::vector<Slice<>> next_idxs(m_slices);
-				next_idxs.push_back(i);
+				next_idxs.push_back(Slice<>(i));
 				NestedDataSet result;
 				if (m_is_const)
 					result = NestedDataSet(m_parent_const, next_idxs);
@@ -1205,6 +1258,18 @@ namespace nyann {
 			for (auto& value : diff_dataset.m_data)
 				difference += value;
 			return difference;
+		}
+
+		DataSet_draft& sqeeze(DataSet_draft& dataset)
+		{
+			Size<> new_size;
+			new_size.reserve(m_size.size());
+			for (int i = 0; i < m_size.size(); i++)
+				if (m_size[i] != 1)
+					new_size.push_back(m_size[i]);
+			if (new_size.empty())
+				new_size.push_back(1);
+			return *this;
 		}
 	};
 

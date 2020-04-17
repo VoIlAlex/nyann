@@ -8,6 +8,7 @@
 
 namespace nyann {
 
+#ifdef DRAFT_DATASET_2_0_0_ALPHA_TEST
 	template<typename _DT, typename T = typename DataSet_draft<_DT>::NestedDataSet>
 	std::ostream& operator<<(std::ostream& stream, const T& dataset)
 	{
@@ -68,6 +69,6 @@ namespace nyann {
 		return stream;
 	}
 
-	
+#endif
 
 } // namespace nyann

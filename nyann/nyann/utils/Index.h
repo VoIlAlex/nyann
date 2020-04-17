@@ -144,8 +144,7 @@ namespace nyann {
 		//	return *this;
 		//}
 
-
-		Index<_DT>& increment(Index<_DT> min = Index(), const Index<_DT>& max = Index(), std::vector<_DT> steps = std::vector<_DT>())
+		Index<_DT>& increment(Index<_DT> min = Index(), const Index<_DT>& max = Index(), std::vector<_DT> steps = std::vector<_DT>(), bool to_border = false)
 		{
 			// Invariant
 			for (auto step : steps)
@@ -164,9 +163,14 @@ namespace nyann {
 				this->back()++;
 				return *this;
 			}
+
+			
 			int current_idx_item = max.size() - 1;
+			int to_value;
 			while (current_idx_item != 0)
-				if (this->at(current_idx_item) == max.at(current_idx_item) || this->at(current_idx_item) + steps.at(current_idx_item) > max.at(current_idx_item))
+			{
+				to_value = to_border ? max.at(current_idx_item) - 1 : max.at(current_idx_item);
+				if (this->at(current_idx_item) == to_value || this->at(current_idx_item) + steps.at(current_idx_item) > to_value)
 				{
 					current_idx_item--;
 				}
@@ -177,6 +181,7 @@ namespace nyann {
 						this->at(i) = min.at(i);
 					break;
 				}
+			}
 			if (current_idx_item == 0)
 			{
 				this->at(current_idx_item) += steps.at(current_idx_item);
@@ -220,6 +225,31 @@ namespace nyann {
 				if (this->at(i) != 0)
 					return true;
 			return false;
+		}
+
+		_DT plain(const Index& max_index) const
+		{
+			_DT index = _DT();
+			int degree = 0;
+			for (int i = 0, i_r = size() - 1; i < size(); i++, i_r--)
+			{
+				degree = 1;
+				for (int j = i_r + 1; j < max_index.size(); j++)
+					degree *= max_index[j];
+				index += at(i_r) * degree;
+			}
+			return index;
+		}
+
+		bool all_lower(const Index& index)
+		{
+			if (size() != index.size())
+				return false;
+			for (int i = 0; i < size(); i++)
+				if (at(i) >= index.at(i))
+					return false;
+			return true;
+				
 		}
 
 		static Index<_DT> join(const Index<_DT>& size_1, const Index<_DT> size_2)

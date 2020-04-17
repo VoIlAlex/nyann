@@ -120,13 +120,13 @@ namespace {
 
 		DataSet_draft<double> dataset_slice = dataset_3[{0, -1}][{0, -1}][0];
 		DataSet_draft<double> expected_dataset_slice = {
-			{{1010}, {010}}, {{100}, {110}}
+			{1010, 010}, {100, 110}
 		};
 
 		EXPECT_EQ(expected_dataset_slice, dataset_slice);
 	}
 
-	TEST(DataSet_draft, SlicingInitialization)
+	TEST(DataSet_draft, Slicing_3)
 	{
 		DataSet_draft<double> dataset_3 = {
 			{
@@ -151,15 +151,98 @@ namespace {
 			}
 		};
 
+		DataSet_draft<double> dataset_slice = dataset_3[{0, 2}][0][0];
+		DataSet_draft<double> expected_dataset_slice = {
+			1010, 100
+		};
+
+		EXPECT_EQ(expected_dataset_slice, dataset_slice);
+	}
+
+	TEST(DataSet_draft, SlicingInitialization_1)
+	{
+		DataSet_draft<double> dataset_3 = {
+			{
+				{1010, 001},
+				{010, 011}
+			},
+			{
+				{100, 101},
+				{110, 111}
+			}
+		};
+
 		dataset_3[{0, 2}][1][{0, 2}].set_value(DataSet_draft<double>{
-			{ {0}, {0} },
-			{ {0}, {0} }
+			{ 
+				{0, 0} 
+			},
+			{ 
+				{0, 0} 
+			}
 		});
 
-		ASSERT_EQ(dataset_3[0][1][0], 0);
-		ASSERT_EQ(dataset_3[0][1][1], 0);
-		ASSERT_EQ(dataset_3[1][1][0], 0);
-		ASSERT_EQ(dataset_3[1][1][1], 0);
+		double first_zero = double(dataset_3[0][1][0]);
+		double second_zero = double(dataset_3[0][1][1]);
+		double third_zero = double(dataset_3[1][1][0]);
+		double fourth_zero = double(dataset_3[1][1][1]);
+
+		ASSERT_EQ(first_zero, 0);
+		ASSERT_EQ(second_zero, 0);
+		ASSERT_EQ(third_zero, 0);
+		ASSERT_EQ(fourth_zero, 0);
+	}
+
+	TEST(DataSet_draft, SlicingInitialization_2)
+	{
+		DataSet_draft<double> dataset_3 = {
+			{
+				{
+					{1, 1, 1, 1}, 
+					{1, 1, 1, 1}, 
+					{1, 1, 1, 1},
+					{1, 1, 1, 1}
+				},
+				{
+					{1, 1, 1, 1}, 
+					{1, 1, 1, 1}, 
+					{1, 1, 1, 1}, 
+					{1, 1, 1, 1}
+				}
+			},
+			{
+				{
+					{1, 1, 1, 1},
+					{1, 1, 1, 1},
+					{1, 1, 1, 1},
+					{1, 1, 1, 1}
+				},
+				{
+					{1, 1, 1, 1},
+					{1, 1, 1, 1},
+					{1, 1, 1, 1},
+					{1, 1, 1, 1}
+				}
+			}
+		};
+
+		dataset_3[{0, 2}][1][0][{2, 4}].set_value(DataSet_draft<double>{
+			{
+				{0, 0}
+			},
+			{
+				{0, 0}
+			}
+		});
+
+		double first_zero = double(dataset_3[0][1][0][2]);
+		double second_zero = double(dataset_3[0][1][0][3]);
+		double third_zero = double(dataset_3[1][1][0][2]);
+		double fourth_zero = double(dataset_3[1][1][0][3]);
+
+		ASSERT_EQ(first_zero, 0);
+		ASSERT_EQ(second_zero, 0);
+		ASSERT_EQ(third_zero, 0);
+		ASSERT_EQ(fourth_zero, 0);
 	}
 
 	TEST(DataSet_draft, SplitInputOutput)
@@ -248,7 +331,7 @@ namespace {
 		EXPECT_EQ(value, 111);
 	}
 
-	TEST(DataSet_draft, IO_formatting)
+	/*TEST(DataSet_draft, IO_formatting)
 	{
 		nyann::DataSet_draft<double> dataset = {
 			{1.0, 2.0},
@@ -259,7 +342,7 @@ namespace {
 		ss << dataset << std::endl;
 
 		EXPECT_EQ(ss.str(), "[[1, 2]\n[3, 4]]\n");
-	}
+	}*/
 
 	TEST(DataSet_draft, Iteration_default)
 	{

@@ -45,18 +45,18 @@ int main()
 	//Lab2();
 	//Lab3();
 
-	nyann::TrainDataSet_draft<double> dataset {
+	nyann::TrainDataSet<double> dataset {
 		{
-			nyann::DataSet_draft<double>{0, 0},
-			nyann::DataSet_draft<double>{0, 1},
-			nyann::DataSet_draft<double>{1, 0},
-			nyann::DataSet_draft<double>{1, 1}
+			nyann::DataSet<double>{0, 0},
+			nyann::DataSet<double>{0, 1},
+			nyann::DataSet<double>{1, 0},
+			nyann::DataSet<double>{1, 1}
 		},
 		{
-			nyann::DataSet_draft<double>{0},
-			nyann::DataSet_draft<double>{1},
-			nyann::DataSet_draft<double>{1},
-			nyann::DataSet_draft<double>{0}
+			nyann::DataSet<double>{0},
+			nyann::DataSet<double>{1},
+			nyann::DataSet<double>{1},
+			nyann::DataSet<double>{0}
 		}
 	};
 

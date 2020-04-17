@@ -13,8 +13,7 @@
 
 namespace nyann {
 	namespace python {
-#ifndef DRAFT_DATASET_2_0_0_ALPHA_TEST
-
+#ifdef DRAFT_DATASET_2_0_0_ALPHA_TEST
 #include "..//..//nyann/dataset.h"		
 		template <typename _DT>
 		TrainDataSet<_DT> generate_linear_dataset(int size, int input_size, double deviation)
@@ -125,6 +124,8 @@ namespace nyann {
 			std::filesystem::remove("tmp");
 			return dataset;
 		}
+#else
+
 #endif
 	} // namespace python
 } // namespace nyann

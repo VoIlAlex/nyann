@@ -1,7 +1,7 @@
 #include "io_draft.h"
 
 namespace nyann {
-
+#ifdef DRAFT_DATASET_2_0_0_ALPHA_TEST
 	std::ostream& operator<<(std::ostream& stream, const DataSet_draft<double>::NestedDataSet& dataset)
 	{
 		try
@@ -41,5 +41,5 @@ namespace nyann {
 		}
 		return stream;
 	}
-
+#endif
 } // namespace nyann

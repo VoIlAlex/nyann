@@ -23,6 +23,9 @@ namespace nyann {
 		Slice(_DT idx)
 			: ::std::vector<_DT>{ idx, idx + 1, 1 }, m_is_index(true)
 		{}
+		Slice(const Slice& slice)
+			: ::std::vector<_DT>{ slice[0], slice[1], slice[2] }, m_is_index(slice.m_is_index)
+		{}
 
 		_DT width() const
 		{

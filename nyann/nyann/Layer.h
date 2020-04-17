@@ -20,7 +20,7 @@ namespace nyann
 		ActivationFunction<_DT_IN>* m_activation_function;
 	public:
 		Layer()
-			: m_activation_function(nullptr) {}
+			: m_activation_function(new LinearActivation<_DT_OUT>()) {}
 		virtual DataSet<_DT_OUT> operator() (const DataSet<_DT_IN>&) = 0;
 		virtual DataSet<double> back_propagation(
 			const DataSet<double>& errors,
