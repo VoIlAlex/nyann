@@ -1,28 +1,21 @@
 #pragma once
 
-#include <initializer_list>
-#include <vector>
-#include <math.h>
 
 // For all the framework configurations
 #include "_config.h"
 
-
 #include "utils/exceptions.h"
 #include "utils/Size.h"
-
-#ifdef DRAFT_DATASET_2_0_0_PRERELEASE
-#include "utils/Size.h"
-#include "utils/exceptions.h"
 #include "utils/Index.h"
 #include "utils/Slice.h"
-#endif
+
+#include <initializer_list>
+#include <vector>
+#include <math.h>
+
 
 namespace nyann {
 	
-#ifdef DRAFT_DATASET_2_0_0_PRERELEASE
-
-
 	/*
 		Dataset represents arbitrary
 		shaped array. It might have
@@ -34,6 +27,7 @@ namespace nyann {
 	{
 		std::vector<_DT> m_data;
 		Size<> m_size;
+
 	public:
 		class NestedDataSet;
 
@@ -42,7 +36,7 @@ namespace nyann {
 		DataSet(const Size<>& size)
 			: m_size(size)
 		{
-			int flat_size = 1;
+			size_t flat_size = 1;
 			for (int i = 0; i < size.size(); i++)
 				flat_size *= size[i];
 			m_data.resize(flat_size);
@@ -187,17 +181,6 @@ namespace nyann {
 			return m_data;
 		}
 
-
-		//NestedDataSet operator[](const Index& idx)
-		//{
-		//	return NestedDataSet(this, idx);
-		//}
-
-		//NestedDataSet operator[](const Index& idx) const
-		//{
-		//	return NestedDataSet(this, idx);
-		//}
-
 		NestedDataSet operator[](const Slice<>& idx) const
 		{
 			return NestedDataSet(this, { idx });
@@ -209,6 +192,7 @@ namespace nyann {
 			const DataSet<_DT>* m_parent_const;
 			std::vector<Slice<>> m_slices;
 			bool m_is_const;
+
 		public:
 			NestedDataSet()
 				:
@@ -311,50 +295,6 @@ namespace nyann {
 
 				return *this;
 			}
-
-			//NestedDataSet(DataSet<_DT>* parent, const Index& idx = {})
-			//	:
-			//	m_parent(parent),
-			//	m_parent_const(nullptr),
-			//	m_slices(idx.size()),
-			//	m_is_const(false)
-			//{
-			//	for (int i = 0; i < idx.size(); i++)
-			//		m_slices[i] = Slice(idx);
-			//}
-
-			//NestedDataSet(const DataSet<_DT>* parent, const Index& idx = {})
-			//	:
-			//	m_parent(nullptr),
-			//	m_parent_const(parent),
-			//	m_slices(idx.size()),
-			//	m_is_const(true)
-			//{
-			//	for (int i = 0; i < idx.size(); i++)
-			//		m_slices[i] = Slice(idx);
-			//}
-			// TODO: reconsider the condition of 
-			// getting the result. It might appear 
-			// that somewhere in m_slices is actual Slice
-			// so you cannot convert a real slice into a number, can you?
-			//operator _DT()
-			//{
-			//	// bad size of the coordinate
-			//	if (!m_is_const)
-			//	{
-			//		if (m_slices.size() != m_parent->size().size())
-			//		throw ConversionError("");
-			//	}
-			//	else if (m_is_const)
-			//	{
-			//		if (m_slices.size() != m_parent_const->size().size())
-			//		throw ConversionError("");
-			//	}
-
-			//	int flat_idx = get_flat_index();
-
-			//	return m_parent->m_data[flat_idx];
-			//}
 
 			_DT& value()
 			{
@@ -664,7 +604,6 @@ namespace nyann {
 						throw IndexOverflowError("Bad size of indexing sequence");
 				}
 
-
 				// create the complex
 				// index
 				std::vector<Slice<>> next_idxs(m_slices);
@@ -679,69 +618,6 @@ namespace nyann {
 
 			class iterator
 			{
-				/*NestedDataSet* m_dataset;
-				int m_position;
-			public:*/
-			//iterator(NestedDataSet* dataset, int position = 0)
-			//	: m_dataset(dataset), m_position(position)
-			//{}
-
-			//iterator(const iterator& other)
-			//	: m_dataset(other.m_dataset), m_position(other.m_position)
-			//{}
-
-			//NestedDataSet& operator*()
-			//{
-			//	return m_dataset->operator[](m_position);
-			//}
-
-			//const NestedDataSet& operator*() const
-			//{
-			//	return m_dataset->operator[](m_position);
-			//}
-			//NestedDataSet* operator->()
-			//{
-			//	return *m_dataset->operator[](m_position);
-			//}
-
-			//iterator& operator++()
-			//{
-			//	m_position++;
-			//	return *this;
-			//}
-
-			//iterator operator++(int)
-			//{
-			//	iterator temp(*this);
-			//	operator++();
-			//	return temp;
-			//}
-
-			//// Logic operations
-			//bool operator<(const iterator& other) const
-			//{
-			//	return m_position < other.m_position;
-			//}
-			//bool operator>(const iterator& other) const
-			//{
-			//	return m_position > other.m_position;
-			//}
-			//bool operator==(const iterator& other) const
-			//{
-			//	return (m_dataset == other.m_dataset && m_position == other.m_position);
-			//}
-			//bool operator!=(const iterator& other) const
-			//{
-			//	return !(operator==(other));
-			//}
-			//bool operator<=(const iterator& other) const
-			//{
-			//	return (operator<(other) || operator==(other));
-			//}
-			//bool operator>=(const iterator& other) const
-			//{
-			//	return (operator>(other) || operator==(other));
-			//}
 				NestedDataSet* m_dataset;
 				const NestedDataSet* m_dataset_const;
 				int m_position;
@@ -756,8 +632,6 @@ namespace nyann {
 				{}
 
 			public:
-
-
 				iterator(NestedDataSet* dataset, int position = 0)
 					:
 					m_dataset(dataset),
@@ -954,6 +828,7 @@ namespace nyann {
 			int m_position;
 			bool m_is_dataset_const;
 			int m_axis;
+
 		public:
 			iterator(DataSet<_DT>* dataset, int position = 0, int axis = -1)
 				:
@@ -990,41 +865,6 @@ namespace nyann {
 				m_is_dataset_const(other->m_is_dataset_const),
 				m_axis(other->m_axis)
 			{}
-
-			/*NestedDataSet operator*() const
-			{
-				if (m_is_dataset_const)
-					return m_dataset_const->operator[](m_position);
-				return m_dataset->operator[](m_position);
-			}
-
-			NestedDataSet operator*()
-			{
-				if (m_is_dataset_const)
-					return m_dataset_const->operator[](m_position);
-				return m_dataset->operator[](m_position);
-			}*/
-
-
-
-			/*const NestedDataSet operator*() const
-			{
-				if (m_is_dataset_const)
-					return m_dataset_const->operator[](m_position);
-				return m_dataset->operator[](m_position);
-			}*/
-
-			/*::std::shared_ptr<NestedDataSet> operator->()
-			{
-				return ::std::shared_ptr<NestedDataSet>(new NestedDataSet(m_dataset->operator[](m_position)));
-			}
-
-			::std::shared_ptr<NestedDataSet> operator->() const
-			{
-				if (m_is_dataset_const)
-					return ::std::shared_ptr<NestedDataSet>(new NestedDataSet(m_dataset_const->operator[](m_position)));
-				return ::std::shared_ptr<NestedDataSet>(new NestedDataSet(m_dataset->operator[](m_position)));
-			}*/
 
 			_DT& operator->()
 			{
@@ -1257,7 +1097,6 @@ namespace nyann {
 			return !operator==(right);
 		}
 
-
 		static DataSet<_DT> abs(const DataSet<_DT>& dataset)
 		{
 			DataSet<_DT> result(dataset.size());
@@ -1277,110 +1116,8 @@ namespace nyann {
 			return difference;
 		}
 	};
-
-#else
-	template<typename _DT>
-	class DataSet : public std::vector<std::vector<_DT>>
-	{
-	public:
-		DataSet() {}
-
-		DataSet(std::initializer_list<std::vector<_DT>> il)
-			: std::vector<std::vector<_DT>>(il)
-		{}
-		DataSet(int size, const std::allocator<_DT>& allocator = std::allocator<_DT>())
-			: std::vector<std::vector<_DT>>(size, allocator)
-		{}
-		DataSet(const DataSet<_DT>& dataset)
-			: std::vector<std::vector<_DT>>(dataset)
-		{}
-		// For now only two dimensional
-		DataSet(nyann::Size<> size)
-		{
-			if (size == Size<>() || size[0] == 0)
-				return;
-
-			for (int i = 0; i < size[0]; i++)
-			{
-				if (size.size() == 1)
-					this->push_back({});
-				else
-					this->push_back(std::vector<_DT>(size[1]));
-			}
-		}
-
-		static DataSet<_DT> zeros_like(const DataSet<_DT>& dataset)
-		{
-			nyann::Size<> size_of_dataset;
-			size_of_dataset.push_back(dataset.size());
-			if (dataset.size() >= 1)
-				size_of_dataset.push_back(dataset[0].size());
-
-			return DataSet<_DT>(size_of_dataset);
-		}
-		static DataSet<_DT> ones_like(const DataSet<_DT>& dataset)
-		{
-			DataSet<_DT> result = DataSet<_DT>::zeros_like(dataset);
-			for (int i = 0; i < result.get_size()[0]; i++)
-				for (int j = 0; j < result.get_size()[1]; j++)
-					result[i][j] = 1;
-			return result;
-		}
-		static _DT abs_difference(const DataSet<_DT>& left, const DataSet<_DT>& right)
-		{
-			_DT difference = _DT();
-			DataSet<_DT> diff_dataset = abs(left - right);
-			for (int i = 0; i < diff_dataset.size(); i++)
-				for (int j = 0; j < diff_dataset[0].size(); j++)
-					difference += diff_dataset[i][j];
-			return difference;
-		}
-		Size<> get_size() const
-		{
-			Size<> s;
-			s.push_back(this->size());
-			if (this->size() >= 1)
-				s.push_back(this->operator[](0).size());
-			return s;
-		}
-		Size<> shape() const
-		{
-			return get_size();
-		}
-	};
-
-	template<typename _DT>
-	DataSet<_DT> abs(const DataSet<_DT>& dataset)
-	{
-		DataSet<_DT> result = dataset;
-		for (int i = 0; i < result.get_size()[0]; i++)
-			for (int j = 0; j < result.get_size()[1]; j++)
-				result[i][j] = result[i][j] >= 0 ? result[i][j] : -result[i][j];
-		return result;
-	}
-	////////////////////////////
-	// Operators overloadings //
-	////////////////////////////
-
-
-	template<typename _DT>
-	DataSet<_DT> operator-(const DataSet<_DT>& left, const DataSet<_DT>& right)
-	{
-		if (left.size() != right.size())
-			throw DifferentSizeError(""); // TODO: exception message
-
-		DataSet<_DT> result = DataSet<_DT>::zeros_like(left);
-
-		for (int i = 0; i < left.get_size()[0]; i++)
-			for (int j = 0; j < left.get_size()[1]; j++)
-				result[i][j] = left[i][j] - right[i][j];
-
-		return result;
-	}
-
-#endif
-
 } // namespace nyann
+
 
 // include subclasses of DataSet
 #include "DataSet/TrainDataSet.h"

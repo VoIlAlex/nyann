@@ -1,10 +1,12 @@
 #pragma once
 
-#include <vector>
-#include <stdexcept>
 
 // For all the framework configurations
 #include "../_config.h"
+
+#include <vector>
+#include <stdexcept>
+
 
 namespace nyann {
 

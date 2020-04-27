@@ -1,9 +1,12 @@
 #pragma once
-#include <exception>
-#include <stdexcept>
+
 
 // For all the framework configurations
 #include "../_config.h"
+
+#include <exception>
+#include <stdexcept>
+
 
 namespace nyann {
 

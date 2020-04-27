@@ -1,8 +1,11 @@
 #pragma once
-#include <vector>
+
 
 // For all the framework configurations
 #include "../_config.h"
+
+#include <vector>
+
 
 namespace nyann {
 
@@ -12,6 +15,7 @@ namespace nyann {
 		// whether it's an index
 		// not an slice
 		bool m_is_index;
+
 	public:
 		// Constructors
 		Slice()
@@ -70,16 +74,6 @@ namespace nyann {
 
 		// operators
 		using std::vector<_DT>::operator[];
-
-		/*int& operator[](int i)
-		{
-			return std::vector<int>::operator[](i);
-		}
-
-		const int& operator[](int i) const
-		{
-			return std::vector<int>::operator[](i);
-		}*/
 
 		operator _DT() const
 		{

@@ -1,95 +1,7 @@
 #include "pch.h"
-#include "..//nyann//nyann.h"
-
-#ifdef DRAFT_DATASET_2_0_0_ALPHA_TEST
-#include "../nyann/nyann/drafts/io_draft.h"
-#include "../nyann/nyann/drafts/io_draft.cpp"
-#endif
+#include "../nyann/nyann.h"
 
 namespace {
-#ifdef DRAFT_DATASET_2_0_0_ALPHA_TEST
-
-	TEST(DataSet, Construction)
-	{
-		nyann::DataSet_draft<float> dataset = {
-			{1.0, 2.0},
-			{3.0, 4.0}
-		};
-	}
-	/*TEST(DataSet, IO)
-	{
-		nyann::DataSet_draft<float> dataset = {
-			{1.0, 2.0},
-			{3.0, 4.0}
-		};
-		std::cout << dataset << std::endl;
-	}
-*/
-	TEST(TrainDataSet, Construction)
-	{
-		nyann::TrainDataSet_draft<double> dataset = {
-			{ {1.5, 1.5},
-			{1.5, 0.5},
-			{0.5, 1.5},
-			{0.5, 0.5} },
-			{ {0.},
-			  {1.},
-			  {1.},
-			  {0.} }
-		};
-	}
-
-	TEST(TrainDataSet, GetInput)
-	{
-		nyann::TrainDataSet_draft<double> dataset = {
-			{ {1.5, 1.5},
-			{1.5, 0.5},
-			{0.5, 1.5},
-			{0.5, 0.5} },
-			{ {0.},
-			  {1.},
-			  {1.},
-			  {0.} }
-		};
-
-		nyann::DataSet_draft<double> expected_input = {
-			{1.5, 1.5},
-			{1.5, 0.5},
-			{0.5, 1.5},
-			{0.5, 0.5}
-		};
-		ASSERT_EQ(
-			dataset.get_input(),
-			expected_input
-		);
-	}
-
-	TEST(TrainDataSet, GetOutput)
-	{
-		nyann::TrainDataSet_draft<double> dataset = {
-			{ {1.5, 1.5},
-			{1.5, 0.5},
-			{0.5, 1.5},
-			{0.5, 0.5} },
-			{ {0.},
-			  {1.},
-			  {1.},
-			  {0.}}
-		};
-
-		nyann::DataSet_draft<double> expected_output = {
-			{0.},
-			{1.},
-			{1.},
-			{0.}
-		};
-
-		auto output = dataset.get_output();
-		bool equality = output == expected_output;
-
-		ASSERT_TRUE(equality);
-	}
-#elif defined(DRAFT_DATASET_2_0_0_PRERELEASE)
 	using namespace nyann;
 	TEST(DataSet, Construction)
 	{
@@ -418,19 +330,6 @@ namespace {
 		EXPECT_EQ(value, 111);
 	}
 
-	/*TEST(DataSet, IO_formatting)
-	{
-		nyann::DataSet<double> dataset = {
-			{1.0, 2.0},
-			{3.0, 4.0}
-		};
-
-		std::stringstream ss;
-		ss << dataset << std::endl;
-
-		EXPECT_EQ(ss.str(), "[[1, 2]\n[3, 4]]\n");
-	}*/
-
 	TEST(DataSet, Iteration_default)
 	{
 		DataSet<double> dataset = {
@@ -444,15 +343,6 @@ namespace {
 		ASSERT_EQ(*it, double(dataset[0][0]));
 		ASSERT_EQ(*(it + 4), double(dataset[1][0]));
 	}	
-	/*TEST(DataSet, IO)
-	{
-		nyann::DataSet<float> dataset = {
-			{1.0, 2.0},
-			{3.0, 4.0}
-		};
-		std::cout << dataset << std::endl;
-	}
-*/
 	TEST(TrainDataSet, Construction)
 	{
 		nyann::TrainDataSet<double> dataset = {
@@ -510,76 +400,6 @@ namespace {
 			{1.},
 			{1.},
 			{0.}
-	};
-
-		auto output = dataset.get_output();
-		bool equality = output == expected_output;
-
-		ASSERT_TRUE(equality);
-}
-
-#else
-	TEST(DataSet, Construction)
-	{
-		nyann::DataSet<float> dataset = {
-			{1.0, 2.0},
-			{3.0, 4.0}
-		};
-	}
-	TEST(DataSet, IO)
-	{
-		nyann::DataSet<float> dataset = {
-			{1.0, 2.0},
-			{3.0, 4.0}
-		};
-		std::cout << dataset << std::endl;
-	}
-
-	TEST(TrainDataSet, Construction)
-	{
-		nyann::TrainDataSet<float> dataset = {
-			{{1.5, 1.5}, {0.}},
-			{{1.5, 0.5}, {1.}},
-			{{0.5, 1.5}, {1.}},
-			{{0.5, 0.5}, {0.}}
-		};
-	}
-
-	TEST(TrainDataSet, GetInput)
-	{
-		nyann::TrainDataSet<double> dataset = {
-			{{1.5, 1.5}, {0.}},
-			{{1.5, 0.5}, {1.}},
-			{{0.5, 1.5}, {1.}},
-			{{0.5, 0.5}, {0.}}
-		};
-
-		nyann::DataSet<double> expected_input = {
-			{1.5, 1.5},
-			{1.5, 0.5},
-			{0.5, 1.5},
-			{0.5, 0.5}
-		};
-		ASSERT_EQ(
-			dataset.get_input(),
-			expected_input
-		);
-	}
-
-	TEST(TrainDataSet, GetOutput)
-	{
-		nyann::TrainDataSet<double> dataset = {
-			{{1.5, 1.5}, {0.}},
-			{{1.5, 0.5}, {1.}},
-			{{0.5, 1.5}, {1.}},
-			{{0.5, 0.5}, {0.}}
-		};
-
-		nyann::DataSet<double> expected_output = {
-			{0.},
-			{1.},
-			{1.},
-			{0.}
 		};
 
 		auto output = dataset.get_output();
@@ -587,7 +407,4 @@ namespace {
 
 		ASSERT_TRUE(equality);
 	}
-
-
-#endif 
 } // namespace

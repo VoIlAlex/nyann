@@ -1,8 +1,11 @@
 #pragma once
-#include <vector>
+
 
 // For all the framework configurations
 #include "../_config.h"
+
+#include <vector>
+
 
 namespace nyann {
 

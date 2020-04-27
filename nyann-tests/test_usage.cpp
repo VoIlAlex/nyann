@@ -4,7 +4,6 @@
 namespace {
 #ifdef DRAFT_DATASET_2_0_0_ALPHA_TEST
 #elif defined(DRAFT_DATASET_2_0_0_PRERELEASE)
-#else
 	TEST(Net, Prediction_1)
 	{
 		// Create a model

@@ -9,7 +9,6 @@
 // For all the framework configurations
 #include "_config.h"
 
-
 #include "drafts/DataSet_draft.h"
 #include "drafts/TrainDataSet_draft.h"
 #include "drafts/io_draft.h"

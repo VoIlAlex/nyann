@@ -17,7 +17,7 @@
 //
 // Prerelease is a testing of merging
 // with framework the framwork.
-#define DRAFT_DATASET_2_0_0_PRERELEASE
+//#define DRAFT_DATASET_2_0_0_PRERELEASE
 
 ////////////
 // Python //
@@ -30,5 +30,5 @@
 ////////////////
 // Deprecated // 
 ////////////////
-#define DEPRECATED_LAYER_ROW_PROCESSING
+//#define DEPRECATED_LAYER_ROW_PROCESSING
 //#define DEPRECATED_FCLAYER_WEIGHTS_VECTOR
