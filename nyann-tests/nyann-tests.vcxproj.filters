@@ -19,6 +19,7 @@
     <ClCompile Include="test_usage.cpp" />
     <ClCompile Include="test_utils.cpp" />
     <ClCompile Include="test_utils_draft.cpp" />
+    <ClCompile Include="test_ConvLayer1D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
