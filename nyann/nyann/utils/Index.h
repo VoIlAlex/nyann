@@ -231,7 +231,7 @@ namespace nyann {
 		{
 			_DT index = _DT();
 			int degree = 0;
-			for (int i = 0, i_r = size() - 1; i < size(); i++, i_r--)
+			for (int i = 0, i_r = this->size() - 1; i < this->size(); i++, i_r--)
 			{
 				degree = 1;
 				for (int j = i_r + 1; j < max_index.size(); j++)
@@ -243,10 +243,10 @@ namespace nyann {
 
 		bool all_lower(const Index& index)
 		{
-			if (size() != index.size())
+			if (this->size() != index.size())
 				return false;
-			for (int i = 0; i < size(); i++)
-				if (at(i) >= index.at(i))
+			for (int i = 0; i < this->size(); i++)
+				if (this->at(i) >= index.at(i))
 					return false;
 			return true;
 				
