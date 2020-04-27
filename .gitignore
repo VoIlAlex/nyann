@@ -358,3 +358,5 @@ cmake_install.cmake
 nyann-tests/CMakeCache.txt
 nyann-tests/runTests
 nyann-tests/Makefile
+
+.codel/
