@@ -179,6 +179,8 @@
     <ClInclude Include="nyann\Net.h" />
     <ClInclude Include="nyann\Optimizer.h" />
     <ClInclude Include="nyann\Optimizer\SGDOptimizer.h" />
+    <ClInclude Include="nyann\utils\Serializer.h" />
+    <ClInclude Include="nyann\utils.h" />
     <ClInclude Include="nyann\utils\dataset_operations.h" />
     <ClInclude Include="nyann\utils\bool_operations.h" />
     <ClInclude Include="nyann\utils\constants.h" />

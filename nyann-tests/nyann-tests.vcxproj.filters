@@ -14,6 +14,9 @@
     <ClCompile Include="test_dataset_operations.cpp">
       <Filter>framework\utils</Filter>
     </ClCompile>
+    <ClCompile Include="test_Serializer.cpp">
+      <Filter>framework\utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />

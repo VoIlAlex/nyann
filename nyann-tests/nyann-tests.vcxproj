@@ -54,6 +54,7 @@
     <ClCompile Include="test_inbox.cpp" />
     <ClCompile Include="test_Index.cpp" />
     <ClCompile Include="test_Net.cpp" />
+    <ClCompile Include="test_Serializer.cpp" />
     <ClCompile Include="test_Size.cpp" />
     <ClCompile Include="test_Slice.cpp" />
     <ClCompile Include="test_TrainDataSet_draft.cpp" />
