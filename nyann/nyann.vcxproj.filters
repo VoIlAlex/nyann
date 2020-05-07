@@ -18,7 +18,7 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="nyann\drafts\io_draft.cpp">
+    <ClCompile Include="nyann\utils\conversion.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

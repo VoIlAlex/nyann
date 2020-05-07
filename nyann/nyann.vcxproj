@@ -146,6 +146,7 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="nyann\drafts\io_draft.cpp" />
+    <ClCompile Include="nyann\utils\conversion.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="examples\labs.h" />

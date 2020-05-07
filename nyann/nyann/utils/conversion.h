@@ -7,6 +7,8 @@
 #include "./Size.h"
 #include "./Index.h"
 
+#include <string>
+
 
 namespace nyann {
 
@@ -18,5 +20,20 @@ namespace nyann {
 			result[i] = size[i];
 		return result;
 	}
+
+	template<typename _DT>
+	_DT to_type(const std::string& arg)
+	{
+		return _DT(arg);
+	}
+
+	template<>
+	double to_type<double>(const std::string& arg);
+
+	template<>
+	float to_type<float>(const std::string& arg);
+
+	template<>
+	size_t to_type<size_t>(const std::string& arg);
 
 } // namespace nyann
