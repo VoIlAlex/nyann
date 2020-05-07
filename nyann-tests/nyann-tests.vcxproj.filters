@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -11,15 +11,9 @@
     <ClCompile Include="test_FCLayer.cpp" />
     <ClCompile Include="test_goal.cpp" />
     <ClCompile Include="test_inbox.cpp" />
-    <ClCompile Include="test_Index.cpp" />
-    <ClCompile Include="test_Net.cpp" />
-    <ClCompile Include="test_Size.cpp" />
-    <ClCompile Include="test_Slice.cpp" />
-    <ClCompile Include="test_TrainDataSet_draft.cpp" />
-    <ClCompile Include="test_usage.cpp" />
-    <ClCompile Include="test_utils.cpp" />
-    <ClCompile Include="test_utils_draft.cpp" />
-    <ClCompile Include="test_ConvLayer1D.cpp" />
+    <ClCompile Include="test_dataset_operations.cpp">
+      <Filter>framework\utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />

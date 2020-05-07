@@ -161,6 +161,7 @@
     <ClInclude Include="nyann\ActivationFunction\SoftMaxActivation.h" />
     <ClInclude Include="nyann\ActivationFunction\SoftMaxActivatoin.h" />
     <ClInclude Include="nyann\DataSet.h" />
+    <ClInclude Include="nyann\DataSet\DataSetOperation.h" />
     <ClInclude Include="nyann\DataSet\TrainDataSet.h" />
     <ClInclude Include="nyann\drafts.h" />
     <ClInclude Include="nyann\drafts\DataSet_draft.h" />
@@ -176,7 +177,7 @@
     <ClInclude Include="nyann\Net.h" />
     <ClInclude Include="nyann\Optimizer.h" />
     <ClInclude Include="nyann\Optimizer\SGDOptimizer.h" />
-    <ClInclude Include="nyann\utils.h" />
+    <ClInclude Include="nyann\utils\dataset_operations.h" />
     <ClInclude Include="nyann\utils\bool_operations.h" />
     <ClInclude Include="nyann\utils\constants.h" />
     <ClInclude Include="nyann\utils\conversion.h" />
