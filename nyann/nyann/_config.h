@@ -8,6 +8,11 @@
 #pragma once
 
 #define GROUP_ACTIVATION
+#define OPTIMIZER
+#define LOSS
+#define TRAIN_STOP_CONDITION
+//#define CONV_LAYER_1D
+
 
 // Draft features togglers
 //
