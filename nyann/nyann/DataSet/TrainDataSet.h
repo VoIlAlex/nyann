@@ -60,7 +60,7 @@ namespace nyann {
 
 		size_t samples_count() const
 		{
-			return DataSet(this->first).size()[0];
+			return DataSet<_DT>(this->first).size()[0];
 		}
 
 	};
