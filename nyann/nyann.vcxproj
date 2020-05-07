@@ -162,6 +162,7 @@
     <ClInclude Include="nyann\ActivationFunction\SoftMaxActivatoin.h" />
     <ClInclude Include="nyann\DataSet.h" />
     <ClInclude Include="nyann\DataSet\DataSetOperation.h" />
+    <ClInclude Include="nyann\DataSet\DataSetReducer.h" />
     <ClInclude Include="nyann\DataSet\TrainDataSet.h" />
     <ClInclude Include="nyann\drafts.h" />
     <ClInclude Include="nyann\drafts\DataSet_draft.h" />
@@ -181,6 +182,7 @@
     <ClInclude Include="nyann\utils\bool_operations.h" />
     <ClInclude Include="nyann\utils\constants.h" />
     <ClInclude Include="nyann\utils\conversion.h" />
+    <ClInclude Include="nyann\utils\dataset_reducers.h" />
     <ClInclude Include="nyann\utils\exceptions.h" />
     <ClInclude Include="nyann\utils\Index.h" />
     <ClInclude Include="nyann\utils\io.h" />

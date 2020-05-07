@@ -47,6 +47,7 @@
     <ClCompile Include="test_ConvLayer1D.cpp" />
     <ClCompile Include="test_DataSet.cpp" />
     <ClCompile Include="test_dataset_operations.cpp" />
+    <ClCompile Include="test_dataset_reducers.cpp" />
     <ClCompile Include="test_drafts.cpp" />
     <ClCompile Include="test_FCLayer.cpp" />
     <ClCompile Include="test_goal.cpp" />
