@@ -3,6 +3,7 @@
 #include "../nyann/nyann/drafts.h"
 
 namespace {
+#ifdef CONV_LAYER_1D
 	TEST(ConvLayer1D, Construction)
 	{
 		nyann::ConvLayer1D<double> layer(
@@ -52,4 +53,5 @@ namespace {
 
 		ASSERT_EQ(y.size(), output_shape);
 	}
+#endif
 } // namespace 

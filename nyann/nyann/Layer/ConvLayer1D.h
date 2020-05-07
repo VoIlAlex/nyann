@@ -12,7 +12,7 @@
 
 
 namespace nyann {
-
+#ifdef CONV_LAYER_1D
 	template<typename _DT>
 	class ConvLayer1D : public Layer<_DT>
 	{
@@ -141,5 +141,5 @@ namespace nyann {
 			}
 		}
 	};
-
+#endif
 } // namespace nyann
