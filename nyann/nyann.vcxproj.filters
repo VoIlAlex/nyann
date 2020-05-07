@@ -143,5 +143,8 @@
     <ClInclude Include="nyann\utils\dataset_operations.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="nyann\DataSet\DataSetSerializer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -164,6 +164,7 @@
     <ClInclude Include="nyann\DataSet.h" />
     <ClInclude Include="nyann\DataSet\DataSetOperation.h" />
     <ClInclude Include="nyann\DataSet\DataSetReducer.h" />
+    <ClInclude Include="nyann\DataSet\DataSetSerializer.h" />
     <ClInclude Include="nyann\DataSet\TrainDataSet.h" />
     <ClInclude Include="nyann\drafts.h" />
     <ClInclude Include="nyann\drafts\DataSet_draft.h" />
