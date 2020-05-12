@@ -12,3 +12,6 @@
 #include "utils/Index.h"
 #include "utils/Slice.h"
 #include "utils/conversion.h"
+#include "utils/dataset_operations.h"
+#include "utils/dataset_reducers.h"
+#include "utils/Serializer.h"
