@@ -32,6 +32,7 @@ namespace nyann {
 		DataSet<_DT_OUT> m_output;
 
 	public:
+		FCLayer() {}
 		FCLayer(const Size<size_t>& size_in, const Size<size_t>& size_out)
 			: m_weights(Size<>::join(size_in, size_out)), m_biases(size_out),
 			m_size_in(size_in), m_size_out(size_out)
