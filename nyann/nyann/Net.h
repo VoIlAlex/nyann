@@ -105,6 +105,70 @@ namespace nyann {
 			this->m_optimizer = optimizer;
 		}
 
+#ifdef TRAIN_STOP_CONDITION
+		std::vector<_DT> fit(
+			const ::nyann::TrainDataSet<_DT>& dataset,
+			const TrainStopCondition<_DT>& condition,
+			size_t batch_size = 1
+		)
+		{
+			std::vector<_DT> error_dynamic;
+			DataSet<_DT> input = dataset.get_input();
+			DataSet<_DT> output = dataset.get_output();
+			DataSet<_DT> predicted_output = predict(input);
+			_DT difference = DataSet<_DT>::abs_difference(predicted_output, output) / output.size().size();
+
+			TrainState<_DT> state;
+			state.epoch = 0;
+			state.error = difference;
+			DataSet<_DT> X;
+			DataSet<_DT> y;
+			DataSet<_DT> errors;
+			DataSet<_DT> y_pred;
+
+			while (!condition.is_true(state))
+			{
+				errors.clear();
+				y_pred.clear(); 
+				condition.act_before(state);
+				
+				error_dynamic.push_back(difference);
+				std::cout << "[INFO] Epoch " << state.epoch + 1 << "..." << std::endl;
+				std::cout << "[INFO] Error: " << difference << std::endl;
+
+				for (int i = 0; i < dataset.samples_count() / batch_size; i++)
+				{
+					X = DataSet<_DT>(Size<>::join({ batch_size }, dataset.input_size()));
+					y = DataSet<_DT>(Size<>::join({ batch_size }, dataset.output_size()));
+					for (int j = i * batch_size, k = 0; j < i * batch_size + batch_size; j++, k++)
+					{
+						X[k] = dataset[j].get_input();
+						y[k] = dataset[j].get_output();
+					}
+
+					y_pred = predict(X);
+					errors = (*m_loss)(y_pred, y);
+
+					for (auto it = m_layers.rbegin(); it != m_layers.rend(); it++)
+					{
+						errors = (*it)->back_propagation(
+							errors,
+							*m_optimizer);
+					}
+				}
+
+				condition.act_after(state);
+				// Set average error
+				y_pred = predict(input);
+				y = output;
+				difference = DataSet<_DT>::abs_difference(y_pred, y) / output.size().size();
+				errors = (*m_loss)(y_pred, y);
+				state.error = errors.execute(AbsOperation<_DT>()).reduce(AverageReducer<_DT>());
+			}
+
+			return error_dynamic;
+		}
+#endif
 		std::vector<_DT> fit(
 			const ::nyann::TrainDataSet<_DT>& dataset,
 			int epochs,
