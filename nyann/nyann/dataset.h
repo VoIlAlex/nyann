@@ -53,6 +53,13 @@ namespace nyann {
 			m_size = size;
 		}
 
+		DataSet(const Size<>& size, const std::vector<_DT>& data)
+		{
+			// TODO: size correctess checking
+			m_data = data;
+			m_size = size;
+		}
+
 		DataSet(const DataSet<_DT>& dataset)
 		{
 			m_data = dataset.m_data;
