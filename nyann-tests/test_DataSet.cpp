@@ -158,7 +158,7 @@ namespace {
 		EXPECT_EQ(expected_dataset_slice, dataset_slice);
 	}
 
-	TEST(DataSet, SlicingInitialization_1)
+	TEST(DataSet, SliceSetting_1)
 	{
 		DataSet<double> dataset_3 = {
 			{
@@ -191,7 +191,7 @@ namespace {
 		ASSERT_EQ(fourth_zero, 0);
 	}
 
-	TEST(DataSet, SlicingInitialization_2)
+	TEST(DataSet, SliceSetting_2)
 	{
 		DataSet<double> dataset_3 = {
 			{
