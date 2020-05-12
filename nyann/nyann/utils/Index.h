@@ -183,7 +183,7 @@ namespace nyann {
 			int to_value;
 			while (current_idx_item != 0)
 			{
-				to_value = to_border ? max.at(current_idx_item) - 1 : max.at(current_idx_item);
+				to_value = (to_border ? max.at(current_idx_item) - 1 : max.at(current_idx_item));
 				if (this->at(current_idx_item) == to_value || this->at(current_idx_item) + steps.at(current_idx_item) > to_value)
 				{
 					current_idx_item--;
