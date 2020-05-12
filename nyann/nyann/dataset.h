@@ -192,6 +192,18 @@ namespace nyann {
 			return m_data;
 		}
 
+		void execute_inplace(const DataSetOperation<_DT>& operation)
+		{
+			operation(m_data, m_size);
+		}
+
+		DataSet<_DT> execute(const DataSetOperation<_DT>& operation) const
+		{
+			DataSet<_DT> new_dataset(*this);
+			new_dataset.execute_inplace(operation);
+			return new_dataset;
+		}
+
 		NestedDataSet operator[](const Slice<>& idx) const
 		{
 			return NestedDataSet(this, { idx });
