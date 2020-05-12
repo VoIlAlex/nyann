@@ -60,6 +60,23 @@ namespace nyann {
 		}
 	};
 
+	template<typename _DT>
+	class RequiredErrorCondition : public TrainStopCondition<_DT>
+	{
+		_DT m_required_error;
+
+	public:
+		RequiredErrorCondition(_DT required_error)
+			: m_required_error(required_error)
+		{}
+
+		bool is_true(const TrainState<_DT>& state) const override
+		{
+			return state.error <= m_required_error;
+		}
+	};
+
+
 	template<typename _DT = double>
 	class Net
 	{
