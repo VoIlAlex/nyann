@@ -46,6 +46,19 @@ namespace nyann {
 			return size;
 		}
 
+		size_t shift_at(int pos)
+		{
+			int size = this->size();
+			if (pos < -1 || pos >= size)
+				throw std::out_of_range("Position out of range.");
+
+			size_t shift = 1;
+			for (auto it = this->begin() + (pos + 1); it != this->end(); it++)
+				shift *= *it;
+
+			return shift;
+		}
+
 		operator _DT() const
 		{
 			return this->at(0);
