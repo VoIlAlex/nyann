@@ -1119,5 +1119,6 @@ namespace nyann {
 } // namespace nyann
 
 
-// include subclasses of DataSet
+// include subclasses etc. of DataSet
 #include "DataSet/TrainDataSet.h"
+#include "DataSet/DataSetSerializer.h"
