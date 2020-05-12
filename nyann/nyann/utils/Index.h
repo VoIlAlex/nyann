@@ -75,6 +75,13 @@ namespace nyann {
 			return *this;
 		}
 
+		Index<_DT>& operator=(Index<_DT>&& index)
+		{
+			for (int i = 0; i < index.size(); i++)
+				this->at(i) = index.at(i);
+			return *this;
+		}
+
 		bool operator==(const Index<_DT>& other) const
 		{
 			if (this->size() != other.size())
