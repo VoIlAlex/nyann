@@ -17,12 +17,15 @@ namespace {
 		net.add_layer(layer_2);
 	}
 
-
 	TEST(Net, Fitting)
 	{
 		nyann::Layer<double>* layer_1 = new nyann::FCLayer<double>(nyann::Size<>{ 2, 2 });
 		nyann::Layer<double>* layer_2 = new nyann::FCLayer<double>(nyann::Size<>{ 2, 1 });
+		nyann::Loss<double>* loss = new nyann::MSELoss<double>();
+		nyann::Optimizer<double>* optimizer = new nyann::SGDOptimizer<double>(0.01);
 		nyann::Net net;
+		net.set_loss(loss);
+		net.set_optimizer(optimizer);
 		net.add_layer(layer_1);
 		net.add_layer(layer_2);
 
