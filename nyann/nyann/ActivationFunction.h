@@ -46,3 +46,4 @@ namespace nyann {
 #include "ActivationFunction/ReLUActivation.h"
 #include "ActivationFunction/SigmoidActivation.h"
 #include "ActivationFunction/LinearActivation.h"
+#include "ActivationFunction/SoftMaxActivation.h"
