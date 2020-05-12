@@ -173,7 +173,6 @@ namespace nyann {
 			NestedDataSet result(this, slices);
 			return result;
 		}
-
 		NestedDataSet operator[](const Slice<>& idx)
 		{
 			return NestedDataSet(this, std::vector<Slice<>>{ idx });
@@ -182,11 +181,11 @@ namespace nyann {
 		{
 			return NestedDataSet(this, std::vector<Slice<>>{ idx });
 		}
+		// Access
 		const ::std::vector<_DT>& data() const
 		{
 			return m_data;
 		}
-
 		::std::vector<_DT>& access_data()
 		{
 			return m_data;
