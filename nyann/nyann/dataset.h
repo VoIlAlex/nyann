@@ -548,29 +548,7 @@ namespace nyann {
 			}
 
 			NestedDataSet& operator=(const DataSet<_DT>& dataset) {
-				int flat_idx = get_flat_index();
-				// bad size of the coordinate
-				if (!m_is_const)
-				{
-
-					// Assigned dataset should have
-					// size of nested dataset
-					size_t nested_dataset_dimension = m_parent->size().size() - m_slices.size();
-					size_t assigned_dataset_dimension = dataset.size().size();
-					if (nested_dataset_dimension != assigned_dataset_dimension)
-						throw ConversionError("");
-					for (int i = 0; i < nested_dataset_dimension; i++)
-						if (m_parent->size()[m_slices.size() + i] != dataset.size()[i])
-							throw ConversionError("Bad size");
-
-
-
-					for (int i = get_flat_index(), j = 0; i < dataset.data().size(); i++, j++)
-						m_parent->m_data[i] = dataset.m_data[i];
-				}
-				else
-					throw std::runtime_error("Parent dataset is constants.");
-				return *this;
+				return this->set_value(dataset);
 			}
 
 			NestedDataSet operator[](const Slice<>& i) const
