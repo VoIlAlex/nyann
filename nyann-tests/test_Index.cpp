@@ -41,6 +41,18 @@ namespace {
 		ASSERT_EQ(count_of_increments, 2 * 2 * 3 * 2);
 	}
 
+	TEST(Index, IncrementWithStepsToBorder)
+	{
+		nyann::Index<unsigned int>  max_idx = { 2, 1, 4, 2 };
+		nyann::Index<unsigned int>  min_index = { 0, 0, 0, 0 };
+		nyann::Index<unsigned int>  idx = { 0, 0, 0, 0 };
+		nyann::Index<unsigned int>  steps = { 1, 1, 1, 1 };
+		int count_of_increments = 0;
+		while (idx.all_lower(max_idx) && ++count_of_increments)
+			idx.increment(min_index, max_idx, steps, true);
+		ASSERT_EQ(count_of_increments, 2 * 1 * 4 * 2);
+	}
+
 	TEST(Index, Decrement)
 	{
 		nyann::Index<unsigned int>  idx = { 1, 2, 3, 4 };
