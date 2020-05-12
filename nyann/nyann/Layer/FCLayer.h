@@ -59,10 +59,10 @@ namespace nyann {
 			Index<size_t> max_out_index = to_index(m_size_out);
 			for (size_t batch = 0; batch < batch_count; batch++)
 			{
-				for (; out_index < max_out_index; out_index.increment({}, max_out_index))
+				for (out_index = Index<size_t>(m_size_out.size()); out_index.all_lower(max_out_index); out_index.increment({}, max_out_index))
 				{
 					Index<size_t> batch_out_index = Index<size_t>::join({ batch }, out_index);
-					for (; in_index < max_in_index; in_index.increment({}, max_in_index))
+					for (in_index = Index<size_t>(m_size_in.size()); in_index.all_lower(max_in_index); in_index.increment({}, max_in_index))
 					{
 						Index<size_t> in_out_index = Index<size_t>::join(in_index, out_index);
 						Index<size_t> batch_in_index = Index<size_t>::join({ batch }, in_index);
