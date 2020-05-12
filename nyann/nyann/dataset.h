@@ -204,6 +204,11 @@ namespace nyann {
 			return new_dataset;
 		}
 
+		_DT reduce(const DataSetReducer<_DT>& reducer) const 
+		{
+			return reducer(m_data, m_size);
+		}
+
 		NestedDataSet operator[](const Slice<>& idx) const
 		{
 			return NestedDataSet(this, { idx });
