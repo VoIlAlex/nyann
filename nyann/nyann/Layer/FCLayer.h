@@ -205,8 +205,7 @@ namespace nyann {
 			}
 
 			return errors_here;
-			}
-
+		}
 		const DataSet<_DT_OUT>& get_weights() const
 		{
 			return m_weights;
@@ -223,6 +222,34 @@ namespace nyann {
 		DataSet<_DT_OUT>& get_biases()
 		{
 			return m_biases;
+		}
+
+		std::string serialize() const override
+		{
+			std::ostringstream result;
+			DataSetSerializer<_DT_IN> data_serializer;
+			VectorSerializer<size_t> size_serializer;
+			result << data_serializer.serialize(m_weights) << "\n";
+			result << data_serializer.serialize(m_biases) << "\n";
+			result << data_serializer.serialize(m_input) << "\n";
+			result << data_serializer.serialize(m_output) << "\n";
+			result << size_serializer.serialize(m_size_in) << "\n";
+			result << size_serializer.serialize(m_size_out);
+			return result.str();
+		}
+
+		void deserialize(std::istringstream& input) override
+		{
+			//std::istringstream input(data);
+			DataSetSerializer<_DT_IN> data_serializer;
+			VectorSerializer<size_t> size_serializer;
+			
+			m_weights = data_serializer.deserialize(input);
+			m_biases = data_serializer.deserialize(input);
+			m_input = data_serializer.deserialize(input);
+			m_output = data_serializer.deserialize(input);
+			m_size_in = size_serializer.deserialize(input);
+			m_size_out = size_serializer.deserialize(input);		
 		}
 
 	private:
