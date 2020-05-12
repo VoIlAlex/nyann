@@ -47,4 +47,30 @@ namespace {
 		);
 		ASSERT_NE(initial_weights, layer.get_weights());
 	}
+
+	TEST(FCLayer, MultidimInput)
+	{
+		nyann::DataSet<double> input = {
+			{
+				{1.5, 1.5},
+				{1.5, 0.5},
+				{0.5, 1.5},
+				{0.5, 0.5}
+			},
+			{
+				{0.5, 0.5},
+				{0.5, 0.5},
+				{0.5, 0.5},
+				{0.5, 0.5}
+			}
+		};
+
+		nyann::Layer<double>* layer_1 = new nyann::FCLayer<double>(nyann::Size<>{ 4, 2 }, nyann::Size<>{2});
+
+		nyann::DataSet<double> output = layer_1->operator()(input);
+		nyann::Size<> expected_size { 2, 2 };
+
+		ASSERT_EQ(output.size(), expected_size);
+	}
+
 } // namespace
