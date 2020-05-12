@@ -17,7 +17,7 @@ namespace nyann {
 		//using std::vector<int>::vector;
 		Index() {}
 
-		Index(int count, _DT value = 0)
+		explicit Index(int count, _DT value = 0)
 			:
 			::std::vector<_DT>::vector(count, value),
 			m_initial_state(count, value)
@@ -38,9 +38,11 @@ namespace nyann {
 
 		Index(Index<_DT>&& index) noexcept
 			:
-			::std::vector<_DT>::vector(std::move(index)),
-			m_initial_state(std::move(index))
-		{}
+			::std::vector<_DT>::vector(std::move(index))
+		{
+			m_initial_state.resize(this->size());
+			std::copy(this->begin(), this->end(), m_initial_state.begin());
+		}
 
 		Index(const std::vector<_DT>& ivec)
 			:
@@ -50,9 +52,11 @@ namespace nyann {
 
 		Index(std::vector<_DT>&& ivec)
 			:
-			m_initial_state(std::move(ivec)),
-			::std::vector<_DT>::vector(m_initial_state)
-		{}
+			::std::vector<_DT>::vector(std::move(ivec))
+		{
+			m_initial_state.resize(this->size());
+			std::copy(this->begin(), this->end(), m_initial_state.begin());
+		}
 
 		std::vector<_DT>& initial_state()
 		{
