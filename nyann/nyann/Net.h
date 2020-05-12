@@ -10,8 +10,11 @@
 #include "ActivationFunction.h"
 #include "DataSet.h"
 #include "DataSet/TrainDataSet.h"
+#include "utils/dataset_reducers.h"
 
 #include <vector>
+#include <sstream>
+#include <string>
 
 
 namespace nyann {
