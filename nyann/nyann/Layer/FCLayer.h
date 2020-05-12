@@ -81,7 +81,58 @@ namespace nyann {
 
 			return outputs;
 		}
+#ifdef OPTIMIZER
+		virtual DataSet<_DT_IN> back_propagation(
+			const DataSet<_DT_OUT>& errors,
+			const Optimizer<_DT_OUT>& optimizer
+		) override
+		{
+			auto& input = m_input;
+			auto& output = m_output;
+			auto weights_copy = m_weights;
 
+
+			// get derivatives
+			// from activation 
+			// function
+			DataSet<_DT_OUT> derivatives = this->m_activation_function->derivative(output);
+			size_t batch_size = derivatives.size()[0];
+
+			// update weights
+			optimizer(m_weights, m_biases, derivatives, errors, input, m_size_in, m_size_out, batch_size);
+
+			// Errors on this layer
+			// (they are calculated by errors
+			// from the next layer)
+			DataSet<_DT_IN> errors_here(Size<size_t>::join({ batch_size }, m_size_in));
+
+
+			Index<size_t> min_in_index(m_size_in.size());
+			Index<size_t> min_out_index(m_size_out.size());
+			Index<size_t> in_index(m_size_in.size());
+			Index<size_t> out_index(m_size_out.size());
+			Index<size_t> max_in_index = to_index(m_size_in);
+			Index<size_t> max_out_index = to_index(m_size_out);
+
+			for (size_t batch = 0; batch < errors.size()[0]; batch++)
+			{
+				for (in_index = min_in_index; in_index.all_lower(max_in_index); in_index.increment(min_in_index, max_in_index))
+				{
+					Index<size_t> batch_in_index = Index<size_t>::join({ batch }, in_index);
+					double error_batch_in = 0;
+					for (out_index = min_out_index; out_index.all_lower(max_out_index); out_index.increment(min_out_index, max_out_index))
+					{
+						Index<size_t> batch_out_index = Index<size_t>::join({ batch }, out_index);
+						Index<size_t> in_out_index = Index<size_t>::join(in_index, out_index);
+						error_batch_in += errors.at_index(batch_out_index) * derivatives.at_index(batch_out_index) * weights_copy.at_index(in_out_index);
+					}
+					errors_here.at_index(batch_in_index) = error_batch_in;
+				}
+			}
+
+			return errors_here;
+		}
+#endif
 		virtual DataSet<_DT_IN> back_propagation(
 			const DataSet<_DT_OUT>& errors,
 			double lr = 0.01
