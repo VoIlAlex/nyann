@@ -5,6 +5,7 @@ namespace {
 
 	TEST(Index, Construction)
 	{
+		nyann::Index<unsigned int> empty_idx;
 		nyann::Index<unsigned int> idx_1;
 		nyann::Index<unsigned int> idx_2 = { 2, 1, 4, 2 };
 		nyann::Index<unsigned int> idx_3 (idx_2);
@@ -12,6 +13,11 @@ namespace {
 		std::vector<unsigned int> vec_idx = { 1, 3, 4, 6 };
 		nyann::Index<unsigned int> idx_5 (vec_idx);
 		nyann::Index<unsigned int> idx_6 (std::move(vec_idx));
+		ASSERT_EQ(idx_1, empty_idx);
+		ASSERT_EQ(idx_3, empty_idx);
+		ASSERT_EQ(idx_4, idx_2);
+		ASSERT_EQ(idx_5, idx_6);
+		ASSERT_TRUE(vec_idx.empty());
 	}
 
 	TEST(Index, Increment)
