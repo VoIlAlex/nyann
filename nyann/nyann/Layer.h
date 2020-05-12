@@ -6,6 +6,7 @@
 
 #include "dataset.h"
 #include "ActivationFunction.h"
+#include "Optimizer.h"
 
 
 namespace nyann {
@@ -20,9 +21,23 @@ namespace nyann {
 		Layer()
 			: m_activation_function(new LinearActivation<_DT_OUT>()) {}
 		virtual DataSet<_DT_OUT> operator() (const DataSet<_DT_IN>&) = 0;
+#ifdef OPTIMIZER
+		virtual DataSet<double> back_propagation(
+			const DataSet<double>& errors,
+			const Optimizer<double>& optimizer) = 0;
+		virtual DataSet<double> back_propagation(
+			const DataSet<double>& errors,
+			double lr = 0.01)
+		{
+			throw DeprecationError("Currently used back_propagation iterface is deprecated.");
+		}
+#else
 		virtual DataSet<double> back_propagation(
 			const DataSet<double>& errors,
 			double lr = 0.01) = 0;
+#endif
+		
+
 		void add_activation_function(ActivationFunction<_DT_IN>* activation_function)
 		{
 			m_activation_function = activation_function;
