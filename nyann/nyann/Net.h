@@ -277,6 +277,18 @@ namespace nyann {
 				stream << m_layers.at(i)->serialize();
 			}
 		}
+
+		void read(const std::string& filename)
+		{
+			std::ifstream input_file(filename);
+			std::string content{ std::istreambuf_iterator<char>(input_file), std::istreambuf_iterator<char>() };
+			std::istringstream input(content);
+			m_loss->deserialize(input);
+			m_optimizer->deserialize(input);
+			for (nyann::Layer<_DT>* layer : m_layers)
+				layer->deserialize(input);
+		}
+
 		~Net()
 		{
 			for (auto layer : m_layers)
