@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Source Files">
@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="nyann\drafts\io_draft.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="nyann\utils\conversion.cpp">
@@ -110,9 +110,6 @@
     <ClInclude Include="nyann\_config.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="nyann\utils\bool_operations.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="nyann\utils\Index.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -134,16 +131,28 @@
     <ClInclude Include="nyann\ActivationFunction\LinearActivation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="nyann\ActivationFunction\SoftMaxActivatoin.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="nyann\DataSet\DataSetOperation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="nyann\utils\dataset_operations.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="nyann\DataSet\DataSetReducer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="nyann\utils\dataset_reducers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="nyann\DataSet\DataSetSerializer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="nyann\utils\Serializer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="nyann\Net\NetSerializer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="nyann\ActivationFunction\SoftMaxActivation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

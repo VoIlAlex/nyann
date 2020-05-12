@@ -39,13 +39,13 @@
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -144,7 +144,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="nyann\drafts\io_draft.cpp" />
     <ClCompile Include="nyann\utils\conversion.cpp" />
   </ItemGroup>
@@ -160,7 +159,7 @@
     <ClInclude Include="nyann\ActivationFunction\ReLUActivation.h" />
     <ClInclude Include="nyann\ActivationFunction\SigmoidActivation.h" />
     <ClInclude Include="nyann\ActivationFunction\SoftMaxActivation.h" />
-    <ClInclude Include="nyann\ActivationFunction\SoftMaxActivatoin.h" />
+    <ClInclude Include="nyann\ActivationFunction\SoftMaxActivation.h" />
     <ClInclude Include="nyann\DataSet.h" />
     <ClInclude Include="nyann\DataSet\DataSetOperation.h" />
     <ClInclude Include="nyann\DataSet\DataSetReducer.h" />
@@ -178,12 +177,12 @@
     <ClInclude Include="nyann\Loss.h" />
     <ClInclude Include="nyann\Loss\MSELoss.h" />
     <ClInclude Include="nyann\Net.h" />
+    <ClInclude Include="nyann\Net\NetSerializer.h" />
     <ClInclude Include="nyann\Optimizer.h" />
     <ClInclude Include="nyann\Optimizer\SGDOptimizer.h" />
     <ClInclude Include="nyann\utils\Serializer.h" />
     <ClInclude Include="nyann\utils.h" />
     <ClInclude Include="nyann\utils\dataset_operations.h" />
-    <ClInclude Include="nyann\utils\bool_operations.h" />
     <ClInclude Include="nyann\utils\constants.h" />
     <ClInclude Include="nyann\utils\conversion.h" />
     <ClInclude Include="nyann\utils\dataset_reducers.h" />
