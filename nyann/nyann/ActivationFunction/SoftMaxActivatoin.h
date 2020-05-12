@@ -10,7 +10,7 @@
 namespace nyann {
 
 	template <typename _DT>
-	class SoftMax : public ActivationFunction<_DT>
+	class SoftMaxActivation : public ActivationFunction<_DT>
 	{
 	public:
 		_DT operator()(const _DT &sum) override
