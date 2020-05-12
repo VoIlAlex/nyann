@@ -24,6 +24,20 @@ namespace {
 		ASSERT_EQ(plain_size, 100);
 	}
 
+	TEST(Size, ShiftAt)
+	{
+		nyann::Size<> size{ 2, 5, 10 };
+		size_t shift_at_minus_1 = size.shift_at(-1);
+		size_t shift_at_0 = size.shift_at(0);
+		size_t shift_at_1 = size.shift_at(1);
+		size_t shift_at_2 = size.shift_at(2);
+
+		ASSERT_EQ(shift_at_minus_1, 2 * 5 * 10);
+		ASSERT_EQ(shift_at_0, 5 * 10);
+		ASSERT_EQ(shift_at_1, 10);
+		ASSERT_EQ(shift_at_2, 1);
+	}
+
 	TEST(Size, Join)
 	{
 		nyann::Size<> size_1{ 1, 2, 3 };
