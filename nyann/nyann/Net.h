@@ -95,12 +95,12 @@ namespace nyann {
 			this->m_layers.push_back(layer);
 		}
 
-		void set_loss(Loss* loss)
+		void set_loss(Loss<_DT>* loss)
 		{
 			this->m_loss = loss;
 		}
 
-		void set_optimizer(Optimizer* optimizer)
+		void set_optimizer(Optimizer<_DT>* optimizer)
 		{
 			this->m_optimizer = optimizer;
 		}
