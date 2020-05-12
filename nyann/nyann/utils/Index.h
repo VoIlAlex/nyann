@@ -250,6 +250,20 @@ namespace nyann {
 				degree = 1;
 				for (int j = i_r + 1; j < max_index.size(); j++)
 					degree *= max_index[j];
+				index += this->at(i_r) * degree;
+			}
+			return index;
+		}
+
+		_DT flatten(const Index& max_index) const
+		{
+			_DT index = _DT();
+			int degree = 0;
+			for (int i = 0, i_r = this->size() - 1; i < this->size(); i++, i_r--)
+			{
+				degree = 1;
+				for (int j = i_r + 1; j < max_index.size(); j++)
+					degree *= max_index[j];
 				index += at(i_r) * degree;
 			}
 			return index;
