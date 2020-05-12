@@ -8,10 +8,13 @@
 #include "utils/Size.h"
 #include "utils/Index.h"
 #include "utils/Slice.h"
+#include "DataSet/DataSetOperation.h"
+#include "DataSet/DataSetReducer.h"
 
 #include <initializer_list>
 #include <vector>
 #include <math.h>
+#include <functional>
 
 
 namespace nyann {
