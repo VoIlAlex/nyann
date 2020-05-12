@@ -244,6 +244,39 @@ namespace {
 		ASSERT_EQ(fourth_zero, 0);
 	}
 
+	TEST(DataSet, SliceAssignment_1)
+	{
+		DataSet<double> dataset_3 = {
+			{
+				{1010, 001},
+				{010, 011}
+			},
+			{
+				{100, 101},
+				{110, 111}
+			}
+		};
+
+		dataset_3[{0, 2}][1][{0, 2}] = DataSet<double>{
+			{
+				{0, 0}
+			},
+			{
+				{0, 0}
+			}
+		};
+
+		double first_zero = double(dataset_3[0][1][0]);
+		double second_zero = double(dataset_3[0][1][1]);
+		double third_zero = double(dataset_3[1][1][0]);
+		double fourth_zero = double(dataset_3[1][1][1]);
+
+		ASSERT_EQ(first_zero, 0);
+		ASSERT_EQ(second_zero, 0);
+		ASSERT_EQ(third_zero, 0);
+		ASSERT_EQ(fourth_zero, 0);
+	}
+
 	TEST(DataSet, SplitInputOutput)
 	{
 		typedef nyann::DataSet<double> dt;
