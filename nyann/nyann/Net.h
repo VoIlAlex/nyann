@@ -265,6 +265,18 @@ namespace nyann {
 				m_layers[idx]->add_activation_function(activation_function);
 		}
 
+		void save(const std::string& filename) const
+		{
+			std::ofstream stream(filename);
+			stream << m_loss->serialize() << "\n";
+			stream << m_optimizer->serialize() << "\n";
+			for (int i = 0; i < m_layers.size(); i++)
+			{
+				if (i != 0)
+					stream << "\n";
+				stream << m_layers.at(i)->serialize();
+			}
+		}
 		~Net()
 		{
 			for (auto layer : m_layers)
