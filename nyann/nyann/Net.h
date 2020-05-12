@@ -19,6 +19,13 @@
 
 namespace nyann {
 
+	template<typename _DT>
+	struct TrainState
+	{
+		size_t epoch;
+		_DT error;
+	};
+
 	template<typename _DT = double>
 	class Net
 	{
