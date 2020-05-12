@@ -26,7 +26,7 @@ namespace nyann {
 		{
 			DataSet<_DT> results = DataSet<_DT>::ones_like(Y);
 			for (int i = 0; i < Y.data().size(); i++)
-				results.access_data()[i] = operator()(Y.data()[i]);
+				results.access_data()[i] = derivative(Y.data()[i]);
 			return results;
 		}
 		// TODO: save activation function 
