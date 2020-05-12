@@ -81,8 +81,8 @@ namespace nyann {
 	class Net
 	{
 		std::vector<Layer<_DT>*> m_layers;
-		Loss* m_loss;
-		Optimizer* m_optimizer;
+		Loss<_DT>* m_loss;
+		Optimizer<_DT>* m_optimizer;
 
 	public:
 		Net() :
