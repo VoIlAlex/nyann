@@ -15,6 +15,11 @@ namespace nyann {
 	{
 	public:
 		using std::vector<_DT>::vector;
+
+		Size(const std::vector<_DT>& other)
+			: std::vector<_DT>::vector(other)
+		{}
+
 		// zero if not
 		// presented
 		const _DT& operator[](int i) const
