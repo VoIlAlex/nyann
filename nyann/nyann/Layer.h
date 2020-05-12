@@ -7,12 +7,13 @@
 #include "dataset.h"
 #include "ActivationFunction.h"
 #include "Optimizer.h"
+#include "utils/Serializer.h"
 
 
 namespace nyann {
 
 	template<typename _DT_IN, typename _DT_OUT = _DT_IN>
-	class Layer
+	class Layer : public Serializable<_DT_IN>
 	{
 	protected:
 		ActivationFunction<_DT_IN>* m_activation_function;
