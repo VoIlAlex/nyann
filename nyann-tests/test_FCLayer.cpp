@@ -73,4 +73,34 @@ namespace {
 		ASSERT_EQ(output.size(), expected_size);
 	}
 
+	TEST(FCLayer, Serialization)
+	{
+		nyann::DataSet<double> input = {
+			{
+				{1.5, 1.5},
+				{1.5, 0.5},
+				{0.5, 1.5},
+				{0.5, 0.5}
+			},
+			{
+				{0.5, 0.5},
+				{0.5, 0.5},
+				{0.5, 0.5},
+				{0.5, 0.5}
+			}
+		};
+
+		nyann::FCLayer<double> layer_1(nyann::Size<>{ 4, 2 }, nyann::Size<>{2});
+
+		std::string serialized = layer_1.serialize();
+
+		nyann::FCLayer<double> layer_2;
+		std::istringstream serialized_stream(serialized);
+		layer_2.deserialize(serialized_stream);
+
+		double error = nyann::DataSet<double>::abs_difference(layer_1.get_biases(), layer_2.get_biases());
+		error += nyann::DataSet<double>::abs_difference(layer_1.get_weights(), layer_2.get_weights());
+
+		ASSERT_LE(error, 0.5);
+	}
 } // namespace
