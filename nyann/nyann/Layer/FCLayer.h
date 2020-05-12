@@ -11,6 +11,10 @@
 #include <vector>
 #include <functional>
 #include <random>
+#include <fstream>
+#include <sstream>
+#include <iterator>
+#include <string>
 
 
 namespace nyann {
