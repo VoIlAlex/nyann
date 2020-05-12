@@ -10,29 +10,35 @@
 
 namespace nyann {
 
-	class DifferentSizeError : public ::std::out_of_range 
-	{
-		public:
-		using ::std::out_of_range::out_of_range;
-	};
+	class NyannError
+	{};
 
-	class ConversionError : public ::std::runtime_error {
-		public:
-		using ::std::runtime_error::runtime_error;
-	};
-	
-	class SizeError : public ::std::runtime_error {
-	public:
-		using ::std::runtime_error::runtime_error;
-	};
+	class DataSetError
+	{};
 
-	class IndexError : public ::std::out_of_range
+	class DifferentSizeError : public NyannError, public ::std::out_of_range
 	{
 	public:
 		using ::std::out_of_range::out_of_range;
 	};
 
-	class IndexSizeError : public IndexError
+	class ConversionError : public NyannError, public ::std::runtime_error {
+	public:
+		using ::std::runtime_error::runtime_error;
+	};
+
+	class SizeError : public NyannError, public  ::std::runtime_error {
+	public:
+		using ::std::runtime_error::runtime_error;
+	};
+
+	class IndexError : public NyannError, public ::std::out_of_range
+	{
+	public:
+		using ::std::out_of_range::out_of_range;
+	};
+
+	class IndexSizeError : public NyannError, public IndexError
 	{
 	public:
 		IndexSizeError(const std::string &message)
@@ -40,18 +46,26 @@ namespace nyann {
 			IndexError(message.c_str()) {}
 	};
 
-	class IndexOverflowError : public IndexSizeError
+	class IndexOverflowError : public NyannError, public IndexSizeError
 	{
 	public:
 		using IndexSizeError::IndexSizeError;
 	};
 
-	class NotImplementedError : public ::std::runtime_error {
+	class NotImplementedError : public NyannError, public ::std::runtime_error
+	{
 	public:
 		using ::std::runtime_error::runtime_error;
 	};
 
-	class ConstParentError : public ::std::runtime_error {
+	class ConstParentError : public DataSetError, public ::std::runtime_error
+	{
+	public:
+		using ::std::runtime_error::runtime_error;
+	};
+
+	class DeprecationError : public NyannError, public ::std::runtime_error
+	{
 	public:
 		using ::std::runtime_error::runtime_error;
 	};
