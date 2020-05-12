@@ -494,24 +494,6 @@ namespace nyann {
 				Index<unsigned int> current_idx(size.size());
 				for (int i = 0; i < m_slices.size(); i++)
 					current_idx[i] = m_slices[i].from_value();
-				//std::vector<int> current_result_idx;
-				/*for (int i = 0; i < m_slices.size(); i++)
-				{
-					if (m_slices[i].is_index())
-					{
-						current_idx.push_back(m_slices[i]);
-						if (current_idx.size() == m_parent->m_size())
-							dataset.at_index(current_result_idx) = m_parent->at_index(current_idx);
-					}
-					else
-					{
-						for (int j = m_slices[i][0], k = 0; j < m_slices[i][1]; j += m_slices[i][2], k++)
-						{
-							current_result_idx
-						}
-					}
-
-				}*/
 
 				std::vector<unsigned int> steps(size.size());
 				for (int i = 0; i < size.size(); i++)
