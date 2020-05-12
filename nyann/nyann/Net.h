@@ -194,10 +194,10 @@ namespace nyann {
 						DataSet<_DT> y(Size<>::join({ batch_size }, dataset.output_size()));
 						DataSet<_DT> errors;
 						DataSet<_DT> y_pred;
-						for (int j = i * batch_size; j < i * batch_size + batch_size; j++)
+						for (int j = i * batch_size, k = 0; j < i * batch_size + batch_size; j++, k++)
 						{
-							X[j] = dataset[j].get_input();
-							y[j] = dataset[j].get_output();
+							X[k] = dataset[j].get_input();
+							y[k] = dataset[j].get_output();
 						}
 
 						y_pred = predict(X);
