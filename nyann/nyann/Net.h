@@ -44,6 +44,22 @@ namespace nyann {
 		}
 	};
 
+	template<typename _DT>
+	class EpochsCondition : public TrainStopCondition<_DT>
+	{
+		int m_epochs;
+
+	public:
+		EpochsCondition(int epochs)
+			: m_epochs(epochs)
+		{}
+
+		bool is_true(const TrainState<_DT>& state) const override
+		{
+			return state.epoch >= m_epochs;
+		}
+	};
+
 	template<typename _DT = double>
 	class Net
 	{
