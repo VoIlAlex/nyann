@@ -26,6 +26,24 @@ namespace nyann {
 		_DT error;
 	};
 
+	template<typename _DT>
+	class TrainStopCondition
+	{
+	public:
+		TrainStopCondition()
+		{}
+
+		virtual bool is_true(const TrainState<_DT>& state) const = 0;
+
+		virtual void act_before(TrainState<_DT>& state) const
+		{}
+
+		virtual void act_after(TrainState<_DT>& state) const
+		{
+			state.epoch++;
+		}
+	};
+
 	template<typename _DT = double>
 	class Net
 	{
