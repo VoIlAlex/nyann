@@ -28,6 +28,7 @@ namespace nyann {
 	template<typename _DT>
 	class DataSet
 	{
+	protected:
 		std::vector<_DT> m_data;
 		Size<> m_size;
 
