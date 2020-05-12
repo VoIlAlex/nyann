@@ -209,6 +209,13 @@ namespace nyann {
 			return reducer(m_data, m_size);
 		}
 
+		void clear()
+		{
+			m_data.clear();
+			m_size.clear();
+		}
+
+
 		NestedDataSet operator[](const Slice<>& idx) const
 		{
 			return NestedDataSet(this, { idx });
