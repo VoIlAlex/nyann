@@ -47,10 +47,10 @@ namespace nyann {
 	template<typename _DT>
 	class PowerOperation : public DataSetOperation<_DT>
 	{
-		double m_power;
+		_DT m_power;
 
 	public:
-		PowerOperation(double power)
+		PowerOperation(const _DT &power)
 			: m_power(power)
 		{}
 
@@ -67,7 +67,7 @@ namespace nyann {
 		_DT m_coefficient;
 
 	public:
-		MultOperation(_DT coefficient)
+		MultOperation(const _DT& coefficient)
 			: m_coefficient(coefficient)
 		{}
 
