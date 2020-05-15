@@ -13,7 +13,7 @@ namespace nyann {
 	class NyannError
 	{};
 
-	class DataSetError
+	class DataSetError : public NyannError
 	{};
 
 	class DifferentSizeError : public NyannError, public ::std::out_of_range
@@ -38,7 +38,7 @@ namespace nyann {
 		using ::std::out_of_range::out_of_range;
 	};
 
-	class IndexSizeError : public NyannError, public IndexError
+	class IndexSizeError : public IndexError
 	{
 	public:
 		IndexSizeError(const std::string &message)
@@ -46,7 +46,7 @@ namespace nyann {
 			IndexError(message.c_str()) {}
 	};
 
-	class IndexOverflowError : public NyannError, public IndexSizeError
+	class IndexOverflowError : public IndexSizeError
 	{
 	public:
 		using IndexSizeError::IndexSizeError;
