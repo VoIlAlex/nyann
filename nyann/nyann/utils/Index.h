@@ -158,7 +158,7 @@ namespace nyann {
 		//	return *this;
 		//}
 
-		Index<_DT>& increment(Index<_DT> min = Index(), const Index<_DT>& max = Index(), std::vector<_DT> steps = std::vector<_DT>(), bool to_border = false)
+		Index<_DT>& increment(const Index<_DT>& min = Index(), const Index<_DT>& max = Index(), const std::vector<_DT>& steps = std::vector<_DT>(), bool to_border = false)
 		{
 			// Invariant
 			for (auto step : steps)
@@ -280,7 +280,7 @@ namespace nyann {
 				
 		}
 
-		static Index<_DT> join(const Index<_DT>& size_1, const Index<_DT> size_2)
+		static Index<_DT> join(const Index<_DT>& size_1, const Index<_DT>& size_2)
 		{
 			Index<_DT> size_result(size_1.size() + size_2.size());
 			for (int i = 0; i < size_1.size(); i++)
