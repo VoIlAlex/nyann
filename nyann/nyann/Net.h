@@ -80,9 +80,9 @@ namespace nyann {
 	template<typename _DT = double>
 	class Net
 	{
-		std::vector<Layer<_DT>*> m_layers;
-		Loss<_DT>* m_loss;
-		Optimizer<_DT>* m_optimizer;
+		std::vector<std::shared_ptr<Layer<_DT>>> m_layers;
+		std::shared_ptr<Loss<_DT>> m_loss;
+		std::shared_ptr<Optimizer<_DT>> m_optimizer;
 
 	public:
 		Net() :
@@ -90,19 +90,24 @@ namespace nyann {
 			m_optimizer(nullptr)
 		{}
 
+		Net(Loss<_DT>* loss, Optimizer<_DT>* optimizer) :
+			m_loss(loss),
+			m_optimizer(optimizer)
+		{}
+
 		void add_layer(Layer<_DT>* layer)
 		{
-			this->m_layers.push_back(layer);
+			this->m_layers.emplace_back(layer);
 		}
 
 		void set_loss(Loss<_DT>* loss)
 		{
-			this->m_loss = loss;
+			this->m_loss = std::shared_ptr<Loss<_DT>>(loss);
 		}
 
 		void set_optimizer(Optimizer<_DT>* optimizer)
 		{
-			this->m_optimizer = optimizer;
+			this->m_optimizer = std::shared_ptr<Optimizer<_DT>>(optimizer);
 		}
 
 #ifdef TRAIN_STOP_CONDITION
@@ -252,7 +257,7 @@ namespace nyann {
 		DataSet<_DT> predict(const DataSet<_DT>& input)
 		{
 			DataSet<_DT> result = input;
-			for (Layer<_DT>* layer : m_layers)
+			for (auto layer : m_layers)
 				result = (*layer)(result);
 			return result;
 		}
@@ -287,12 +292,6 @@ namespace nyann {
 			m_optimizer->deserialize(input);
 			for (nyann::Layer<_DT>* layer : m_layers)
 				layer->deserialize(input);
-		}
-
-		~Net()
-		{
-			for (auto layer : m_layers)
-				delete layer;
 		}
 	};
 
