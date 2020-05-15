@@ -16,7 +16,7 @@ namespace nyann {
 	class Layer : public Serializable<_DT_IN>
 	{
 	protected:
-		ActivationFunction<_DT_IN>* m_activation_function;
+		std::shared_ptr<ActivationFunction<_DT_OUT>> m_activation_function;
 
 	public:
 		Layer()
@@ -39,14 +39,9 @@ namespace nyann {
 #endif
 		
 
-		void add_activation_function(ActivationFunction<_DT_IN>* activation_function)
+		void add_activation_function(ActivationFunction<_DT_OUT>* activation_function)
 		{
-			m_activation_function = activation_function;
-		}
-		~Layer()
-		{
-			if (m_activation_function != nullptr)
-				delete m_activation_function;
+			m_activation_function = std::shared_ptr<ActivationFunction<_DT_IN>>(activation_function);
 		}
 	};
 
