@@ -25,7 +25,7 @@ namespace nyann {
 	class VectorSerializer
 	{
 	public:
-		std::string serialize(const std::vector<_DT>& data) 
+		std::string serialize(const std::vector<_DT>& data) const
 		{
 			std::ostringstream result;
 			for (int i = 0; i < data.size(); i++)
@@ -37,7 +37,7 @@ namespace nyann {
 			return result.str();
 		}
 
-		std::vector<_DT> deserialize(std::istringstream& input) 
+		std::vector<_DT> deserialize(std::istringstream& input) const
 		{
 			std::string line;
 			std::getline(input, line);
