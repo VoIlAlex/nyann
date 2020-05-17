@@ -159,7 +159,6 @@
     <ClInclude Include="nyann\ActivationFunction\ReLUActivation.h" />
     <ClInclude Include="nyann\ActivationFunction\SigmoidActivation.h" />
     <ClInclude Include="nyann\ActivationFunction\SoftMaxActivation.h" />
-    <ClInclude Include="nyann\ActivationFunction\SoftMaxActivation.h" />
     <ClInclude Include="nyann\DataSet.h" />
     <ClInclude Include="nyann\DataSet\DataSetOperation.h" />
     <ClInclude Include="nyann\DataSet\DataSetReducer.h" />
