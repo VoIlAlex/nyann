@@ -290,7 +290,7 @@ namespace nyann {
 			std::istringstream input(content);
 			m_loss->deserialize(input);
 			m_optimizer->deserialize(input);
-			for (nyann::Layer<_DT>* layer : m_layers)
+			for (auto layer : m_layers)
 				layer->deserialize(input);
 		}
 	};
