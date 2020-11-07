@@ -9,19 +9,32 @@ find_package(GTest REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
 
 # Link runTests with what we want to test and the GTest and pthread library
-add_executable(runTests 
-test_BinaryActivation.cpp
-test_ConvLayer1D.cpp
+
+set (NYANN_TESTS_SRCS
+test_ActivationFunction.cpp
+test_conversion.cpp
+test_dataset_operations.cpp
+test_dataset_reducers.cpp
 test_DataSet.cpp 
 test_drafts.cpp 
+test_exceptions.cpp
 test_FCLayer.cpp 
 test_goal.cpp 
 test_inbox.cpp 
+test_Index.cpp
 test_Net.cpp 
+test_Serializer.cpp
 test_Size.cpp
 test_Slice.cpp
+test_TrainDataSet_draft.cpp
 test_usage.cpp 
-test_utils.cpp
+test_utils_draft.cpp
+test_utils.cpp)
+
+
+
+add_executable(runTests 
+${NYANN_TESTS_SRCS}
 )
 # add_executable(runTests test_BinaryActivation.cpp)
 # add_executable(runTests test_DataSet.cpp)

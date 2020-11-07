@@ -264,7 +264,7 @@ namespace nyann {
 				degree = 1;
 				for (int j = i_r + 1; j < max_index.size(); j++)
 					degree *= max_index[j];
-				index += at(i_r) * degree;
+				index += this->at(i_r) * degree;
 			}
 			return index;
 		}
